@@ -8,7 +8,7 @@ class World {
         new Puffer()
     ]
     barriers = [
-        new Barrier()
+        new Light()
     ]
     canvas;
     ctx;
