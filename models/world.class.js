@@ -2,10 +2,10 @@ class World {
 
     character = new Character();
     enemies = [
-        new Chicken(),
-        new Chicken(),
-        new Chicken(),
-        new Chicken()
+        new Puffer(),
+        new Puffer(),
+        new Puffer(),
+        new Puffer()
     ]
     canvas;
     ctx;
