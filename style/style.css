@@ -7,9 +7,3 @@ body {
     justify-content: center;
     align-items: center;
 }
-
-canvas {
-    height: 480px;
-    width: 720px;
-    background-color: black;
-}
