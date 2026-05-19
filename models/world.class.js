@@ -7,6 +7,9 @@ class World {
         new Puffer(),
         new Puffer()
     ]
+    barriers = [
+        new Barrier()
+    ]
     canvas;
     ctx;
 
@@ -23,6 +26,10 @@ class World {
         this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
         this.enemies.forEach(enemy => {
             this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
+        });
+
+        this.barriers.forEach(barrier => {
+            this.ctx.drawImage(barrier.img, barrier.x, barrier.y, barrier.width, barrier.height);
         });
         
         let self = this;
