@@ -6,10 +6,13 @@ class World {
         new Puffer(),
         new Puffer(),
         new Puffer()
-    ]
-    barriers = [
+    ];
+    lights = [
         new Light()
-    ]
+    ];
+    backgroundObjects = [
+        new BackgroundObject('assets/3. Background/Layers/2. Floor/D.png', 0, 280)
+    ];
     canvas;
     ctx;
 
@@ -23,18 +26,25 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.ctx.drawImage(this.character.img, this.character.x, this.character.y, this.character.width, this.character.height);
-        this.enemies.forEach(enemy => {
-            this.ctx.drawImage(enemy.img, enemy.x, enemy.y, enemy.width, enemy.height);
-        });
+        this.addToMap(this.character);
 
-        this.barriers.forEach(barrier => {
-            this.ctx.drawImage(barrier.img, barrier.x, barrier.y, barrier.width, barrier.height);
-        });
-        
+        this.addObjectsToMap(this.lights);
+        this.addObjectsToMap(this.enemies);
+        this.addObjectsToMap(this.backgroundObjects);
+
         let self = this;
-        requestAnimationFrame(function() {
+        requestAnimationFrame(function () {
             self.draw();
         });
+    }
+
+    addObjectsToMap(objects) {
+        objects.forEach(o => {
+            this.addToMap(o);
+        });
+    }
+
+    addToMap(mo) {
+        this.ctx.drawImage(mo.img, mo.x, mo.y, mo.width, mo.height);
     }
 }
