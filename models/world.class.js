@@ -11,7 +11,7 @@ class World {
         new Light()
     ];
     backgroundObjects = [
-        new BackgroundObject('assets/3. Background/Layers/2. Floor/D.png', 0, 280)
+        new BackgroundObject('assets/3. Background/Layers/2. Floor/D.png', 0)
     ];
     canvas;
     ctx;
