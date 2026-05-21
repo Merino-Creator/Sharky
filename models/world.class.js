@@ -1,3 +1,5 @@
+let lightX = Math.random() *400;
+
 class World {
 
     character = new Character();
@@ -8,7 +10,8 @@ class World {
         new Puffer()
     ];
     lights = [
-        new Light()
+        new Light('assets/3. Background/Layers/1. Light/1.png', lightX),
+        new Light('assets/3. Background/Layers/1. Light/2.png', lightX + 80)
     ];
     backgroundObjects = [
         new BackgroundObject('assets/3. Background/Layers/2. Floor/D.png', 0)
@@ -26,11 +29,10 @@ class World {
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-        this.addToMap(this.character);
-
+        this.addObjectsToMap(this.backgroundObjects);
         this.addObjectsToMap(this.lights);
         this.addObjectsToMap(this.enemies);
-        this.addObjectsToMap(this.backgroundObjects);
+        this.addToMap(this.character);
 
         let self = this;
         requestAnimationFrame(function () {
