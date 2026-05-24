@@ -27,14 +27,14 @@ class Character extends MoveableObject {
     animate() {
 
         setInterval(() => {
-            if (this.world.keyboard.LEFT) {
-                this.x -= this.speed;
-                this.otherDirection = true;
-            }
-
-            if (this.world.keyboard.RIGHT) {
+            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.x += this.speed;
                 this.otherDirection = false;
+            }
+
+            if (this.world.keyboard.LEFT && this.x > 0) {
+                this.x -= this.speed;
+                this.otherDirection = true;
             }
 
             if (this.world.keyboard.UP) {
@@ -45,7 +45,7 @@ class Character extends MoveableObject {
                 this.y += this.speed;
             }
 
-            this.world.camera_x = -this.x;
+            this.world.camera_x = -this.x + 40;
         }, 1000 / 30);
 
         setInterval(() => {

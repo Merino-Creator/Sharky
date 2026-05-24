@@ -3,11 +3,7 @@ let lightX = Math.random() *400;
 class World {
 
     character = new Character();
-    
-    enemies = level1.enemies;
-    lights = level1.lights;
-    backgroundObjects = level1.backgroundObjects;
-
+    level = level1;
     canvas;
     ctx;
     keyboard;
@@ -30,9 +26,9 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.backgroundObjects);
-        this.addObjectsToMap(this.lights);
-        this.addObjectsToMap(this.enemies);
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.lights);
+        this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0);
