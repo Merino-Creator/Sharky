@@ -4,6 +4,8 @@ class Character extends MoveableObject {
     y = 160;
     height = 160;
     width = 120;
+    world;
+
     IMAGES_CHARACTER = [
         './assets/1.Sharkie/3.Swim/1.png',
         './assets/1.Sharkie/3.Swim/2.png',
