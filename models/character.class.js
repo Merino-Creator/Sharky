@@ -50,8 +50,6 @@ class Character extends MoveableObject {
 
         setInterval(() => {
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
-                this.x += this.speed;
-
                 let i = this.currentImage % this.IMAGES_CHARACTER.length;
                 let path = this.IMAGES_CHARACTER[i];
                 this.img = this.ImageCache[path];
