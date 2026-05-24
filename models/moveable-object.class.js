@@ -14,7 +14,7 @@ class MoveableObject {
         grr.forEach((path) => {
             let img = new Image();
             img.src = path;
-            this.ImageCache[path] = path;
+            this.ImageCache[path] = img;
         });
     }
 
