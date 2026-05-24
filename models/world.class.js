@@ -11,7 +11,7 @@ class World {
     ];
     lights = [
         new Light('assets/3. Background/Layers/1. Light/1.png', lightX),
-        new Light('assets/3. Background/Layers/1. Light/2.png', lightX + 80)
+        new Light('assets/3. Background/Layers/1. Light/2.png', lightX + 520)
     ];
     backgroundObjects = [
         new BackgroundObject('assets/3. Background/Layers/5. Water/D.png', 0),
