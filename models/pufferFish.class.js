@@ -22,10 +22,7 @@ class Puffer extends MoveableObject {
 
     animate() {
         setInterval( () => {
-            let i = this.currentImage % this.IMAGES_ENEMY.length;
-            let path = this.IMAGES_ENEMY[i];
-            this.img = this.ImageCache[path];
-            this.currentImage++;
+            this.playAnimation(this.IMAGES_ENEMY);
         }, 255);
 
         this.moveLeft();

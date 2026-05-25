@@ -3,7 +3,8 @@ const level1 = new Level(
         new Puffer(),
         new Puffer(),
         new Puffer(),
-        new Puffer()
+        new Puffer(),
+        new Endboss()
     ],
 
     [
