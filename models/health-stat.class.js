@@ -1,0 +1,3 @@
+class health extends InterfaceObject {
+    
+}

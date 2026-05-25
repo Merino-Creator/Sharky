@@ -1,0 +1,3 @@
+class CoinAmount extends InterfaceObject {
+    
+}
