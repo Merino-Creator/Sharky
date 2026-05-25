@@ -29,13 +29,26 @@ class MoveableObject {
     }
 
     moveRight() {
-        console.log('moving right');
 
     }
 
     moveLeft() {
         setInterval(() => {
             this.x -= this.speed;
+        }, 1000 / 60);
+    }
+
+    moveUpDown() {
+        let movingUp = true;
+
+        setInterval(() => {
+            if (movingUp) {
+                this.y -= this.speed;
+                if (this.y <= 0) movingUp = false;
+            } else {
+                this.y += this.speed;
+                if (this.y >= 160) movingUp = true;
+            }
         }, 1000 / 60);
     }
 }
