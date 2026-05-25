@@ -44,10 +44,10 @@ class MoveableObject {
         setInterval(() => {
             if (movingUp) {
                 this.y -= this.speed;
-                if (this.y <= 0) movingUp = false;
+                if (this.y <= this.yMin) movingUp = false;
             } else {
                 this.y += this.speed;
-                if (this.y >= 160) movingUp = true;
+                if (this.y >= this.yMax) movingUp = true;
             }
         }, 1000 / 60);
     }

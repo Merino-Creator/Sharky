@@ -12,7 +12,16 @@ class Jellyfish extends MoveableObject {
         this.loadImages(this.IMAGES_JELLY);
 
         this.x = 200 + Math.random() * 500;
-        this.y = 0 + Math.random() * 160
+        let topZone = Math.random() < 0.5;
+        if (topZone) {
+            this.y = Math.random() * 160;
+            this.yMin = 0;
+            this.yMax = 160;
+        } else {
+            this.y = 300 + Math.random() * 100;
+            this.yMin = 300;
+            this.yMax = 400;
+        }
 
         this.speed = 0.2 + Math.random() * 0.25;
 
@@ -20,7 +29,7 @@ class Jellyfish extends MoveableObject {
     }
 
     animate() {
-        setInterval( () => {
+        setInterval(() => {
             this.playAnimation(this.IMAGES_JELLY);
         }, 255);
 
