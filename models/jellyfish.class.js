@@ -11,7 +11,7 @@ class Jellyfish extends MoveableObject {
         super().loadImage(this.IMAGES_JELLY[0]);
         this.loadImages(this.IMAGES_JELLY);
 
-        this.x = 200 + Math.random() * 500;
+        this.x = 200 + Math.random() * 2000;
         let topZone = Math.random() < 0.5;
         if (topZone) {
             this.y = Math.random() * 160;
