@@ -37,11 +37,11 @@ class Character extends MoveableObject {
                 this.otherDirection = true;
             }
 
-            if (this.world.keyboard.UP) {
+            if (this.world.keyboard.UP && this.y > -120) {
                 this.y -= this.speed;
             }
 
-            if (this.world.keyboard.DOWN) {
+            if (this.world.keyboard.DOWN && this.y < 280) {
                 this.y += this.speed;
             }
 
@@ -49,7 +49,7 @@ class Character extends MoveableObject {
         }, 1000 / 30);
 
         setInterval(() => {
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT) {
+            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
                 this.playAnimation(this.IMAGES_CHARACTER);
             }
         }, 100);
