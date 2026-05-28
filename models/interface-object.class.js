@@ -1,7 +1,5 @@
 class InterfaceObject {
     img;
-    height = 80;
-    width = 80;
 
     ImageCache = {};
 
