@@ -31,7 +31,9 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addToMap(this.character);
 
-        this.ctx.translate(-this.camera_x, 0);
+        this.ctx.translate(-this.camera_x, 0); // alle vorher bewegt sich mit der spielwelt, alles danach mit der kamera!
+
+        this.addObjectsToMap(this.level.UI);
 
         let self = this;
         requestAnimationFrame(function () {
