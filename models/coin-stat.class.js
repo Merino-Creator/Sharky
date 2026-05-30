@@ -1,6 +1,6 @@
 class CoinAmount extends Statusbar {
-    x = 220;
-    y = 30;
+    x = 235;
+    y = 28;
     height = 60;
     width = 60;
 

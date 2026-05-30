@@ -20,7 +20,7 @@ class Statusbar extends DrawableObject {
     }
 
     drawValue(ctx, value, x, y) {
-        ctx.font = '30px Arial';
+        ctx.font = 'normal 40px Luckiest_Guy';
         ctx.fillStyle = 'white';
         ctx.fillText(value, x, y);
     }
