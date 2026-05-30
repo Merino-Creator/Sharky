@@ -1,4 +1,4 @@
-class Toxic extends InterfaceObject {
+class Toxic extends Statusbar {
     x = 0;
     y = 0;
     height = 90;

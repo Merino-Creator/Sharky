@@ -1,4 +1,4 @@
-class Health extends InterfaceObject {
+class Health extends Statusbar {
     x = 110;
     y = 20;
     height = 70;

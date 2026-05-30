@@ -1,4 +1,4 @@
-class CoinAmount extends InterfaceObject {
+class CoinAmount extends Statusbar {
     x = 220;
     y = 30;
     height = 60;

@@ -1,8 +1,4 @@
-class MoveableObject {
-    img;
-    height = 80;
-    width = 80;
-    currentImage = 0;
+class MoveableObject extends DrawableObject {
     speed = 0.2;
     otherDirection = false;
     speedY = 0;
@@ -16,21 +12,6 @@ class MoveableObject {
         left: 0,
         right: 0
     };
-
-    ImageCache = {};
-
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-    loadImages(grr) {
-        grr.forEach((path) => {
-            let img = new Image();
-            img.src = path;
-            this.ImageCache[path] = img;
-        });
-    }
 
     applyGravity() {
         setInterval(() => {
@@ -46,12 +27,8 @@ class MoveableObject {
         this.currentImage++;
     }
 
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
-    }
-
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Puffer || this instanceof Jellyfish || this instanceof PoisonBottle) {
+        if (this instanceof Character || this instanceof Puffer || this instanceof Jellyfish || this instanceof PoisonBottle || this instanceof Endboss) {
             ctx.beginPath();
             ctx.lineWidth = '5';
             ctx.strokeStyle = 'blue';
