@@ -5,6 +5,8 @@ class MoveableObject {
     currentImage = 0;
     speed = 0.2;
     otherDirection = false;
+    speedY = 0;
+    acceleration = 0.01;
 
     ImageCache = {};
 
@@ -19,6 +21,13 @@ class MoveableObject {
             img.src = path;
             this.ImageCache[path] = img;
         });
+    }
+
+    applyGravity() {
+        setInterval(() =>{
+            this.y += this.speedY;
+            this.speedY += this.acceleration;
+        }, 1000 / 60);
     }
 
     playAnimation(images) {
