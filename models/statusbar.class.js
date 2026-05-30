@@ -19,10 +19,10 @@ class Statusbar extends DrawableObject {
         });
     }
 
-    drawValue(ctx, value) {
+    drawValue(ctx, value, x, y) {
         ctx.font = '30px Arial';
         ctx.fillStyle = 'white';
-        ctx.fillText(value, this.x + this.width, this.y + this.height / 2 + 25);
+        ctx.fillText(value, x, y);
     }
 
     draw(ctx) {

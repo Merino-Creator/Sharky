@@ -39,9 +39,9 @@ class World {
         this.ctx.translate(-this.camera_x, 0); // alle vorher bewegt sich mit der spielwelt, alles danach mit der kamera!
 
         this.addObjectsToMap(this.level.UI);
-        this.level.UI[0].drawValue(this.ctx, this.toxicAmount);
-        this.level.UI[1].drawValue(this.ctx, this.character.energy);
-        this.level.UI[2].drawValue(this.ctx, this.coinAmount);
+        this.level.UI[0].drawValue(this.ctx, this.toxicAmount, 70, 70);
+        this.level.UI[1].drawValue(this.ctx, this.character.energy, 165, 70);
+        this.level.UI[2].drawValue(this.ctx, this.coinAmount, 275, 70);
 
         let self = this;
         requestAnimationFrame(function () {
