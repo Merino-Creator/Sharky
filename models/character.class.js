@@ -75,7 +75,13 @@ class Character extends MoveableObject {
         'assets/1.Sharkie/6.dead/1.Poisoned/10.png',
         'assets/1.Sharkie/6.dead/1.Poisoned/11.png',
         'assets/1.Sharkie/6.dead/1.Poisoned/12.png'
-    ]
+    ];
+
+    IMAGES_HURT = [
+        'assets/1.Sharkie/5.Hurt/2.Electric shock/1.png',
+        'assets/1.Sharkie/5.Hurt/2.Electric shock/2.png',
+        'assets/1.Sharkie/5.Hurt/2.Electric shock/3.png',
+    ];
 
     constructor() {
         super().loadImage('./assets/1.Sharkie/3.Swim/1.png');
@@ -83,6 +89,7 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.loadImages(this.IMAGES_DEAD);
+        this.loadImages(this.IMAGES_HURT);
 
         this.animate();
     }
@@ -122,6 +129,8 @@ class Character extends MoveableObject {
         setInterval(() => {
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
                 this.playAnimation(this.IMAGES_SWIM);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_HURT);
             } else if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isLongIdle()) {
