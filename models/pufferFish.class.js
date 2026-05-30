@@ -25,7 +25,9 @@ class Puffer extends MoveableObject {
             this.playAnimation(this.IMAGES_ENEMY);
         }, 255);
 
-        this.moveLeft();
+        setInterval(() => {
+            this.moveLeft();
+        }, 1000 / 60);
     }
 
 }
