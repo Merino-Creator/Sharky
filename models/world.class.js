@@ -8,6 +8,9 @@ class World {
     ctx;
     keyboard;
     camera_x = 0;
+    toxicAmount = 0;
+    coinAmount = 0;
+    healthAmount = 0;
 
     constructor(canvas) {
         this.ctx = canvas.getContext('2d');
@@ -30,11 +33,15 @@ class World {
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.lights);
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.toxic);
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0); // alle vorher bewegt sich mit der spielwelt, alles danach mit der kamera!
 
         this.addObjectsToMap(this.level.UI);
+        this.level.UI[0].drawValue(this.ctx, this.toxicAmount);
+        this.level.UI[1].drawValue(this.ctx, this.character.energy);
+        this.level.UI[2].drawValue(this.ctx, this.coinAmount);
 
         let self = this;
         requestAnimationFrame(function () {
@@ -43,11 +50,25 @@ class World {
     }
 
     checkCollisions() {
-        setInterval(() =>{
+        setInterval(() => {
             this.level.enemies.forEach((enemy) => {
-                if(this.character.isColliding(enemy)) {
+                if (this.character.isColliding(enemy)) {
                     this.character.hit();
                     console.log('Collision with character, energy ', this.character.energy);
+                }
+            });
+
+            this.level.toxic.forEach((toxic, index) => {
+                if (this.character.isColliding(toxic)) {
+                    this.toxicAmount++;
+                    this.level.toxic.splice(index, 1);
+                }
+            });
+
+            this.level.coin.forEach((coin, index) => {
+                if (this.character.isColliding(coin)) {
+                    this.coinAmount++;
+                    this.level.coin.splice(index, 1);
                 }
             });
         }, 255);

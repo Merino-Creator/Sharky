@@ -1,9 +1,5 @@
 const level1 = new Level(
     [
-        new PoisonBottle(),
-        new PoisonBottle(),
-        new PoisonBottle(),
-        new PoisonBottle(),
         new Puffer(),
         new Puffer(),
         new Puffer(),
@@ -49,5 +45,16 @@ const level1 = new Level(
         new Toxic(),
         new Health(),
         new CoinAmount()
+    ],
+
+    [
+        new PoisonBottle(),
+        new PoisonBottle(),
+        new PoisonBottle(),
+        new PoisonBottle()
+    ],
+
+    [
+
     ]
 );
