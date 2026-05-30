@@ -6,6 +6,7 @@ class Character extends MoveableObject {
     width = 220;
     speed = 10;
     world;
+    lastKeyPress = new Date().getTime();
 
     offset = {
         top: 110,
@@ -61,11 +62,27 @@ class Character extends MoveableObject {
         'assets/1.Sharkie/2.Long_IDLE/i14.png'
     ];
 
+    IMAGES_DEAD = [
+        'assets/1.Sharkie/6.dead/1.Poisoned/1.png',
+        'assets/1.Sharkie/6.dead/1.Poisoned/2.png',
+        'assets/1.Sharkie/6.dead/1.Poisoned/3.png',
+        'assets/1.Sharkie/6.dead/1.Poisoned/4.png',
+        'assets/1.Sharkie/6.dead/1.Poisoned/5.png',
+        'assets/1.Sharkie/6.dead/1.Poisoned/6.png',
+        'assets/1.Sharkie/6.dead/1.Poisoned/7.png',
+        'assets/1.Sharkie/6.dead/1.Poisoned/8.png',
+        'assets/1.Sharkie/6.dead/1.Poisoned/9.png',
+        'assets/1.Sharkie/6.dead/1.Poisoned/10.png',
+        'assets/1.Sharkie/6.dead/1.Poisoned/11.png',
+        'assets/1.Sharkie/6.dead/1.Poisoned/12.png'
+    ]
+
     constructor() {
         super().loadImage('./assets/1.Sharkie/3.Swim/1.png');
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
+        this.loadImages(this.IMAGES_DEAD);
 
         this.animate();
     }
@@ -76,22 +93,26 @@ class Character extends MoveableObject {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
+                this.lastKeyPress = new Date().getTime();
                 //this.walking_sound.play();
             }
 
             if (this.world.keyboard.LEFT && this.x > 0) {
                 this.moveLeft();
                 this.otherDirection = true;
+                this.lastKeyPress = new Date().getTime();
                 //this.walking_sound.play();
             }
 
             if (this.world.keyboard.UP && this.y > -120) {
                 this.moveUP();
+                this.lastKeyPress = new Date().getTime();
                 //this.walking_sound.play();
             }
 
             if (this.world.keyboard.DOWN && this.y < 280) {
                 this.moveDown();
+                this.lastKeyPress = new Date().getTime();
                 //this.walking_sound.play();
             }
 
@@ -101,11 +122,18 @@ class Character extends MoveableObject {
         setInterval(() => {
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
                 this.playAnimation(this.IMAGES_SWIM);
+            } else if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.isLongIdle()) {
+                this.playAnimation(this.IMAGES_LONG_IDLE);
+            } else {
+                this.playAnimation(this.IMAGES_IDLE);
             }
         }, 100);
     }
 
-    jump() {
-
+    isLongIdle() {
+        let timePassed = new Date().getTime() - this.lastKeyPress;
+        return timePassed > 6000;
     }
 }

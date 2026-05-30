@@ -7,6 +7,7 @@ class MoveableObject {
     otherDirection = false;
     speedY = 0;
     acceleration = 0.01;
+    energy = 100;
 
     offset = {
         top: 0,
@@ -68,6 +69,17 @@ class MoveableObject {
             this.y + this.height - this.offset.bottom > mo.y + mo.offset.top &&
             this.x + this.offset.left < mo.x + mo.width - mo.offset.right &&
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
+    }
+
+    hit() {
+        this.energy -= 5;
+        if(this.energy < 0) {
+            this.energy = 0;
+        }
+    }
+
+    isDead() {
+        return this.energy == 0;
     }
 
     moveRight() {
