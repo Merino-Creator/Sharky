@@ -1,5 +1,9 @@
 const level1 = new Level(
     [
+        new PoisonBottle(),
+        new PoisonBottle(),
+        new PoisonBottle(),
+        new PoisonBottle(),
         new Puffer(),
         new Puffer(),
         new Puffer(),
