@@ -7,6 +7,8 @@ body {
     justify-content: center;
     align-items: center;
     background-image: url('/assets/3. Background/Layers/5. Water/D2.png');
+    background-position: center;
+    background-size: cover;
 }
 
 @font-face {
@@ -20,4 +22,20 @@ h1 {
     font-weight: 200;
     text-shadow: 4px 4px 6px black;
     margin-top: 0;
+}
+
+canvas {
+    display: block;
+}
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
 }
