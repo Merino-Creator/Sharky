@@ -16,6 +16,10 @@ body {
     src: url('/assets/5.Font/LuckiestGuy-Regular.ttf');
 }
 
+canvas {
+    display: block;
+}
+
 h1 {
     font-family: 'Luckiest_Guy';
     font-size: 48px;
@@ -23,14 +27,37 @@ h1 {
     text-shadow: 4px 4px 6px black;
 }
 
-canvas {
-    display: block;
+h3 {
+    color: white;
+    font-family: 'Luckiest_Guy';
+    font-size: 24px;
+    font-weight: 200;
+    margin-top: 10px;
+    letter-spacing: 2px;
+}
+
+#controls {
+    display: flex;
+    margin-top: 20px;
+    gap: 12px;
+}
+
+.arrows {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.spacebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .controls-image {
-    display: flex;
-    justify-content: center;
-    height: 320px;
+    height: 100px;
 }
 
 @media only screen and (max-width: 720px) {
