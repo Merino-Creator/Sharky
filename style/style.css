@@ -21,7 +21,6 @@ h1 {
     font-size: 48px;
     font-weight: 200;
     text-shadow: 4px 4px 6px black;
-    margin-top: 0;
 }
 
 canvas {
@@ -31,8 +30,7 @@ canvas {
 .controls-image {
     display: flex;
     justify-content: center;
-    height: 380px;
-    width: 720px;
+    height: 320px;
 }
 
 @media only screen and (max-width: 720px) {
