@@ -11,6 +11,7 @@ class World {
     toxicAmount = 0;
     coinAmount = 0;
     healthAmount = 0;
+    throwableObject = [];
 
     constructor(canvas) {
         this.ctx = canvas.getContext('2d');
@@ -18,7 +19,7 @@ class World {
         this.keyboard = keyboard;
         this.setWorld();
         this.draw();
-        this.checkCollisions();
+        this.checks();
     }
 
     setWorld() {
@@ -34,6 +35,7 @@ class World {
         this.addObjectsToMap(this.level.lights);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.toxic);
+        this.addObjectsToMap(this.throwableObject);
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0); // alle vorher bewegt sich mit der spielwelt, alles danach mit der kamera!
@@ -49,29 +51,40 @@ class World {
         });
     }
 
-    checkCollisions() {
+    checks() {
         setInterval(() => {
-            this.level.enemies.forEach((enemy) => {
-                if (this.character.isColliding(enemy)) {
-                    this.character.hit();
-                    console.log('Collision with character, energy ', this.character.energy);
-                }
-            });
-
-            this.level.toxic.forEach((toxic, index) => {
-                if (this.character.isColliding(toxic)) {
-                    this.toxicAmount++;
-                    this.level.toxic.splice(index, 1);
-                }
-            });
-
-            this.level.coin.forEach((coin, index) => {
-                if (this.character.isColliding(coin)) {
-                    this.coinAmount++;
-                    this.level.coin.splice(index, 1);
-                }
-            });
+            this.checkCollisions();
+            this.checkThrow();
         }, 255);
+    }
+
+    checkCollisions() {
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy)) {
+                this.character.hit();
+            }
+        });
+
+        this.level.toxic.forEach((toxic, index) => {
+            if (this.character.isColliding(toxic)) {
+                this.toxicAmount++;
+                this.level.toxic.splice(index, 1);
+            }
+        });
+
+        this.level.coin.forEach((coin, index) => {
+            if (this.character.isColliding(coin)) {
+                this.coinAmount++;
+                this.level.coin.splice(index, 1);
+            }
+        });
+    }
+
+    checkThrow() {
+        if(this.keyboard.SPACE) {
+            let bubble = new ThrowableObject(this.character.x, this.character.y);
+            this.throwableObject.push(bubble);
+        }
     }
 
     addObjectsToMap(objects) {
