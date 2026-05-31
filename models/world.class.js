@@ -1,5 +1,3 @@
-let lightX = Math.random() * 400;
-
 class World {
 
     character = new Character();
@@ -12,6 +10,7 @@ class World {
     coinAmount = 0;
     healthAmount = 0;
     throwableObject = [];
+    coins;
 
     constructor(canvas) {
         this.ctx = canvas.getContext('2d');
@@ -35,6 +34,7 @@ class World {
         this.addObjectsToMap(this.level.lights);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.toxic);
+        this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.throwableObject);
         this.addToMap(this.character);
 
@@ -72,10 +72,10 @@ class World {
             }
         });
 
-        this.level.coin.forEach((coin, index) => {
-            if (this.character.isColliding(coin)) {
+        this.level.coins.forEach((coins, index) => {
+            if (this.character.isColliding(coins)) {
                 this.coinAmount++;
-                this.level.coin.splice(index, 1);
+                this.level.coins.splice(index, 1);
             }
         });
     }

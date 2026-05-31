@@ -12,8 +12,8 @@ const level1 = new Level(
     ],
 
     [
-        new Light('assets/3. Background/Layers/1. Light/1.png', lightX),
-        new Light('assets/3. Background/Layers/1. Light/2.png', lightX + 520)
+        new Light('assets/3. Background/Layers/1. Light/1.png'),
+        new Light('assets/3. Background/Layers/1. Light/2.png', 520)
     ],
 
     [
@@ -55,6 +55,25 @@ const level1 = new Level(
     ],
 
     [
-
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
+        new Coins(),
     ]
 );
