@@ -6,7 +6,7 @@ class Level {
     toxic;
     coins;
 
-    level_end_x = 500*4;
+    level_end_x = 500*8;
 
 
     constructor(enemies, lights, backgroundObjects, UI, toxic, coins) {

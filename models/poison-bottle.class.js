@@ -19,7 +19,7 @@ class PoisonBottle extends MoveableObject {
         super().loadImage('assets/4. Marcadores/Posión/Animada/1.png');
         this.loadImages(this.IMAGES_POISON_BOTTLE); 
 
-        this.x = 200 + Math.random() * 2000;
+        this.x = 200 + Math.random() * 3500;
 
         this.applyGravity();
         this.animate();

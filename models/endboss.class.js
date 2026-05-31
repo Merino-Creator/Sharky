@@ -3,6 +3,14 @@ class Endboss extends MoveableObject {
     y = -20;
     height = 450;
     width = 500;
+    firstContact = false;
+
+    offset = {
+        top: 130,
+        bottom: 60,
+        left: 30,
+        right: 40
+    };
 
     IMAGES_ENDBOSS = [
         'assets/2.Enemy/3 Final Enemy/2.floating/1.png',
@@ -20,17 +28,44 @@ class Endboss extends MoveableObject {
         'assets/2.Enemy/3 Final Enemy/2.floating/13.png',
     ];
 
+    IMAGES_INTRO = [
+        '/assets/2.Enemy/3 Final Enemy/1.Introduce/1.png',
+        '/assets/2.Enemy/3 Final Enemy/1.Introduce/2.png',
+        '/assets/2.Enemy/3 Final Enemy/1.Introduce/3.png',
+        '/assets/2.Enemy/3 Final Enemy/1.Introduce/4.png',
+        '/assets/2.Enemy/3 Final Enemy/1.Introduce/5.png',
+        '/assets/2.Enemy/3 Final Enemy/1.Introduce/6.png',
+        '/assets/2.Enemy/3 Final Enemy/1.Introduce/7.png',
+        '/assets/2.Enemy/3 Final Enemy/1.Introduce/8.png',
+        '/assets/2.Enemy/3 Final Enemy/1.Introduce/9.png',
+        '/assets/2.Enemy/3 Final Enemy/1.Introduce/10.png'
+    ]
+
     constructor() {
         super().loadImage(this.IMAGES_ENDBOSS[0]);
         this.loadImages(this.IMAGES_ENDBOSS);
-        this.x = 2000;
+        this.loadImages(this.IMAGES_INTRO);
+        this.x = 3800;
         this.animate();
     };
 
     animate() {
-        setInterval(() => {
+    setInterval(() => {
+        if (!this.firstContact) {
             this.playAnimation(this.IMAGES_ENDBOSS);
-        }, 255);
-    };
+        } else if (this.firstContact && this.currentImage < this.IMAGES_INTRO.length) {
+            this.playAnimation(this.IMAGES_INTRO);
+        } else {
+            this.playAnimation(this.IMAGES_ENDBOSS);
+        }
+    }, 255);
+
+    setInterval(() => {
+        if (world.character.x > 3000 && !this.firstContact) {
+            this.firstContact = true;
+            this.currentImage = 0;
+        }
+    }, 255);
+}
 
 }

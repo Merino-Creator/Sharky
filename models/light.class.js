@@ -1,7 +1,7 @@
 class Light extends MoveableObject {
 
     y = 1;
-    static sharedX = Math.random() * 400;
+    static sharedX = Math.random() * 3000;
     height = 400;
     width = 520;
     speed = 0.2;
