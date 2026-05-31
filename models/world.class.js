@@ -42,7 +42,7 @@ class World {
 
         this.addObjectsToMap(this.level.UI);
         this.level.UI[0].drawValue(this.ctx, this.toxicAmount, 70, 70);
-        this.level.UI[1].drawValue(this.ctx, this.character.energy, 170, 70);
+        this.level.UI[1].drawValue(this.ctx, this.character.energy, 160, 70);
         this.level.UI[2].drawValue(this.ctx, this.coinAmount, 290, 72);
 
         let self = this;

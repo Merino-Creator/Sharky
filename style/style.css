@@ -6,4 +6,18 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-image: url('/assets/3. Background/Layers/5. Water/D2.png');
+}
+
+@font-face {
+    font-family: 'Luckiest_Guy';
+    src: url('/assets/5.Font/LuckiestGuy-Regular.ttf');
+}
+
+h1 {
+    font-family: 'Luckiest_Guy';
+    font-size: 48px;
+    font-weight: 200;
+    text-shadow: 4px 4px 6px black;
+    margin-top: 0;
 }
