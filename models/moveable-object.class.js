@@ -1,5 +1,5 @@
 class MoveableObject extends DrawableObject {
-    speed = 0.2;
+    speed = 1;
     otherDirection = false;
     speedY = 0;
     acceleration = 1;
@@ -17,7 +17,7 @@ class MoveableObject extends DrawableObject {
         setInterval(() => {
             this.y += this.speedY;
             this.speedY += this.acceleration;
-        }, 1000 / 60);
+        }, 1000 / 30);
     }
 
     playAnimation(images) {
@@ -95,6 +95,6 @@ class MoveableObject extends DrawableObject {
                 this.y += this.speed;
                 if (this.y >= this.yMax) movingUp = true;
             }
-        }, 1000 / 60);
+        }, 1000 / 30);
     }
 }

@@ -55,7 +55,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkThrow();
-        }, 255);
+        }, 250);
     }
 
     checkCollisions() {

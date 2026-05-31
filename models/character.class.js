@@ -152,7 +152,7 @@ class Character extends MoveableObject {
             } else {
                 this.playAnimation(this.IMAGES_IDLE);
             }
-        }, 100);
+        }, 250);
     }
 
     isLongIdle() {

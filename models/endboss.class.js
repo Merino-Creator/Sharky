@@ -58,14 +58,14 @@ class Endboss extends MoveableObject {
         } else {
             this.playAnimation(this.IMAGES_ENDBOSS);
         }
-    }, 255);
+    }, 250);
 
     setInterval(() => {
         if (world && world.character.x > 3000 && !this.firstContact) {
             this.firstContact = true;
             this.currentImage = 0;
         }
-    }, 255);
+    }, 250);
 }
 
 }

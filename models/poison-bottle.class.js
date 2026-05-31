@@ -28,7 +28,7 @@ class PoisonBottle extends MoveableObject {
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_POISON_BOTTLE);
-        }, 100);
+        }, 250);
 
     }
 }

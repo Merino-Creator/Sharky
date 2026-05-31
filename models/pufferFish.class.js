@@ -15,7 +15,7 @@ class Puffer extends MoveableObject {
         this.x = 200 + Math.random() * 3500;
         this.y = 240;
 
-        this.speed = 0.2 + Math.random() * 0.25;
+        this.speed = 1 + Math.random() * 0.25;
 
         this.animate();
     }
@@ -23,11 +23,11 @@ class Puffer extends MoveableObject {
     animate() {
         setInterval( () => {
             this.playAnimation(this.IMAGES_ENEMY);
-        }, 255);
+        }, 250);
 
         setInterval(() => {
             this.moveLeft();
-        }, 1000 / 60);
+        }, 1000 / 30);
     }
 
 }

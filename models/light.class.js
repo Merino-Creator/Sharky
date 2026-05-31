@@ -4,7 +4,7 @@ class Light extends MoveableObject {
     static sharedX = Math.random() * 3000;
     height = 400;
     width = 520;
-    speed = 0.2;
+    speed = 1;
 
     constructor(path, offset = 0) {
         super().loadImage(path);
@@ -20,6 +20,6 @@ class Light extends MoveableObject {
     moveLeft() {
         setInterval(() => {
             this.x -= this.speed;
-        }, 1000 / 60);
+        }, 1000 / 30);
     }
 }
