@@ -83,6 +83,17 @@ class Character extends MoveableObject {
         'assets/1.Sharkie/5.Hurt/2.Electric shock/3.png',
     ];
 
+    IMAGES_NORMAL_ATTACK = [
+        '/assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png',
+        '/assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png',
+        '/assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/3.png',
+        '/assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/4.png',
+        '/assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/5.png',
+        '/assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/6.png',
+        '/assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png',
+        '/assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png'
+    ];
+
     constructor() {
         super().loadImage('./assets/1.Sharkie/3.Swim/1.png');
         this.loadImages(this.IMAGES_SWIM);
@@ -90,6 +101,7 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_NORMAL_ATTACK);
 
         this.animate();
     }
@@ -129,6 +141,8 @@ class Character extends MoveableObject {
         setInterval(() => {
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
                 this.playAnimation(this.IMAGES_SWIM);
+            } else if (this.isAttacking) {
+                this.playAnimation(this.IMAGES_NORMAL_ATTACK);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isDead()) {

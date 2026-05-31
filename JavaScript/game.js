@@ -13,7 +13,7 @@ function showStartScreen() {
     let background = new Image();
     let startBtn = new Image();
 
-    background.src = '/assets/3. Background/Layers/5. Water/D1.png';
+    background.src = '/assets/3. Background/Dark/2.png';
     startBtn.src = '/assets/6.Botones/Start/1.png';
 
     let btnWidth = 200;
@@ -28,7 +28,7 @@ function showStartScreen() {
         ctx.font = '60px Luckiest Guy';
         ctx.fillStyle = 'white';
         ctx.textAlign = 'center';
-        ctx.fillText('SHARKY', canvas.width / 2, canvas.height / 2 - 50);
+        ctx.fillText('AND THE TOXIC WHALE', canvas.width / 2, canvas.height / 2 - 100);
 
         if (hover) {
             ctx.drawImage(startBtn, btnX - 10, btnY - 5, btnWidth + 20, btnHeight + 10);
@@ -39,21 +39,22 @@ function showStartScreen() {
         ctx.restore();
     }
 
-    background.onload = () => drawStartScreen(false);
-
-    startBtn.onload = () => drawStartScreen(false);
-
-    canvas.addEventListener('mousemove', (event) => {
+    function onMouseMove(event) {
         let rect = canvas.getBoundingClientRect();
         let mouseX = event.clientX - rect.left;
         let mouseY = event.clientY - rect.top;
 
         let hover = mouseX >= btnX && mouseX <= btnX + btnWidth &&
-                    mouseY >= btnY && mouseY <= btnY + btnHeight;
+            mouseY >= btnY && mouseY <= btnY + btnHeight;
 
         drawStartScreen(hover);
         canvas.style.cursor = hover ? 'pointer' : 'default';
-    });
+    }
+
+    background.onload = () => drawStartScreen(false);
+    startBtn.onload = () => drawStartScreen(false);
+
+    canvas.addEventListener('mousemove', onMouseMove);
 
     canvas.addEventListener('click', (event) => {
         let rect = canvas.getBoundingClientRect();
@@ -62,6 +63,8 @@ function showStartScreen() {
 
         if (clickX >= btnX && clickX <= btnX + btnWidth &&
             clickY >= btnY && clickY <= btnY + btnHeight) {
+            canvas.removeEventListener('mousemove', onMouseMove);
+            canvas.style.cursor = 'default';
             startGame();
         }
     });

@@ -82,11 +82,14 @@ class World {
 
     checkThrow() {
         if (this.keyboard.SPACE) {
+            this.character.isAttacking = true;
             let bubble = new ThrowableObject(
                 this.character.x + this.character.offset.left,
                 this.character.y + this.character.offset.top + 25
             );
             this.throwableObject.push(bubble);
+        } else {
+            this.character.isAttacking = false;
         }
     }
 
