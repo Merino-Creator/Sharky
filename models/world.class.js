@@ -81,8 +81,11 @@ class World {
     }
 
     checkThrow() {
-        if(this.keyboard.SPACE) {
-            let bubble = new ThrowableObject(this.character.x, this.character.y);
+        if (this.keyboard.SPACE) {
+            let bubble = new ThrowableObject(
+                this.character.x + this.character.offset.left,
+                this.character.y + this.character.offset.top + 25
+            );
             this.throwableObject.push(bubble);
         }
     }
