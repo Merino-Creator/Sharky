@@ -78,6 +78,8 @@ function startGame() {
 }
 
 window.addEventListener('keydown', (event) => {
+    event.preventDefault();
+    
     if (event.keyCode == 13) startGame();
 
     if (event.keyCode == 39) keyboard.RIGHT = true;
