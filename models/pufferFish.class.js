@@ -38,7 +38,7 @@ class Puffer extends MoveableObject {
         let tooClose;
 
         do {
-            x = 250 + Math.random() * 3300;
+            x = 400 + Math.random() * 3300;
             tooClose = Puffer.usedPositions.some(pos => Math.abs(pos - x) < 200);
         } while (tooClose);
 

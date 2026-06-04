@@ -27,7 +27,7 @@ class Coins extends MoveableObject {
         let tooClose;
 
         do {
-            x = 200 + Math.random() * 3300;
+            x = 250 + Math.random() * 3300;
             tooClose = Coins.usedPositions.some(pos => Math.abs(pos - x) < 100);
         } while (tooClose);
 
