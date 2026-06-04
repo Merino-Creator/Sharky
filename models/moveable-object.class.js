@@ -100,4 +100,20 @@ class MoveableObject extends DrawableObject {
 
         intervalIds.push(upDownId);
     }
+
+    shootBubble(world) {
+        if (!this.isAttacking && !this.isHurt()) {
+            this.isAttacking = true;
+            this.currentImage = 0;
+
+            setTimeout(() => {
+                let bubble = new ThrowableObject(
+                    this.x + this.offset.left + 140,
+                    this.y + this.offset.top + 25
+                );
+                world.throwableObject.push(bubble);
+                this.isAttacking = false;
+            }, 800);
+        }
+    }
 }

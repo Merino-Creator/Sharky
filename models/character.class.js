@@ -135,26 +135,46 @@ class Character extends MoveableObject {
                 //this.walking_sound.play();
             }
 
+            if (this.world.keyboard.SPACE) {
+                this.shootBubble(this.world);
+                this.lastKeyPress = new Date().getTime();
+            }
+
             this.world.camera_x = -this.x + 40;
         }, 1000 / 30);
 
         intervalIds.push(characterMoveId);
 
+        let frameCounter = 0;
+
         let characterAnimateId = setInterval(() => {
+            frameCounter++;
+
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
+                if (frameCounter % 2 === 0)
+                    this.playAnimation(this.IMAGES_DEAD);
+
             } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_HURT);
+                if (frameCounter % 1 === 0)
+                    this.playAnimation(this.IMAGES_HURT);
+
             } else if (this.isAttacking) {
-                this.playAnimation(this.IMAGES_NORMAL_ATTACK);
+                if (frameCounter % 1 === 0)
+                    this.playAnimation(this.IMAGES_NORMAL_ATTACK);
+
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
-                this.playAnimation(this.IMAGES_SWIM);
+                if (frameCounter % 2 === 0)
+                    this.playAnimation(this.IMAGES_SWIM);
+
             } else if (this.isLongIdle()) {
-                this.playAnimation(this.IMAGES_LONG_IDLE);
+                if (frameCounter % 2 === 0)
+                    this.playAnimation(this.IMAGES_LONG_IDLE);
+
             } else {
-                this.playAnimation(this.IMAGES_IDLE);
+                if (frameCounter % 2 === 0)
+                    this.playAnimation(this.IMAGES_IDLE);
             }
-        }, 250);
+        }, 100);
 
         intervalIds.push(characterAnimateId);
     }
@@ -166,6 +186,6 @@ class Character extends MoveableObject {
 
     deathAnimationFinished() {
         let timePassed = new Date().getTime() - this.timeDied;
-        return timePassed > 1795;
+        return timePassed > 1800;
     }
 }

@@ -54,7 +54,6 @@ class World {
     checks() {
         let checksId = setInterval(() => {
             this.checkCollisions();
-            this.checkThrow();
         }, 250);
 
         intervalIds.push(checksId);
@@ -68,7 +67,7 @@ class World {
                     this.character.timeDied = new Date().getTime();
                     setTimeout(() => {
                         stopGame();
-                    }, 1795);
+                    }, 1800);
                 }
             }
         });
@@ -86,19 +85,6 @@ class World {
                 this.level.coins.splice(index, 1);
             }
         });
-    }
-
-    checkThrow() {
-        if (this.keyboard.SPACE) {
-            this.character.isAttacking = true;
-            let bubble = new ThrowableObject(
-                this.character.x + this.character.offset.left +140,
-                this.character.y + this.character.offset.top + 25
-            );
-            this.throwableObject.push(bubble);
-        } else {
-            this.character.isAttacking = false;
-        }
     }
 
     addObjectsToMap(objects) {
