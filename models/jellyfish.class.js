@@ -1,5 +1,7 @@
 class Jellyfish extends MoveableObject {
 
+    static usedPositions = [];
+
     IMAGES_JELLY = [
         'assets/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',
         'assets/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png',
@@ -11,7 +13,7 @@ class Jellyfish extends MoveableObject {
         super().loadImage(this.IMAGES_JELLY[0]);
         this.loadImages(this.IMAGES_JELLY);
 
-        this.x = 200 + Math.random() * 3500;
+        this.x = this.generateX();
         let topZone = Math.random() < 0.5;
         if (topZone) {
             this.y = Math.random() * 160;
@@ -26,6 +28,19 @@ class Jellyfish extends MoveableObject {
         this.speed = 1 + Math.random() * 0.25;
 
         this.animate();
+    }
+
+    generateX() {
+        let x;
+        let tooClose;
+
+        do {
+            x = 250 + Math.random() * 3300;
+            tooClose = Jellyfish.usedPositions.some(pos => Math.abs(pos - x) < 200);
+        } while (tooClose);
+
+        Jellyfish.usedPositions.push(x);
+        return x;
     }
 
     animate() {

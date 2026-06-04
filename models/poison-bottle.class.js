@@ -1,5 +1,7 @@
 class PoisonBottle extends MoveableObject {
 
+    static usedPositions = [];
+
     width = 70;
     y = -80;
     acceleration = 0.01;
@@ -19,10 +21,23 @@ class PoisonBottle extends MoveableObject {
         super().loadImage('assets/4. Marcadores/Posión/Animada/1.png');
         this.loadImages(this.IMAGES_POISON_BOTTLE); 
 
-        this.x = 200 + Math.random() * 3500;
+        this.x = this.generateX();
 
         this.applyGravity();
         this.animate();
+    }
+
+    generateX() {
+        let x;
+        let tooClose;
+
+        do {
+            x = 250 + Math.random() * 3300;
+            tooClose = PoisonBottle.usedPositions.some(pos => Math.abs(pos - x) < 200);
+        } while (tooClose);
+
+        PoisonBottle.usedPositions.push(x);
+        return x;
     }
 
     animate() {

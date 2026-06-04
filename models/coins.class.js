@@ -3,6 +3,8 @@ class Coins extends MoveableObject {
     height = 50;
     width = 50;
 
+    static usedPositions = [];
+
     IMAGES_COINS = [
         '/assets/4. Marcadores/1. Coins/1.png',
         '/assets/4. Marcadores/1. Coins/2.png',
@@ -14,10 +16,23 @@ class Coins extends MoveableObject {
         super().loadImage(this.IMAGES_COINS[0]);
         this.loadImages(this.IMAGES_COINS);
 
-        this.x = 200 + Math.random() * 3500;
+        this.x = this.generateX();
         this.y = 50 + Math.random() * 300;
 
         this.animate();
+    }
+
+    generateX() {
+        let x;
+        let tooClose;
+
+        do {
+            x = 200 + Math.random() * 3300;
+            tooClose = Coins.usedPositions.some(pos => Math.abs(pos - x) < 100);
+        } while (tooClose);
+
+        Coins.usedPositions.push(x);
+        return x;
     }
 
     animate() {
