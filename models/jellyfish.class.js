@@ -1,6 +1,7 @@
 class Jellyfish extends MoveableObject {
 
     static usedPositions = [];
+    energy = 50;
 
     IMAGES_JELLY = [
         'assets/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',

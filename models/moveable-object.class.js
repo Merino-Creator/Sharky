@@ -107,7 +107,7 @@ class MoveableObject extends DrawableObject {
             this.currentImage = 0;
 
             setTimeout(() => {
-                let bubble = new ThrowableObject(
+                let bubble = new Bubble(
                     this.x + this.offset.left + 140,
                     this.y + this.offset.top + 25
                 );

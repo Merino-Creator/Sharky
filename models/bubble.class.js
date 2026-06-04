@@ -1,8 +1,9 @@
-class ThrowableObject extends MoveableObject {
+class Bubble extends MoveableObject {
 
     height = 50;
     width = 50;
     acceleration = 1;
+    damage;
 
     constructor(x, y) {
         super().loadImage('assets/1.Sharkie/4.Attack/Bubble trap/Bubble.png');
