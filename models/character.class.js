@@ -141,14 +141,14 @@ class Character extends MoveableObject {
         intervalIds.push(characterMoveId);
 
         let characterAnimateId = setInterval(() => {
-            if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
-                this.playAnimation(this.IMAGES_SWIM);
-            } else if (this.isAttacking) {
-                this.playAnimation(this.IMAGES_NORMAL_ATTACK);
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
             } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
-            } else if (this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
+            } else if (this.isAttacking) {
+                this.playAnimation(this.IMAGES_NORMAL_ATTACK);
+            } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
+                this.playAnimation(this.IMAGES_SWIM);
             } else if (this.isLongIdle()) {
                 this.playAnimation(this.IMAGES_LONG_IDLE);
             } else {
@@ -161,6 +161,11 @@ class Character extends MoveableObject {
 
     isLongIdle() {
         let timePassed = new Date().getTime() - this.lastKeyPress;
-        return timePassed > 6000;
+        return timePassed > 10000;
+    }
+
+    deathAnimationFinished() {
+        let timePassed = new Date().getTime() - this.timeDied;
+        return timePassed > 1795;
     }
 }

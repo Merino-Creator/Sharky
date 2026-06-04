@@ -79,7 +79,7 @@ function startGame() {
 
 window.addEventListener('keydown', (event) => {
     event.preventDefault();
-    
+
     if (event.keyCode == 13) startGame();
 
     if (event.keyCode == 39) keyboard.RIGHT = true;
@@ -97,19 +97,6 @@ window.addEventListener('keyup', (event) => {
     if (event.keyCode == 32) keyboard.SPACE = false;
 });
 
-
-// stopGame function für später
-
-// let intervalIds = [];
-
-// intervalIds.push(interval);
-
-// function stopGame() {
-//     for (let i = 0; i < intervalIds.length; i++) {
-//         const id = intervalIds[i];
-//         clearInterval(intervalIds);
-//     }
-    
-//     // same same but different
-//     intervalIds.forEach(clearInterval);
-// }
+function stopGame() {
+    intervalIds.forEach(clearInterval);
+}

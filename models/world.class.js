@@ -64,6 +64,12 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
                 this.character.hit();
+                if (this.character.isDead()) {
+                    this.character.timeDied = new Date().getTime();
+                    setTimeout(() => {
+                        stopGame();
+                    }, 1795);
+                }
             }
         });
 
@@ -86,7 +92,7 @@ class World {
         if (this.keyboard.SPACE) {
             this.character.isAttacking = true;
             let bubble = new ThrowableObject(
-                this.character.x + this.character.offset.left,
+                this.character.x + this.character.offset.left +140,
                 this.character.y + this.character.offset.top + 25
             );
             this.throwableObject.push(bubble);
