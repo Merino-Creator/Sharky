@@ -61,7 +61,7 @@ class World {
 
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy)) {
+            if (this.character.isColliding(enemy) && !enemy.isDead()) {
                 this.character.characterHit(enemy.damage);
                 if (this.character.isDead()) {
                     this.character.timeDied = new Date().getTime();
