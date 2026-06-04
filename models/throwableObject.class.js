@@ -12,8 +12,10 @@ class ThrowableObject extends MoveableObject {
     }
 
     throw() {
-        setInterval(() => {
+        let throwId = setInterval(() => {
             this.x += 10;
         }, 1000 / 30);
+
+        intervalIds.push(throwId);
     }
 }

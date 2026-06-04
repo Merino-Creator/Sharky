@@ -18,8 +18,10 @@ class Light extends MoveableObject {
     }
 
     moveLeft() {
-        setInterval(() => {
+        let lightId = setInterval(() => {
             this.x -= this.speed;
         }, 1000 / 30);
+
+        intervalIds.push(lightId);
     }
 }

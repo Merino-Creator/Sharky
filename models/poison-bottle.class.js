@@ -41,9 +41,10 @@ class PoisonBottle extends MoveableObject {
     }
 
     animate() {
-        setInterval(() => {
+        let poisonBottleId = setInterval(() => {
             this.playAnimation(this.IMAGES_POISON_BOTTLE);
         }, 250);
 
+        intervalIds.push(poisonBottleId);
     }
 }

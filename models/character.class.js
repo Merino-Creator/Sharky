@@ -108,7 +108,7 @@ class Character extends MoveableObject {
 
     animate() {
 
-        setInterval(() => {
+        let characterMoveId = setInterval(() => {
             if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
                 this.moveRight();
                 this.otherDirection = false;
@@ -138,7 +138,9 @@ class Character extends MoveableObject {
             this.world.camera_x = -this.x + 40;
         }, 1000 / 30);
 
-        setInterval(() => {
+        intervalIds.push(characterMoveId);
+
+        let characterAnimateId = setInterval(() => {
             if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
                 this.playAnimation(this.IMAGES_SWIM);
             } else if (this.isAttacking) {
@@ -153,6 +155,8 @@ class Character extends MoveableObject {
                 this.playAnimation(this.IMAGES_IDLE);
             }
         }, 250);
+
+        intervalIds.push(characterAnimateId);
     }
 
     isLongIdle() {

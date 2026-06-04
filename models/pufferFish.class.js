@@ -36,13 +36,17 @@ class Puffer extends MoveableObject {
     }
 
     animate() {
-        setInterval(() => {
+        let pufferAnimateId = setInterval(() => {
             this.playAnimation(this.IMAGES_ENEMY);
         }, 250);
 
-        setInterval(() => {
+        intervalIds.push(pufferAnimateId);
+
+        let pufferMoveLeftId = setInterval(() => {
             this.moveLeft();
         }, 1000 / 30);
+
+        intervalIds.push(pufferMoveLeftId);
     }
 
 }

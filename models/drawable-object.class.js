@@ -1,3 +1,5 @@
+let intervalIds = [];
+
 class DrawableObject {
     img;
     height = 80;

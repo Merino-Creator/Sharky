@@ -14,10 +14,11 @@ class MoveableObject extends DrawableObject {
     };
 
     applyGravity() {
-        setInterval(() => {
+        let gravityId = setInterval(() => {
             this.y += this.speedY;
             this.speedY += this.acceleration;
         }, 1000 / 30);
+        intervalIds.push(gravityId);
     }
 
     playAnimation(images) {
@@ -51,7 +52,7 @@ class MoveableObject extends DrawableObject {
 
     hit() {
         this.energy -= 5;
-        if(this.energy < 0) {
+        if (this.energy < 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
@@ -87,7 +88,7 @@ class MoveableObject extends DrawableObject {
     moveUpDown() {
         let movingUp = true;
 
-        setInterval(() => {
+        let upDownId = setInterval(() => {
             if (movingUp) {
                 this.y -= this.speed;
                 if (this.y <= this.yMin) movingUp = false;
@@ -96,5 +97,7 @@ class MoveableObject extends DrawableObject {
                 if (this.y >= this.yMax) movingUp = true;
             }
         }, 1000 / 30);
+
+        intervalIds.push(upDownId);
     }
 }

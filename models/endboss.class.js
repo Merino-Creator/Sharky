@@ -50,22 +50,26 @@ class Endboss extends MoveableObject {
     };
 
     animate() {
-    setInterval(() => {
-        if (!this.firstContact) {
-            this.playAnimation(this.IMAGES_ENDBOSS);
-        } else if (this.firstContact && this.currentImage < this.IMAGES_INTRO.length) {
-            this.playAnimation(this.IMAGES_INTRO);
-        } else {
-            this.playAnimation(this.IMAGES_ENDBOSS);
-        }
-    }, 250);
+        let bossAnimateId = setInterval(() => {
+            if (!this.firstContact) {
+                this.playAnimation(this.IMAGES_ENDBOSS);
+            } else if (this.firstContact && this.currentImage < this.IMAGES_INTRO.length) {
+                this.playAnimation(this.IMAGES_INTRO);
+            } else {
+                this.playAnimation(this.IMAGES_ENDBOSS);
+            }
+        }, 250);
 
-    setInterval(() => {
-        if (world && world.character.x > 3000 && !this.firstContact) {
-            this.firstContact = true;
-            this.currentImage = 0;
-        }
-    }, 250);
-}
+        intervalIds.push(bossAnimateId);
+
+        let bossContactId = setInterval(() => {
+            if (world && world.character.x > 3000 && !this.firstContact) {
+                this.firstContact = true;
+                this.currentImage = 0;
+            }
+        }, 250);
+
+        intervalIds.push(bossContactId);
+    }
 
 }

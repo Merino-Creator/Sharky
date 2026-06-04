@@ -52,10 +52,12 @@ class World {
     }
 
     checks() {
-        setInterval(() => {
+        let checksId = setInterval(() => {
             this.checkCollisions();
             this.checkThrow();
         }, 250);
+
+        intervalIds.push(checksId);
     }
 
     checkCollisions() {

@@ -44,9 +44,11 @@ class Jellyfish extends MoveableObject {
     }
 
     animate() {
-        setInterval(() => {
+        let jellyAnimateId = setInterval(() => {
             this.playAnimation(this.IMAGES_JELLY);
         }, 250);
+
+        intervalIds.push(jellyAnimateId);
 
         this.moveUpDown();
     }
