@@ -54,7 +54,7 @@ class World {
     checks() {
         let enemyCollisionId = setInterval(() => {
             this.checkEnemyCollisions();
-        }, 1000);
+        }, 500);
         intervalIds.push(enemyCollisionId);
 
         let bubbleCollisionId = setInterval(() => {

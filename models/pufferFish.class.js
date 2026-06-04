@@ -12,17 +12,26 @@ class Puffer extends MoveableObject {
         'assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim5.png'
     ];
 
+    IMAGES_PUFFER_TRANSITION = [
+        '/assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition1.png',
+        '/assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition2.png',
+        '/assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition3.png',
+        '/assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition4.png',
+        '/assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition5.png'
+    ];
+
     IMAGES_PUFFER_ATTACK = [
         '/assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim1.png',
         '/assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim2.png',
         '/assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim3.png',
         '/assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim4.png',
         '/assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim5.png'
-    ]
+    ];
 
     constructor() {
         super().loadImage('assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
         this.loadImages(this.IMAGES_PUFFER_SWIM);
+        this.loadImages(this.IMAGES_PUFFER_TRANSITION);
         this.loadImages(this.IMAGES_PUFFER_ATTACK);
 
         this.x = this.generateX();
@@ -47,24 +56,35 @@ class Puffer extends MoveableObject {
     }
 
     animate() {
-        let isAttacking = false;
+        let state = 'swim';
 
         let pufferAttackTriggerId = setInterval(() => {
-            isAttacking = true;
+
+            state = 'transition';
+
             setTimeout(() => {
-                isAttacking = false;
-            }, 5 * 250);
-        }, 3000);
+                state = 'attack';
+
+                setTimeout(() => {
+                    state = 'swim';
+                }, 3000);
+            }, 2000);
+
+        }, 6000);
 
         intervalIds.push(pufferAttackTriggerId);
 
         let pufferAnimateId = setInterval(() => {
-            if (isAttacking) {
+            if (state === 'transition') {
+                this.playAnimation(this.IMAGES_PUFFER_TRANSITION);
+            } else if (state === 'attack') {
                 this.playAnimation(this.IMAGES_PUFFER_ATTACK);
+                this.attackMode();
             } else {
                 this.playAnimation(this.IMAGES_PUFFER_SWIM);
+                return this.damage = 10;
             }
-        }, 250);
+        }, 150);
 
         intervalIds.push(pufferAnimateId);
 
@@ -73,6 +93,10 @@ class Puffer extends MoveableObject {
         }, 1000 / 30);
 
         intervalIds.push(pufferMoveLeftId);
+    }
+
+    attackMode() {
+        return this.damage = 20;
     }
 
 }
