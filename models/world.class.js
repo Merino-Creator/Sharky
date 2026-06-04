@@ -9,7 +9,7 @@ class World {
     toxicAmount = 0;
     coinAmount = 0;
     healthAmount = 0;
-    throwableObject = [];
+    bubble = [];
     coins;
 
     constructor(canvas) {
@@ -35,7 +35,7 @@ class World {
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.toxic);
         this.addObjectsToMap(this.level.coins);
-        this.addObjectsToMap(this.throwableObject);
+        this.addObjectsToMap(this.bubble);
         this.addToMap(this.character);
 
         this.ctx.translate(-this.camera_x, 0); // alle vorher bewegt sich mit der spielwelt, alles danach mit der kamera!
@@ -62,7 +62,7 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
+                this.character.characterHit(enemy.damage);
                 if (this.character.isDead()) {
                     this.character.timeDied = new Date().getTime();
                     setTimeout(() => {
@@ -70,6 +70,22 @@ class World {
                     }, 1800);
                 }
             }
+
+            this.bubble.forEach((bubble, bubbleIndex) => {
+                if (bubble.isColliding(enemy)) {
+                    enemy.enemyHit(bubble.damage);
+                    this.bubble.splice(bubbleIndex, 1);
+                }
+
+                if (enemy.isDead()) {
+                    setTimeout(() => {
+                        let index = this.level.enemies.indexOf(enemy);
+                        if (index > -1) {
+                            this.level.enemies.splice(index, 1);
+                        }
+                    }, 1000)
+                }
+            });
         });
 
         this.level.toxic.forEach((toxic, index) => {

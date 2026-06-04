@@ -7,6 +7,7 @@ class Character extends MoveableObject {
     speed = 10;
     world;
     lastKeyPress = new Date().getTime();
+    energy = 100;
 
     offset = {
         top: 110,

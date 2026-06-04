@@ -2,6 +2,7 @@ class Jellyfish extends MoveableObject {
 
     static usedPositions = [];
     energy = 50;
+    damage = 25;
 
     IMAGES_JELLY = [
         'assets/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',
@@ -10,9 +11,17 @@ class Jellyfish extends MoveableObject {
         'assets/2.Enemy/2 Jelly fish/Regular damage/Lila 4.png'
     ];
 
+    IMAGES_JELLY_DEAD = [
+        '/assets/2.Enemy/2 Jelly fish/Dead/Lila/L1.png',
+        '/assets/2.Enemy/2 Jelly fish/Dead/Lila/L2.png',
+        '/assets/2.Enemy/2 Jelly fish/Dead/Lila/L3.png',
+        '/assets/2.Enemy/2 Jelly fish/Dead/Lila/L4.png'
+    ]
+
     constructor() {
         super().loadImage(this.IMAGES_JELLY[0]);
         this.loadImages(this.IMAGES_JELLY);
+        this.loadImages(this.IMAGES_JELLY_DEAD);
 
         this.x = this.generateX();
         let topZone = Math.random() < 0.5;
@@ -46,8 +55,13 @@ class Jellyfish extends MoveableObject {
 
     animate() {
         let jellyAnimateId = setInterval(() => {
-            this.playAnimation(this.IMAGES_JELLY);
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_JELLY_DEAD);
+            } else {
+                this.playAnimation(this.IMAGES_JELLY);
+            }
         }, 250);
+
 
         intervalIds.push(jellyAnimateId);
 

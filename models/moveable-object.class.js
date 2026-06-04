@@ -2,7 +2,7 @@ class MoveableObject extends DrawableObject {
     speed = 1;
     otherDirection = false;
     speedY = 0;
-    acceleration = 1;
+    acceleration = 0;
     energy = 100;
     lastHit = 0;
 
@@ -50,12 +50,19 @@ class MoveableObject extends DrawableObject {
             this.y + this.offset.top < mo.y + mo.height - mo.offset.bottom;
     }
 
-    hit() {
-        this.energy -= 5;
+    characterHit(damage) {
+        this.energy -= damage;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();
+        }
+    }
+
+    enemyHit(damage) {
+        this.energy -= damage;
+        if (this.energy < 0) {
+            this.energy = 0;
         }
     }
 
@@ -111,7 +118,7 @@ class MoveableObject extends DrawableObject {
                     this.x + this.offset.left + 140,
                     this.y + this.offset.top + 25
                 );
-                world.throwableObject.push(bubble);
+                world.bubble.push(bubble);
                 this.isAttacking = false;
             }, 800);
         }

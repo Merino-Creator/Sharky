@@ -4,7 +4,7 @@ class PoisonBottle extends MoveableObject {
 
     width = 70;
     y = -80;
-    acceleration = 0.01;
+    acceleration = 0.05;
 
     IMAGES_POISON_BOTTLE = [
         'assets/4. Marcadores/Posión/Animada/1.png',
