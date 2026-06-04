@@ -73,6 +73,7 @@ function showStartScreen() {
 function startGame() {
     if (!gameStarted) {
         gameStarted = true;
+        initLevel();
         world = new World(canvas);
     }
 }

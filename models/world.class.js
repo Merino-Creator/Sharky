@@ -1,7 +1,7 @@
 class World {
 
     character = new Character();
-    level = level1;
+    level;
     canvas;
     ctx;
     keyboard;
@@ -13,6 +13,7 @@ class World {
     coins;
 
     constructor(canvas) {
+        this.level = level1;
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
