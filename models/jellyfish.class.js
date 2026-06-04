@@ -18,10 +18,18 @@ class Jellyfish extends MoveableObject {
         '/assets/2.Enemy/2 Jelly fish/Dead/Lila/L4.png'
     ]
 
+    IMAGES_JELLY_AGRESSIVE = [
+        'assets/2.Enemy/2 Jelly fish/Súper dangerous/Pink 1.png',
+        'assets/2.Enemy/2 Jelly fish/Súper dangerous/Pink 2.png',
+        'assets/2.Enemy/2 Jelly fish/Súper dangerous/Pink 3.png',
+        'assets/2.Enemy/2 Jelly fish/Súper dangerous/Pink 4.png'
+    ]
+
     constructor() {
         super().loadImage(this.IMAGES_JELLY[0]);
         this.loadImages(this.IMAGES_JELLY);
         this.loadImages(this.IMAGES_JELLY_DEAD);
+        this.loadImages(this.IMAGES_JELLY_AGRESSIVE);
 
         this.x = this.generateX();
         let topZone = Math.random() < 0.5;
@@ -57,6 +65,9 @@ class Jellyfish extends MoveableObject {
         let jellyAnimateId = setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_JELLY_DEAD);
+            } else if (this.energy == 25) {
+                this.playAnimation(this.IMAGES_JELLY_AGRESSIVE);
+                this.agressiveMode();
             } else {
                 this.playAnimation(this.IMAGES_JELLY);
             }
@@ -66,5 +77,9 @@ class Jellyfish extends MoveableObject {
         intervalIds.push(jellyAnimateId);
 
         this.moveUpDown();
+    }
+
+    agressiveMode() {
+        return this.damage = 50;
     }
 }

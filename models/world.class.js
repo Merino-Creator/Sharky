@@ -52,25 +52,36 @@ class World {
     }
 
     checks() {
-        let checksId = setInterval(() => {
-            this.checkCollisions();
-        }, 250);
+        let enemyCollisionId = setInterval(() => {
+            this.checkEnemyCollisions();
+        }, 1000);
+        intervalIds.push(enemyCollisionId);
 
-        intervalIds.push(checksId);
+        let bubbleCollisionId = setInterval(() => {
+            this.checkBubbleCollisions();
+        }, 150);
+        intervalIds.push(bubbleCollisionId);
+
+        let collectibleCollisionId = setInterval(() => {
+            this.checkCollectibles();
+        }, 100);
+        intervalIds.push(collectibleCollisionId);
     }
 
-    checkCollisions() {
+    checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && !enemy.isDead()) {
                 this.character.characterHit(enemy.damage);
                 if (this.character.isDead()) {
                     this.character.timeDied = new Date().getTime();
-                    setTimeout(() => {
-                        stopGame();
-                    }, 1800);
+                    setTimeout(() => stopGame(), 1800);
                 }
             }
+        });
+    }
 
+    checkBubbleCollisions() {
+        this.level.enemies.forEach((enemy) => {
             this.bubble.forEach((bubble, bubbleIndex) => {
                 if (bubble.isColliding(enemy)) {
                     enemy.enemyHit(bubble.damage);
@@ -80,14 +91,14 @@ class World {
                 if (enemy.isDead()) {
                     setTimeout(() => {
                         let index = this.level.enemies.indexOf(enemy);
-                        if (index > -1) {
-                            this.level.enemies.splice(index, 1);
-                        }
-                    }, 1000)
+                        if (index > -1) this.level.enemies.splice(index, 1);
+                    }, 1000);
                 }
             });
         });
+    }
 
+    checkCollectibles() {
         this.level.toxic.forEach((toxic, index) => {
             if (this.character.isColliding(toxic)) {
                 this.toxicAmount++;
