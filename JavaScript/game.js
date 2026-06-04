@@ -96,3 +96,20 @@ window.addEventListener('keyup', (event) => {
     if (event.keyCode == 40) keyboard.DOWN = false;
     if (event.keyCode == 32) keyboard.SPACE = false;
 });
+
+
+// stopGame function für später
+
+// let intervalIds = [];
+
+// intervalIds.push(interval);
+
+// function stopGame() {
+//     for (let i = 0; i < intervalIds.length; i++) {
+//         const id = intervalIds[i];
+//         clearInterval(intervalIds);
+//     }
+    
+//     // same same but different
+//     intervalIds.forEach(clearInterval);
+// }
