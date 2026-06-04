@@ -14,8 +14,8 @@ class Bubble extends MoveableObject {
 
     throw() {
         let throwId = setInterval(() => {
-            this.x += 15;
-        }, 1000 / 30);
+            this.x += 10;
+        }, 1000 / 60);
 
         intervalIds.push(throwId);
     }
