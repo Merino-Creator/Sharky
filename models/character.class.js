@@ -84,7 +84,7 @@ class Character extends MoveableObject {
         'assets/1.Sharkie/5.Hurt/2.Electric shock/3.png',
     ];
 
-    IMAGES_NORMAL_ATTACK = [
+    IMAGES_BUBBLE_ATTACK = [
         '/assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png',
         '/assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png',
         '/assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/3.png',
@@ -95,6 +95,15 @@ class Character extends MoveableObject {
         '/assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png'
     ];
 
+    IMAGES_SLAP_ATTACK = [
+        '/assets/1.Sharkie/4.Attack/Fin slap/1.png',
+        '/assets/1.Sharkie/4.Attack/Fin slap/4.png',
+        '/assets/1.Sharkie/4.Attack/Fin slap/5.png',
+        '/assets/1.Sharkie/4.Attack/Fin slap/6.png',
+        '/assets/1.Sharkie/4.Attack/Fin slap/7.png',
+        '/assets/1.Sharkie/4.Attack/Fin slap/8.png'
+    ]
+
     constructor() {
         super().loadImage('./assets/1.Sharkie/3.Swim/1.png');
         this.loadImages(this.IMAGES_SWIM);
@@ -102,7 +111,8 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.loadImages(this.IMAGES_DEAD);
         this.loadImages(this.IMAGES_HURT);
-        this.loadImages(this.IMAGES_NORMAL_ATTACK);
+        this.loadImages(this.IMAGES_BUBBLE_ATTACK);
+        this.loadImages(this.IMAGES_SLAP_ATTACK);
 
         this.animate();
     }
@@ -136,7 +146,7 @@ class Character extends MoveableObject {
                 //this.walking_sound.play();
             }
 
-            if (this.world.keyboard.SPACE) {
+            if (this.world.keyboard.S) {
                 this.shootBubble(this.world);
                 this.lastKeyPress = new Date().getTime();
             }
@@ -161,7 +171,7 @@ class Character extends MoveableObject {
 
             } else if (this.isAttacking) {
                 if (frameCounter % 1 === 0)
-                    this.playAnimation(this.IMAGES_NORMAL_ATTACK);
+                    this.playAnimation(this.IMAGES_BUBBLE_ATTACK);
 
             } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
                 if (frameCounter % 2 === 0)

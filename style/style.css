@@ -40,6 +40,7 @@ h3 {
     display: flex;
     margin-top: 20px;
     gap: 12px;
+    width: 720px;
 }
 
 .arrows {
@@ -47,9 +48,24 @@ h3 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 160px;
 }
 
-.spacebar {
+.attack-buttons {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 560px;
+}
+
+.shoot-attack {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.slap-attack {
     display: flex;
     flex-direction: column;
     justify-content: center;

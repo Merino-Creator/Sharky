@@ -60,7 +60,7 @@ class World {
 
         let bubbleCollisionId = setInterval(() => {
             this.checkBubbleCollisions();
-        }, 150);
+        }, 120);
         intervalIds.push(bubbleCollisionId);
 
         let collectibleCollisionId = setInterval(() => {
@@ -85,7 +85,15 @@ class World {
         this.level.enemies.forEach((enemy) => {
             this.bubble.forEach((bubble, bubbleIndex) => {
                 if (bubble.isColliding(enemy)) {
-                    enemy.enemyHit(bubble.damage);
+
+                    if (enemy instanceof Jellyfish) {
+                        enemy.enemyHit(bubble.damage);
+                    } else if (enemy instanceof Puffer) {
+                        enemy.enemyHit(bubble.damage / 25);
+                    } else if (enemy instanceof Endboss) {
+                        enemy.enemyHit(bubble.damage * 10);
+                    }
+
                     this.bubble.splice(bubbleIndex, 1);
                 }
 
