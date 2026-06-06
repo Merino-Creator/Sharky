@@ -120,38 +120,7 @@ class Character extends MoveableObject {
     animate() {
 
         let characterMoveId = setInterval(() => {
-            if (this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x) {
-                this.moveRight();
-                this.otherDirection = false;
-                this.lastKeyPress = new Date().getTime();
-                //this.walking_sound.play();
-            }
-
-            if (this.world.keyboard.LEFT && this.x > 0) {
-                this.moveLeft();
-                this.otherDirection = true;
-                this.lastKeyPress = new Date().getTime();
-                //this.walking_sound.play();
-            }
-
-            if (this.world.keyboard.UP && this.y > -120) {
-                this.moveUP();
-                this.lastKeyPress = new Date().getTime();
-                //this.walking_sound.play();
-            }
-
-            if (this.world.keyboard.DOWN && this.y < 280) {
-                this.moveDown();
-                this.lastKeyPress = new Date().getTime();
-                //this.walking_sound.play();
-            }
-
-            if (this.world.keyboard.S) {
-                this.shootBubble(this.world);
-                this.lastKeyPress = new Date().getTime();
-            }
-
-            this.world.camera_x = -this.x + 40;
+            this.moveCharacter();
         }, 1000 / 30);
 
         intervalIds.push(characterMoveId);
@@ -188,6 +157,94 @@ class Character extends MoveableObject {
         }, 100);
 
         intervalIds.push(characterAnimateId);
+    }
+
+    moveCharacter() {
+        if (this.canMoveRight()) {
+            this.moveRight();
+        }
+
+        if (this.canMoveLeft()) {
+            this.moveLeft();
+        }
+
+        if (this.canMoveUp()) {
+            this.moveUp();
+        }
+
+        if (this.canMoveDown()) {
+            this.moveDown();
+        }
+
+        if (this.canShootBubble()) {
+            this.shootBubble();
+        }
+
+        if (this.canSlap()) {
+            this.slap();
+        }
+
+        this.world.camera_x = -this.x + 40;
+    }
+
+    canMoveRight() {
+        return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x;
+    }
+
+    moveRight() {
+        super.moveRight();
+        this.otherDirection = false;
+        this.lastKeyPress = new Date().getTime();
+        //this.walking_sound.play();
+    }
+
+    canMoveLeft() {
+        return this.world.keyboard.LEFT && this.x > 0;
+    }
+
+    moveLeft() {
+        super.moveLeft();
+        this.otherDirection = true;
+        this.lastKeyPress = new Date().getTime();
+        //this.walking_sound.play();
+    }
+
+    canMoveUp() {
+        return this.world.keyboard.UP && this.y > -120;
+    }
+
+    moveUp() {
+        super.moveUP();
+        this.lastKeyPress = new Date().getTime();
+        //this.walking_sound.play();
+    }
+
+    canMoveDown() {
+        return this.world.keyboard.DOWN && this.y < 280;
+    }
+
+    moveDown() {
+        super.moveDown();
+        this.lastKeyPress = new Date().getTime();
+        //this.walking_sound.play();
+    }
+
+    canShootBubble() {
+        return this.world.keyboard.S;
+    }
+
+    shootBubble() {
+        super.shootBubble(this.world);
+        this.lastKeyPress = new Date().getTime();
+    }
+
+    canSlap() {
+        return this.world.keyboard.D;
+    }
+
+    slap() {
+        super.slap(this.world);
+        this.lastKeyPress = new Date().getTime();
     }
 
     isLongIdle() {

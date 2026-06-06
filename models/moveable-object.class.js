@@ -123,4 +123,8 @@ class MoveableObject extends DrawableObject {
             }, 800);
         }
     }
+
+    slap(world) {
+        
+    }
 }
