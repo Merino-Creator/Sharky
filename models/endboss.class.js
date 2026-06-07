@@ -58,6 +58,22 @@ class Endboss extends MoveableObject {
         '/assets/2.Enemy/3 Final Enemy/Attack/6.png'
     ];
 
+    IMAGES_BOSS_HURT = [
+        '/assets/2.Enemy/3 Final Enemy/Hurt/1.png',
+        '/assets/2.Enemy/3 Final Enemy/Hurt/2.png',
+        '/assets/2.Enemy/3 Final Enemy/Hurt/3.png',
+        '/assets/2.Enemy/3 Final Enemy/Hurt/4.png'
+    ];
+
+    IMAGES_BOSS_DEAD = [
+        '/assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 6.png',
+        '/assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 7.png',
+        '/assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 8.png',
+        '/assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 9.png',
+        '/assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png',
+        '/assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2.png'
+    ]
+
     /**
      * Creates a new Endboss instance and starts its animation.
      */
@@ -66,6 +82,8 @@ class Endboss extends MoveableObject {
         this.loadImages(this.IMAGES_BOSS_FLOAT);
         this.loadImages(this.IMAGES_BOSS_INTRO);
         this.loadImages(this.IMAGES_BOSS_ATTACK);
+        this.loadImages(this.IMAGES_BOSS_HURT);
+        this.loadImages(this.IMAGES_BOSS_DEAD);
         this.x = 3800;
         this.animate();
     }
@@ -79,10 +97,11 @@ class Endboss extends MoveableObject {
      */
     animate() {
         let isAttacking = false;
+        let introFinished = false;
         let startX = this.x;
 
         let bossAttackTriggerId = setInterval(() => {
-            if (this.firstContact) {
+            if (this.firstContact && introFinished) {
                 isAttacking = true;
 
                 let attackId = setInterval(() => {
@@ -110,13 +129,19 @@ class Endboss extends MoveableObject {
         intervalIds.push(bossAttackTriggerId);
 
         let bossAnimateId = setInterval(() => {
-            if (!this.firstContact) {
+            if (this.isDead()) {
+                this.playAnimation(this.IMAGES_BOSS_DEAD);
+            } else if (this.isHurt()) {
+                this.playAnimation(this.IMAGES_BOSS_HURT);
+            } else if (!this.firstContact) {
                 this.playAnimation(this.IMAGES_BOSS_FLOAT);
             } else if (this.firstContact && this.currentImage < this.IMAGES_BOSS_INTRO.length) {
                 this.playAnimation(this.IMAGES_BOSS_INTRO);
             } else if (isAttacking) {
+                introFinished = true;
                 this.playAnimation(this.IMAGES_BOSS_ATTACK);
             } else {
+                introFinished = true;
                 this.playAnimation(this.IMAGES_BOSS_FLOAT);
             }
         }, 200);
