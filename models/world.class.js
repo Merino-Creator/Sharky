@@ -55,7 +55,7 @@ class World {
     checks() {
         let enemyCollisionId = setInterval(() => {
             this.checkEnemyCollisions();
-        }, 500);
+        }, 100);
         intervalIds.push(enemyCollisionId);
 
         let bubbleCollisionId = setInterval(() => {
@@ -76,7 +76,9 @@ class World {
 
     checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
-            if (this.character.isColliding(enemy) && !enemy.isDead()) {
+            let isInvulnerable = enemy instanceof Puffer && this.character.isSlapAttacking;
+
+            if (this.character.isColliding(enemy) && !enemy.isDead() && !isInvulnerable && !this.character.isHurt()) {
                 this.character.characterHit(enemy.damage);
                 if (this.character.isDead()) {
                     this.character.timeDied = new Date().getTime();
@@ -87,18 +89,14 @@ class World {
     }
 
     checkBubbleCollisions() {
+        if (this.bubble.length === 0) return;
+
         this.level.enemies.forEach((enemy) => {
             this.bubble.forEach((bubble, bubbleIndex) => {
                 if (bubble.isColliding(enemy)) {
-
                     if (enemy instanceof Jellyfish) {
                         enemy.enemyHit(bubble.damage);
-                    } else if (enemy instanceof Puffer) {
-                        enemy.enemyHit(bubble.damage / 25);
-                    } else if (enemy instanceof Endboss) {
-                        enemy.enemyHit(bubble.damage * 10);
                     }
-
                     this.bubble.splice(bubbleIndex, 1);
                 }
 
