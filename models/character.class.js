@@ -158,30 +158,18 @@ class Character extends MoveableObject {
     }
 
     moveCharacter() {
-        if (this.canMoveRight()) {
+        if (this.canMoveRight())
             this.moveRight();
-        }
-
-        if (this.canMoveLeft()) {
+        if (this.canMoveLeft())
             this.moveLeft();
-        }
-
-        if (this.canMoveUp()) {
+        if (this.canMoveUp())
             this.moveUp();
-        }
-
-        if (this.canMoveDown()) {
+        if (this.canMoveDown())
             this.moveDown();
-        }
-
-        if (this.canShootBubble()) {
+        if (this.canShootBubble())
             this.shootBubble();
-        }
-
-        if (this.canSlap()) {
+        if (this.canSlap())
             this.slap();
-        }
-
         this.world.camera_x = -this.x + 40;
     }
 
