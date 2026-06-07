@@ -1,3 +1,8 @@
+/**
+ * Represents a Jellyfish enemy that moves up and down within defined boundaries.
+ * Becomes aggressive when reduced to 25 energy, increasing its damage output.
+ * @extends MoveableObject
+ */
 class Jellyfish extends MoveableObject {
 
     static usedPositions = [];
@@ -16,15 +21,19 @@ class Jellyfish extends MoveableObject {
         '/assets/2.Enemy/2 Jelly fish/Dead/Lila/L2.png',
         '/assets/2.Enemy/2 Jelly fish/Dead/Lila/L3.png',
         '/assets/2.Enemy/2 Jelly fish/Dead/Lila/L4.png'
-    ]
+    ];
 
     IMAGES_JELLY_AGRESSIVE = [
         'assets/2.Enemy/2 Jelly fish/Súper dangerous/Pink 1.png',
         'assets/2.Enemy/2 Jelly fish/Súper dangerous/Pink 2.png',
         'assets/2.Enemy/2 Jelly fish/Súper dangerous/Pink 3.png',
         'assets/2.Enemy/2 Jelly fish/Súper dangerous/Pink 4.png'
-    ]
+    ];
 
+    /**
+     * Creates a new Jellyfish instance with a random position in either
+     * the top zone (0-160) or bottom zone (300-400) of the canvas.
+     */
     constructor() {
         super().loadImage(this.IMAGES_JELLY[0]);
         this.loadImages(this.IMAGES_JELLY);
@@ -44,23 +53,32 @@ class Jellyfish extends MoveableObject {
         }
 
         this.speed = 1 + Math.random() * 0.25;
-
         this.animate();
     }
 
+    /**
+     * Generates a random x position that maintains a minimum distance
+     * of 400px from all other Jellyfish positions.
+     * @returns {number} A valid x position for the Jellyfish.
+     */
     generateX() {
         let x;
         let tooClose;
 
         do {
             x = 400 + Math.random() * 3300;
-            tooClose = Jellyfish.usedPositions.some(pos => Math.abs(pos - x) < 200);
+            tooClose = Jellyfish.usedPositions.some(pos => Math.abs(pos - x) < 400);
         } while (tooClose);
 
         Jellyfish.usedPositions.push(x);
         return x;
     }
 
+    /**
+     * Starts the animation and movement intervals for the Jellyfish.
+     * Switches to aggressive mode when energy reaches 25.
+     * Stores all interval IDs for later cleanup.
+     */
     animate() {
         let jellyAnimateId = setInterval(() => {
             if (this.isDead()) {
@@ -73,12 +91,14 @@ class Jellyfish extends MoveableObject {
             }
         }, 250);
 
-
         intervalIds.push(jellyAnimateId);
-
         this.moveUpDown();
     }
 
+    /**
+     * Sets the Jellyfish to aggressive mode by doubling its damage value.
+     * @returns {number} The new damage value in aggressive mode.
+     */
     agressiveMode() {
         return this.damage = 50;
     }

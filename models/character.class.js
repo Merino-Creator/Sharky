@@ -1,3 +1,8 @@
+/**
+ * Represents the player character Sharky.
+ * Handles movement, animation states and attack actions.
+ * @extends MoveableObject
+ */
 class Character extends MoveableObject {
 
     x = 20;
@@ -104,8 +109,11 @@ class Character extends MoveableObject {
         '/assets/1.Sharkie/4.Attack/Fin slap/6.png',
         '/assets/1.Sharkie/4.Attack/Fin slap/7.png',
         '/assets/1.Sharkie/4.Attack/Fin slap/8.png'
-    ]
+    ];
 
+    /**
+     * Creates a new Character instance and preloads all animation images.
+     */
     constructor() {
         super().loadImage('./assets/1.Sharkie/3.Swim/1.png');
         this.loadImages(this.IMAGES_SWIM);
@@ -115,10 +123,13 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_BUBBLE_ATTACK);
         this.loadImages(this.IMAGES_SLAP_ATTACK);
-
         this.animate();
     }
 
+    /**
+     * Starts the movement and animation intervals for the character.
+     * Stores all interval IDs for later cleanup.
+     */
     animate() {
         let frameCounter = 0;
 
@@ -132,118 +143,161 @@ class Character extends MoveableObject {
         intervalIds.push(characterAnimateId);
     }
 
+    /**
+     * Determines and plays the correct animation based on the current character state.
+     * Priority order: dead > hurt > slap attack > bubble attack > swimming > long idle > idle.
+     * @param {number} frameCounter - The current animation frame counter.
+     */
     animateCharacter(frameCounter) {
         if (this.isDead()) {
             if (frameCounter % 2 === 0)
                 this.playAnimation(this.IMAGES_DEAD);
-
         } else if (this.isHurt()) {
             if (frameCounter % 1 === 0)
                 this.playAnimation(this.IMAGES_HURT);
-
         } else if (this.isSlapAttacking) {
             if (frameCounter % 1 === 0)
                 this.playAnimation(this.IMAGES_SLAP_ATTACK);
-
         } else if (this.isAttacking) {
             if (frameCounter % 1 === 0)
                 this.playAnimation(this.IMAGES_BUBBLE_ATTACK);
-
         } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
             if (frameCounter % 2 === 0)
                 this.playAnimation(this.IMAGES_SWIM);
-
         } else if (this.isLongIdle()) {
             if (frameCounter % 2 === 0)
                 this.playAnimation(this.IMAGES_LONG_IDLE);
-
         } else {
             if (frameCounter % 2 === 0)
                 this.playAnimation(this.IMAGES_IDLE);
         }
     }
 
+    /**
+     * Handles all character movement and action inputs each frame.
+     * Updates the camera position based on the character's x position.
+     */
     moveCharacter() {
-        if (this.canMoveRight())
-            this.moveRight();
-        if (this.canMoveLeft())
-            this.moveLeft();
-        if (this.canMoveUp())
-            this.moveUp();
-        if (this.canMoveDown())
-            this.moveDown();
-        if (this.canShootBubble())
-            this.shootBubble();
-        if (this.canSlap())
-            this.slap();
+        if (this.canMoveRight()) this.moveRight();
+        if (this.canMoveLeft()) this.moveLeft();
+        if (this.canMoveUp()) this.moveUp();
+        if (this.canMoveDown()) this.moveDown();
+        if (this.canShootBubble()) this.shootBubble();
+        if (this.canSlap()) this.slap();
         this.world.camera_x = -this.x + 40;
     }
 
+    /**
+     * Checks if the character can move right.
+     * @returns {boolean} True if the right key is pressed and the character hasn't reached the level end.
+     */
     canMoveRight() {
         return this.world.keyboard.RIGHT && this.x < this.world.level.level_end_x;
     }
 
+    /**
+     * Moves the character to the right and updates direction and last key press time.
+     */
     moveRight() {
         super.moveRight();
         this.otherDirection = false;
         this.lastKeyPress = new Date().getTime();
-        //this.walking_sound.play();
     }
 
+    /**
+     * Checks if the character can move left.
+     * @returns {boolean} True if the left key is pressed and the character hasn't reached the left boundary.
+     */
     canMoveLeft() {
         return this.world.keyboard.LEFT && this.x > 0;
     }
 
+    /**
+     * Moves the character to the left and updates direction and last key press time.
+     */
     moveLeft() {
         super.moveLeft();
         this.otherDirection = true;
         this.lastKeyPress = new Date().getTime();
-        //this.walking_sound.play();
     }
 
+    /**
+     * Checks if the character can move up.
+     * @returns {boolean} True if the up key is pressed and the character hasn't reached the upper boundary.
+     */
     canMoveUp() {
         return this.world.keyboard.UP && this.y > -120;
     }
 
+    /**
+     * Moves the character upward and updates the last key press time.
+     */
     moveUp() {
         super.moveUP();
         this.lastKeyPress = new Date().getTime();
-        //this.walking_sound.play();
     }
 
+    /**
+     * Checks if the character can move down.
+     * @returns {boolean} True if the down key is pressed and the character hasn't reached the lower boundary.
+     */
     canMoveDown() {
         return this.world.keyboard.DOWN && this.y < 280;
     }
 
+    /**
+     * Moves the character downward and updates the last key press time.
+     */
     moveDown() {
         super.moveDown();
         this.lastKeyPress = new Date().getTime();
-        //this.walking_sound.play();
     }
 
+    /**
+     * Checks if the character can shoot a bubble.
+     * @returns {boolean} True if the S key is pressed.
+     */
     canShootBubble() {
         return this.world.keyboard.S;
     }
 
+    /**
+     * Triggers the bubble attack and updates the last key press time.
+     */
     shootBubble() {
         super.shootBubble(this.world);
         this.lastKeyPress = new Date().getTime();
     }
 
+    /**
+     * Checks if the character can perform a slap attack.
+     * @returns {boolean} True if the D key is pressed.
+     */
     canSlap() {
         return this.world.keyboard.D;
     }
 
+    /**
+     * Triggers the slap attack and updates the last key press time.
+     */
     slap() {
         super.slap(this.world);
         this.lastKeyPress = new Date().getTime();
     }
 
+    /**
+     * Checks if the character has been idle for more than 10 seconds.
+     * @returns {boolean} True if no key has been pressed for over 10 seconds.
+     */
     isLongIdle() {
         let timePassed = new Date().getTime() - this.lastKeyPress;
         return timePassed > 10000;
     }
 
+    /**
+     * Checks if the death animation has finished playing.
+     * @returns {boolean} True if more than 1800ms have passed since the character died.
+     */
     deathAnimationFinished() {
         let timePassed = new Date().getTime() - this.timeDied;
         return timePassed > 1800;

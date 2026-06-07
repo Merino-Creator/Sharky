@@ -1,3 +1,8 @@
+/**
+ * Represents the final boss enemy (Toxic Whale).
+ * Plays an intro animation when the character gets close enough.
+ * @extends MoveableObject
+ */
 class Endboss extends MoveableObject {
 
     y = -20;
@@ -41,16 +46,25 @@ class Endboss extends MoveableObject {
         '/assets/2.Enemy/3 Final Enemy/1.Introduce/8.png',
         '/assets/2.Enemy/3 Final Enemy/1.Introduce/9.png',
         '/assets/2.Enemy/3 Final Enemy/1.Introduce/10.png'
-    ]
+    ];
 
+    /**
+     * Creates a new Endboss instance and starts its animation.
+     */
     constructor() {
         super().loadImage(this.IMAGES_ENDBOSS[0]);
         this.loadImages(this.IMAGES_ENDBOSS);
         this.loadImages(this.IMAGES_INTRO);
         this.x = 3800;
         this.animate();
-    };
+    }
 
+    /**
+     * Starts the animation and first contact detection intervals for the Endboss.
+     * Plays the intro animation once when the character reaches x > 3000,
+     * then switches to the floating animation.
+     * Stores all interval IDs for later cleanup.
+     */
     animate() {
         let bossAnimateId = setInterval(() => {
             if (!this.firstContact) {
@@ -61,7 +75,6 @@ class Endboss extends MoveableObject {
                 this.playAnimation(this.IMAGES_ENDBOSS);
             }
         }, 250);
-
         intervalIds.push(bossAnimateId);
 
         let bossContactId = setInterval(() => {
@@ -70,8 +83,6 @@ class Endboss extends MoveableObject {
                 this.currentImage = 0;
             }
         }, 250);
-
         intervalIds.push(bossContactId);
     }
-
 }

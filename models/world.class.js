@@ -1,3 +1,6 @@
+/**
+ * Represents the game world containing all game objects and game logic.
+ */
 class World {
 
     character = new Character();
@@ -12,6 +15,10 @@ class World {
     bubble = [];
     coins;
 
+    /**
+     * Creates a new World instance and initializes the game.
+     * @param {HTMLCanvasElement} canvas - The canvas element to render the game on.
+     */
     constructor(canvas) {
         this.level = level1;
         this.ctx = canvas.getContext('2d');
@@ -22,15 +29,22 @@ class World {
         this.checks();
     }
 
+    /**
+     * Assigns the world reference to the character for access to keyboard and level data.
+     */
     setWorld() {
         this.character.world = this;
     }
 
+    /**
+     * Main render loop. Clears the canvas and draws all game objects each frame.
+     * Objects drawn before the camera reset move with the game world.
+     * Objects drawn after the camera reset stay fixed on screen.
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
-
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.lights);
         this.addObjectsToMap(this.level.enemies);
@@ -38,8 +52,7 @@ class World {
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.bubble);
         this.addToMap(this.character);
-
-        this.ctx.translate(-this.camera_x, 0); // alle vorher bewegt sich mit der spielwelt, alles danach mit der kamera!
+        this.ctx.translate(-this.camera_x, 0);
 
         this.addObjectsToMap(this.level.UI);
         this.level.UI[0].drawValue(this.ctx, this.toxicAmount, 70, 70);
@@ -52,6 +65,10 @@ class World {
         });
     }
 
+    /**
+     * Starts all collision detection intervals for enemies, bubbles, collectibles and slap attacks.
+     * Stores all interval IDs for later cleanup.
+     */
     checks() {
         let enemyCollisionId = setInterval(() => {
             this.checkEnemyCollisions();
@@ -74,6 +91,11 @@ class World {
         intervalIds.push(slapCollisionId);
     }
 
+    /**
+     * Checks collisions between the character and all enemies.
+     * Character is invulnerable while slapping a Puffer or while already hurt.
+     * Triggers game over if the character dies.
+     */
     checkEnemyCollisions() {
         this.level.enemies.forEach((enemy) => {
             let isInvulnerable = enemy instanceof Puffer && this.character.isSlapAttacking;
@@ -88,6 +110,11 @@ class World {
         });
     }
 
+    /**
+     * Checks collisions between bubbles and enemies.
+     * Bubbles deal damage to Jellyfish and are removed on impact.
+     * Dead enemies are removed from the level after 1 second.
+     */
     checkBubbleCollisions() {
         if (this.bubble.length === 0) return;
 
@@ -110,6 +137,11 @@ class World {
         });
     }
 
+    /**
+     * Checks collisions between the character's slap attack and Puffer enemies.
+     * Instantly kills the Puffer and sends it flying off screen.
+     * Removes the Puffer from the level after 1 second.
+     */
     checkSlapCollisions() {
         if (!this.character.isSlapAttacking) return;
 
@@ -127,6 +159,10 @@ class World {
         });
     }
 
+    /**
+     * Checks collisions between the character and all collectible objects.
+     * Increments the toxic and coin counters and removes collected objects.
+     */
     checkCollectibles() {
         this.level.toxic.forEach((toxic, index) => {
             if (this.character.isColliding(toxic)) {
@@ -143,24 +179,36 @@ class World {
         });
     }
 
+    /**
+     * Draws all objects in an array onto the canvas.
+     * @param {MoveableObject[]} objects - Array of objects to draw.
+     */
     addObjectsToMap(objects) {
         objects.forEach(o => {
             this.addToMap(o);
         });
     }
 
+    /**
+     * Draws a single object onto the canvas.
+     * Handles image flipping for objects moving in the opposite direction.
+     * @param {MoveableObject} mo - The object to draw.
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
         }
         mo.draw(this.ctx);
         mo.drawFrame(this.ctx);
-
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }
     }
 
+    /**
+     * Flips the canvas context horizontally to mirror an object's image.
+     * @param {MoveableObject} mo - The object to flip.
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -168,6 +216,10 @@ class World {
         mo.x = mo.x * -1;
     }
 
+    /**
+     * Restores the canvas context after flipping and resets the object's x position.
+     * @param {MoveableObject} mo - The object to restore.
+     */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
