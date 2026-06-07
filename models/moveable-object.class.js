@@ -109,7 +109,7 @@ class MoveableObject extends DrawableObject {
     }
 
     shootBubble(world) {
-        if (!this.isAttacking && !this.isHurt()) {
+        if (!this.isAttacking && !this.isHurt() && !this.otherDirection) {
             this.isAttacking = true;
             this.currentImage = 0;
 
