@@ -67,6 +67,11 @@ class World {
             this.checkCollectibles();
         }, 100);
         intervalIds.push(collectibleCollisionId);
+
+        let slapCollisionId = setInterval(() => {
+            this.checkSlapCollisions();
+        }, 100);
+        intervalIds.push(slapCollisionId);
     }
 
     checkEnemyCollisions() {
@@ -104,6 +109,23 @@ class World {
                     }, 1000);
                 }
             });
+        });
+    }
+
+    checkSlapCollisions() {
+        if (!this.character.isSlapAttacking) return;
+
+        this.level.enemies.forEach((enemy) => {
+            if (this.character.isColliding(enemy) && !enemy.isDead()) {
+                if (enemy instanceof Puffer) {
+                    enemy.enemyHit(enemy.energy);
+                    enemy.getSlapped();
+                    setTimeout(() => {
+                        let index = this.level.enemies.indexOf(enemy);
+                        if (index > -1) this.level.enemies.splice(index, 1);
+                    }, 1000);
+                }
+            }
         });
     }
 

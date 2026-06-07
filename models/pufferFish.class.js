@@ -28,11 +28,16 @@ class Puffer extends MoveableObject {
         '/assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim5.png'
     ];
 
+    IMAGES_DEAD = [
+        '/assets/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 1 (can animate by going up).png'
+    ];
+
     constructor() {
         super().loadImage('assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
         this.loadImages(this.IMAGES_PUFFER_SWIM);
         this.loadImages(this.IMAGES_PUFFER_TRANSITION);
         this.loadImages(this.IMAGES_PUFFER_ATTACK);
+        this.loadImages(this.IMAGES_DEAD);
 
         this.x = this.generateX();
         this.y = 240;
@@ -75,14 +80,16 @@ class Puffer extends MoveableObject {
         intervalIds.push(pufferAttackTriggerId);
 
         let pufferAnimateId = setInterval(() => {
-            if (state === 'transition') {
+            if (this.isSlapped || this.isDead()) {
+                this.playAnimation(this.IMAGES_DEAD);
+            } else if (state === 'transition') {
                 this.playAnimation(this.IMAGES_PUFFER_TRANSITION);
             } else if (state === 'attack') {
                 this.playAnimation(this.IMAGES_PUFFER_ATTACK);
                 this.attackMode();
             } else {
                 this.playAnimation(this.IMAGES_PUFFER_SWIM);
-                return this.damage = 10;
+                this.damage = 10;
             }
         }, 150);
 
@@ -97,6 +104,19 @@ class Puffer extends MoveableObject {
 
     attackMode() {
         return this.damage = 20;
+    }
+
+    getSlapped() {
+        this.isSlapped = true;
+        this.speedX = -16;
+        this.speedY = -16;
+
+        let slappedId = setInterval(() => {
+            this.x += this.speedX;
+            this.y += this.speedY;
+        }, 1000 / 30);
+
+        intervalIds.push(slappedId);
     }
 
 }

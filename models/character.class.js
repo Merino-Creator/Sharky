@@ -97,6 +97,8 @@ class Character extends MoveableObject {
 
     IMAGES_SLAP_ATTACK = [
         '/assets/1.Sharkie/4.Attack/Fin slap/1.png',
+        '/assets/1.Sharkie/4.Attack/Fin slap/2.png',
+        '/assets/1.Sharkie/4.Attack/Fin slap/3.png',
         '/assets/1.Sharkie/4.Attack/Fin slap/4.png',
         '/assets/1.Sharkie/4.Attack/Fin slap/5.png',
         '/assets/1.Sharkie/4.Attack/Fin slap/6.png',
@@ -138,6 +140,10 @@ class Character extends MoveableObject {
         } else if (this.isHurt()) {
             if (frameCounter % 1 === 0)
                 this.playAnimation(this.IMAGES_HURT);
+
+        } else if (this.isSlapAttacking) {
+            if (frameCounter % 1 === 0)
+                this.playAnimation(this.IMAGES_SLAP_ATTACK);
 
         } else if (this.isAttacking) {
             if (frameCounter % 1 === 0)

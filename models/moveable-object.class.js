@@ -125,6 +125,15 @@ class MoveableObject extends DrawableObject {
     }
 
     slap(world) {
-        
+        if (!this.isAttacking && !this.isHurt()) {
+            this.isAttacking = true;
+            this.isSlapAttacking = true;
+            this.currentImage = 0;
+
+            setTimeout(() => {
+                this.isAttacking = false;
+                this.isSlapAttacking = false;
+            }, 800);
+        }
     }
 }
