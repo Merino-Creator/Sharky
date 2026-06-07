@@ -123,6 +123,8 @@ class World {
                 if (bubble.isColliding(enemy)) {
                     if (enemy instanceof Jellyfish) {
                         enemy.enemyHit(bubble.damage);
+                    } else if (enemy instanceof Endboss && bubble instanceof ToxicBubble) {
+                        enemy.enemyHit(bubble.damage);
                     }
                     this.bubble.splice(bubbleIndex, 1);
                 }

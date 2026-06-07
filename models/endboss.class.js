@@ -10,7 +10,7 @@ class Endboss extends MoveableObject {
     height = 450;
     width = 500;
     firstContact = false;
-    energy = 500;
+    energy = 1000;
     damage = 50;
 
     offset = {
@@ -125,7 +125,7 @@ class Endboss extends MoveableObject {
                     }, 1000 / 30);
                 }, 6 * 100);
             }
-        }, 2600);
+        }, 1600);
         intervalIds.push(bossAttackTriggerId);
 
         let bossAnimateId = setInterval(() => {

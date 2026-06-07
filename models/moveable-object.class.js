@@ -176,10 +176,18 @@ class MoveableObject extends DrawableObject {
             this.currentImage = 0;
 
             setTimeout(() => {
-                let bubble = new Bubble(
-                    this.x + this.offset.left + 140,
-                    this.y + this.offset.top + 25
-                );
+                let bubble;
+                if (world.toxicAmount >= 4) {
+                    bubble = new ToxicBubble(
+                        this.x + this.offset.left + 140,
+                        this.y + this.offset.top + 25
+                    );
+                } else {
+                    bubble = new Bubble(
+                        this.x + this.offset.left + 140,
+                        this.y + this.offset.top + 25
+                    );
+                }
                 world.bubble.push(bubble);
                 this.isAttacking = false;
             }, 800);
