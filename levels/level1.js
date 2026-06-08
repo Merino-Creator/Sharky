@@ -69,20 +69,7 @@ function initLevel() {
             new CoinAmount()
         ],
 
-        [
-            new PoisonBottle(),
-            new PoisonBottle(),
-            new PoisonBottle(),
-            new PoisonBottle(),
-            new PoisonBottle(),
-            new PoisonBottle(),
-            new PoisonBottle(),
-            new PoisonBottle(),
-            new PoisonBottle(),
-            new PoisonBottle(),
-            new PoisonBottle(),
-            new PoisonBottle()
-        ],
+        [],
 
         [
             new Coins(), new Coins(), new Coins(), new Coins(), new Coins(),

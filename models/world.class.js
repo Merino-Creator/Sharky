@@ -14,6 +14,7 @@ class World {
     healthAmount = 0;
     bubble = [];
     coins;
+    lastBottleX = 0;
 
     /**
      * Creates a new World instance and initializes the game.
@@ -89,6 +90,14 @@ class World {
             this.checkSlapCollisions();
         }, 100);
         intervalIds.push(slapCollisionId);
+
+        let bottleMoveId = setInterval(() => {
+            this.level.toxic.forEach(bottle => bottle.updateBottle());
+            this.level.toxic = this.level.toxic.filter(bottle => !bottle.isOutOfBounds());
+        }, 1000 / 30);
+        intervalIds.push(bottleMoveId);
+
+        this.spawnBottle();
     }
 
     /**
@@ -179,6 +188,24 @@ class World {
                 this.level.coins.splice(index, 1);
             }
         });
+    }
+
+    /**
+    * Spawns a new poison bottle every 2 seconds at a random position
+    * within the visible screen area. Each bottle has a randomized fall speed.
+    */
+    spawnBottle() {
+        let bottleSpawnId = setInterval(() => {
+            if (this.character.x <= 3000) {
+                let visibleX = -this.camera_x;
+                let bottle = new PoisonBottle(
+                    visibleX + Math.random() * 720,
+                    0.1 + Math.random() * 0.2
+                );
+                this.level.toxic.push(bottle);
+            }
+        }, 3000);
+        intervalIds.push(bottleSpawnId);
     }
 
     /**

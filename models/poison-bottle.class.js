@@ -1,14 +1,14 @@
 /**
- * Represents a collectible poison bottle that falls from above using gravity.
- * Randomly placed across the level with a minimum distance between bottles.
+ * Represents a collectible poison bottle that falls from above.
+ * Position and acceleration are set externally by the World on spawn.
  * @extends MoveableObject
  */
 class PoisonBottle extends MoveableObject {
 
-    static usedPositions = [];
     width = 70;
     y = -80;
-    acceleration = 0.05;
+    speedY = 1;
+    acceleration = 0.1;
 
     IMAGES_POISON_BOTTLE = [
         'assets/4. Marcadores/Posión/Animada/1.png',
@@ -18,48 +18,36 @@ class PoisonBottle extends MoveableObject {
         'assets/4. Marcadores/Posión/Animada/5.png',
         'assets/4. Marcadores/Posión/Animada/6.png',
         'assets/4. Marcadores/Posión/Animada/7.png',
-        'assets/4. Marcadores/Posión/Animada/8.png',
+        'assets/4. Marcadores/Posión/Animada/8.png'
     ];
 
     /**
-     * Creates a new PoisonBottle instance at a random x position
-     * and starts falling via gravity.
+     * Creates a new PoisonBottle instance.
+     * @param {number} x - The x position of the bottle.
+     * @param {number} acceleration - The fall acceleration of the bottle.
      */
-    constructor() {
+    constructor(x, acceleration) {
         super().loadImage('assets/4. Marcadores/Posión/Animada/1.png');
         this.loadImages(this.IMAGES_POISON_BOTTLE);
-        this.x = this.generateX();
-        this.applyGravity();
-        this.animate();
+        this.x = x;
+        this.acceleration = acceleration;
     }
 
     /**
-     * Generates a random x position that maintains a minimum distance
-     * of 200px from all other PoisonBottle positions.
-     * @returns {number} A valid x position for the PoisonBottle.
+     * Updates the bottle position and animation each frame.
+     * Called externally by the World's bottle movement interval.
      */
-    generateX() {
-        let x;
-        let tooClose;
-
-        do {
-            x = 250 + Math.random() * 3300;
-            tooClose = PoisonBottle.usedPositions.some(pos => Math.abs(pos - x) < 200);
-        } while (tooClose);
-
-        PoisonBottle.usedPositions.push(x);
-        return x;
+    updateBottle() {
+        this.y += this.speedY;
+        this.speedY += this.acceleration;
+        this.playAnimation(this.IMAGES_POISON_BOTTLE);
     }
 
     /**
-     * Starts the bottle animation loop.
-     * Stores the interval ID for later cleanup.
+     * Checks if the bottle has fallen below the canvas.
+     * @returns {boolean} True if the bottle is below y 600.
      */
-    animate() {
-        let poisonBottleId = setInterval(() => {
-            this.playAnimation(this.IMAGES_POISON_BOTTLE);
-        }, 250);
-
-        intervalIds.push(poisonBottleId);
+    isOutOfBounds() {
+        return this.y > 600;
     }
 }

@@ -24,7 +24,7 @@ class Level {
         this.lights = lights;
         this.backgroundObjects = backgroundObjects;
         this.UI = UI;
-        this.toxic = toxic;
+        this.toxic = toxic || [];
         this.coins = coins;
     }
 }
