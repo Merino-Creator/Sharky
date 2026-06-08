@@ -110,6 +110,12 @@ class MoveableObject extends DrawableObject {
         return timepassed < 1;
     }
 
+    bossIsHurt() {
+        let timepassed = new Date().getTime() - this.lastHit;
+        timepassed = timepassed / 1000;
+        return timepassed < 0.3;
+    }
+
     /**
      * Checks if the object is dead.
      * @returns {boolean} True if the object's energy is 0.

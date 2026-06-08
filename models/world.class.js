@@ -142,6 +142,12 @@ class World {
                     setTimeout(() => {
                         let index = this.level.enemies.indexOf(enemy);
                         if (index > -1) this.level.enemies.splice(index, 1);
+
+                        if (enemy instanceof Endboss) {
+                            setTimeout(() => {
+                                winGame();
+                            }, 1000);
+                        }
                     }, 1000);
                 }
             });

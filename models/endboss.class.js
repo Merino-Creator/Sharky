@@ -70,8 +70,7 @@ class Endboss extends MoveableObject {
         '/assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 7.png',
         '/assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 8.png',
         '/assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 9.png',
-        '/assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png',
-        '/assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2.png'
+        '/assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png'
     ]
 
     /**
@@ -99,6 +98,8 @@ class Endboss extends MoveableObject {
         let isAttacking = false;
         let introFinished = false;
         let startX = this.x;
+        let frameCounter = 0;
+        let deadFrame = 0;
 
         let bossAttackTriggerId = setInterval(() => {
             if (this.firstContact && introFinished) {
@@ -129,26 +130,44 @@ class Endboss extends MoveableObject {
         intervalIds.push(bossAttackTriggerId);
 
         let bossAnimateId = setInterval(() => {
+            frameCounter++;
+
             if (this.isDead()) {
-                this.playAnimation(this.IMAGES_BOSS_DEAD);
-            } else if (this.isHurt()) {
-                this.playAnimation(this.IMAGES_BOSS_HURT);
+                if (frameCounter % 2 === 0) {
+                    if (deadFrame < this.IMAGES_BOSS_DEAD.length) {
+                        this.img = this.ImageCache[this.IMAGES_BOSS_DEAD[deadFrame]];
+                        deadFrame++;
+                    } else {
+                        this.img = this.ImageCache[this.IMAGES_BOSS_DEAD[this.IMAGES_BOSS_DEAD.length - 1]];
+                    }
+                }
+            } else if (this.bossIsHurt()) {
+                if (frameCounter % 1 === 0)
+                    this.playAnimation(this.IMAGES_BOSS_HURT);
+
             } else if (!this.firstContact) {
-                this.playAnimation(this.IMAGES_BOSS_FLOAT);
+                if (frameCounter % 2 === 0)
+                    this.playAnimation(this.IMAGES_BOSS_FLOAT);
+
             } else if (this.firstContact && this.currentImage < this.IMAGES_BOSS_INTRO.length) {
-                this.playAnimation(this.IMAGES_BOSS_INTRO);
+                if (frameCounter % 2 === 0)
+                    this.playAnimation(this.IMAGES_BOSS_INTRO);
+
             } else if (isAttacking) {
                 introFinished = true;
-                this.playAnimation(this.IMAGES_BOSS_ATTACK);
+                if (frameCounter % 2 === 0)
+                    this.playAnimation(this.IMAGES_BOSS_ATTACK);
+
             } else {
                 introFinished = true;
-                this.playAnimation(this.IMAGES_BOSS_FLOAT);
+                if (frameCounter % 2 === 0)
+                    this.playAnimation(this.IMAGES_BOSS_FLOAT);
             }
-        }, 200);
+        }, 100);
         intervalIds.push(bossAnimateId);
 
         let bossContactId = setInterval(() => {
-            if (world && world.character.x > 3000 && !this.firstContact) {
+            if (world && world.character.x > 3050 && !this.firstContact) {
                 this.firstContact = true;
                 this.currentImage = 0;
                 startX = this.x;
