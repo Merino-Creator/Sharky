@@ -9,6 +9,8 @@ let btnWidth = 200;
 let btnHeight = 80;
 let btnX;
 let btnY;
+let gameOver = false;
+let gameWon = false;
 
 /**
  * Initializes the game by getting the canvas element and showing the start screen.
@@ -152,11 +154,38 @@ function stopGame() {
     intervalIds.forEach(clearInterval);
 }
 
+function looseGame() {
+    stopGame();
+    gameOver = true;
+    showGameOverScreen();
+}
+
+function showGameOverScreen() {
+    let ctx = canvas.getContext('2d');
+    ctx.save();
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.font = '60px Luckiest Guy';
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.fillText('GAME OVER!', canvas.width / 2, canvas.height / 2);
+    ctx.restore();
+}
+
 function winGame() {
     stopGame();
+    gameWon = true;
     showWinScreen();
 }
 
 function showWinScreen() {
-    
+    let ctx = canvas.getContext('2d');
+    ctx.save();
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.font = '60px Luckiest Guy';
+    ctx.fillStyle = 'white';
+    ctx.textAlign = 'center';
+    ctx.fillText('YOU WIN!', canvas.width / 2, canvas.height / 2);
+    ctx.restore();
 }

@@ -60,6 +60,16 @@ class World {
         this.level.UI[1].drawValue(this.ctx, this.character.energy, 160, 70);
         this.level.UI[2].drawValue(this.ctx, this.coinAmount, 290, 72);
 
+        if (gameOver) {
+            showGameOverScreen();
+            return;
+        }
+
+        if (gameWon) {
+            showWinScreen();
+            return;
+        }
+
         let self = this;
         requestAnimationFrame(function () {
             self.draw();
@@ -113,7 +123,7 @@ class World {
                 this.character.characterHit(enemy.damage);
                 if (this.character.isDead()) {
                     this.character.timeDied = new Date().getTime();
-                    setTimeout(() => stopGame(), 1800);
+                    setTimeout(() => looseGame(), 1400);
                 }
             }
         });
@@ -142,7 +152,7 @@ class World {
                     if (enemy instanceof Endboss) {
                         setTimeout(() => {
                             winGame();
-                        }, 1600);
+                        }, 1400);
                     } else {
                         setTimeout(() => {
                             let index = this.level.enemies.indexOf(enemy);
