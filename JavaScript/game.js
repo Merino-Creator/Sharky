@@ -151,3 +151,12 @@ window.addEventListener('keyup', (event) => {
 function stopGame() {
     intervalIds.forEach(clearInterval);
 }
+
+function winGame() {
+    stopGame();
+    showWinScreen();
+}
+
+function showWinScreen() {
+    
+}
