@@ -41,6 +41,7 @@ class World {
      * Main render loop. Clears the canvas and draws all game objects each frame.
      * Objects drawn before the camera reset move with the game world.
      * Objects drawn after the camera reset stay fixed on screen.
+     * Stops the loop and shows the appropriate end screen when the game is over.
      */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -77,7 +78,7 @@ class World {
     }
 
     /**
-     * Starts all collision detection intervals for enemies, bubbles, collectibles and slap attacks.
+     * Starts all collision detection and game logic intervals.
      * Stores all interval IDs for later cleanup.
      */
     checks() {
@@ -131,8 +132,9 @@ class World {
 
     /**
      * Checks collisions between bubbles and enemies.
-     * Bubbles deal damage to Jellyfish and are removed on impact.
-     * Dead enemies are removed from the level after 1 second.
+     * Bubbles deal damage to Jellyfish and ToxicBubbles deal damage to the Endboss.
+     * Triggers win condition when the Endboss dies.
+     * Other dead enemies are removed from the level after 1 second.
      */
     checkBubbleCollisions() {
         if (this.bubble.length === 0) return;
@@ -150,9 +152,7 @@ class World {
 
                 if (enemy.isDead()) {
                     if (enemy instanceof Endboss) {
-                        setTimeout(() => {
-                            winGame();
-                        }, 1400);
+                        setTimeout(() => winGame(), 1400);
                     } else {
                         setTimeout(() => {
                             let index = this.level.enemies.indexOf(enemy);
@@ -207,9 +207,10 @@ class World {
     }
 
     /**
-    * Spawns a new poison bottle every 2 seconds at a random position
-    * within the visible screen area. Each bottle has a randomized fall speed.
-    */
+     * Spawns a new poison bottle every 3 seconds at a random position
+     * within the visible screen area. Only spawns while character x is below 3000.
+     * Each bottle has a randomized fall acceleration.
+     */
     spawnBottle() {
         let bottleSpawnId = setInterval(() => {
             if (this.character.x <= 3000) {

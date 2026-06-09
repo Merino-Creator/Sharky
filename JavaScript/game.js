@@ -154,12 +154,18 @@ function stopGame() {
     intervalIds.forEach(clearInterval);
 }
 
+/**
+ * Stops the game and shows the game over screen.
+ */
 function looseGame() {
     stopGame();
     gameOver = true;
     showGameOverScreen();
 }
 
+/**
+ * Renders the game over screen on the canvas.
+ */
 function showGameOverScreen() {
     let ctx = canvas.getContext('2d');
     ctx.save();
@@ -172,12 +178,18 @@ function showGameOverScreen() {
     ctx.restore();
 }
 
+/**
+ * Stops the game and shows the win screen.
+ */
 function winGame() {
     stopGame();
     gameWon = true;
     showWinScreen();
 }
 
+/**
+ * Renders the win screen on the canvas.
+ */
 function showWinScreen() {
     let ctx = canvas.getContext('2d');
     ctx.save();
