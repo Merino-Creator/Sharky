@@ -13,6 +13,8 @@ class Endboss extends MoveableObject {
     energy = 1000;
     damage = 50;
 
+    BOSS_ATTACK_AUDIO = new Audio('assets/8.Audio/boss-attack.mp3');
+
     offset = {
         top: 130,
         bottom: 60,

@@ -14,6 +14,8 @@ class Character extends MoveableObject {
     lastKeyPress = new Date().getTime();
     energy = 100;
 
+    HURT_AUDIO = new Audio('assets/8.Audio/character-hurt.mp3');
+
     offset = {
         top: 110,
         bottom: 60,

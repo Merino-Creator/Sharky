@@ -12,6 +12,10 @@ let btnY;
 let gameOver = false;
 let gameWon = false;
 
+let STARTING_SCREEN_AUDIO = new Audio('assets/8.Audio/starting-screen.mp3');
+let INGAME_BGM_AUDIO = new Audio('assets/8.Audio/ingame-bgm.mp3');
+let GAME_WON_AUDIO = new Audio('assets/8.Audio/game-won.mp3');
+
 /**
  * Initializes the game by getting the canvas element and showing the start screen.
  */

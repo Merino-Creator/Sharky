@@ -9,6 +9,9 @@ class Jellyfish extends MoveableObject {
     energy = 50;
     damage = 25;
 
+    JELLY_AGRESSIVE_AUDIO = new Audio('assets/8.Audio/jellyfish-agressive.mp3');
+    JELLY_DEAD_AUDIO = new Audio('assets/8.Audio/jellyfish-dead.mp3');
+
     IMAGES_JELLY = [
         'assets/2.Enemy/2 Jelly fish/Regular damage/Lila 1.png',
         'assets/2.Enemy/2 Jelly fish/Regular damage/Lila 2.png',
