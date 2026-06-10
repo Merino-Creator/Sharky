@@ -20,7 +20,6 @@ class World {
     TOXIC_COLLECT_AUDIO = new Audio('assets/8.Audio/toxic-collect.mp3');
     COIN_COLLECT_AUDIO = new Audio('assets/8.Audio/coin-sound.mp3');
     SLAP_AUDIO = new Audio('assets/8.Audio/slap.mp3');
-    BUBBLE_SHOOT_AUDIO = new Audio('assets/8.Audio/bubble-shoot.mp3');
 
     /**
      * Creates a new World instance and initializes the game.
@@ -183,6 +182,7 @@ class World {
                 if (enemy instanceof Puffer) {
                     enemy.enemyHit(enemy.energy);
                     enemy.getSlapped();
+                    this.SLAP_AUDIO.play();
                     setTimeout(() => {
                         let index = this.level.enemies.indexOf(enemy);
                         if (index > -1) this.level.enemies.splice(index, 1);

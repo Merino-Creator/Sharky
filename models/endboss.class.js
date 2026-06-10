@@ -106,6 +106,7 @@ class Endboss extends MoveableObject {
         let bossAttackTriggerId = setInterval(() => {
             if (this.firstContact && introFinished) {
                 isAttacking = true;
+                this.BOSS_ATTACK_AUDIO.play();
 
                 let attackId = setInterval(() => {
                     if (this.x > startX - 200) {

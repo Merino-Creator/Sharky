@@ -83,12 +83,33 @@ class Jellyfish extends MoveableObject {
      * Stores all interval IDs for later cleanup.
      */
     animate() {
+        let agressiveSoundPlaying = false;
+        let deadSoundPlaying = false;
+
         let jellyAnimateId = setInterval(() => {
             if (this.isDead()) {
                 this.playAnimation(this.IMAGES_JELLY_DEAD);
+
+                if (!deadSoundPlaying) {
+                    deadSoundPlaying = true;
+                    this.JELLY_DEAD_AUDIO.play();
+                    setTimeout(() => {
+                        this.JELLY_DEAD_AUDIO.pause();
+                        this.JELLY_DEAD_AUDIO.currentTime = 0;
+                    }, 1000);
+                }
             } else if (this.energy == 25) {
                 this.playAnimation(this.IMAGES_JELLY_AGRESSIVE);
                 this.agressiveMode();
+
+                if (!agressiveSoundPlaying) {
+                    agressiveSoundPlaying = true;
+                    this.JELLY_AGRESSIVE_AUDIO.play();
+                    setTimeout(() => {
+                        this.JELLY_AGRESSIVE_AUDIO.pause();
+                        this.JELLY_AGRESSIVE_AUDIO.currentTime = 0;
+                    }, 1000);
+                }
             } else {
                 this.playAnimation(this.IMAGES_JELLY);
             }

@@ -15,6 +15,7 @@ let gameWon = false;
 let STARTING_SCREEN_AUDIO = new Audio('assets/8.Audio/starting-screen.mp3');
 let INGAME_BGM_AUDIO = new Audio('assets/8.Audio/ingame-bgm.mp3');
 let GAME_WON_AUDIO = new Audio('assets/8.Audio/game-won.mp3');
+let GAME_OVER_AUDIO = new Audio('assets/8.Audio/game-over.mp3');
 
 /**
  * Initializes the game by getting the canvas element and showing the start screen.
@@ -31,6 +32,7 @@ function showStartScreen() {
     initStartScreenVars();
     loadStartScreenImages();
     registerStartScreenEvents();
+    STARTING_SCREEN_AUDIO.play();
 }
 
 /**
@@ -120,6 +122,8 @@ function startGame() {
         gameStarted = true;
         initLevel();
         world = new World(canvas);
+        STARTING_SCREEN_AUDIO.pause();
+        INGAME_BGM_AUDIO.play();
     }
 }
 
@@ -164,6 +168,8 @@ function stopGame() {
 function looseGame() {
     stopGame();
     gameOver = true;
+    INGAME_BGM_AUDIO.pause();
+    GAME_OVER_AUDIO.play();
     showGameOverScreen();
 }
 
@@ -189,6 +195,7 @@ function winGame() {
     stopGame();
     gameWon = true;
     showWinScreen();
+    GAME_WON_AUDIO.play();
 }
 
 /**

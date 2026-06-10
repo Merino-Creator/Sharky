@@ -15,6 +15,7 @@ class Character extends MoveableObject {
     energy = 100;
 
     HURT_AUDIO = new Audio('assets/8.Audio/character-hurt.mp3');
+    BUBBLE_SHOOT_AUDIO = new Audio('assets/8.Audio/bubble-shoot.mp3');
 
     offset = {
         top: 110,
@@ -157,6 +158,7 @@ class Character extends MoveableObject {
         } else if (this.isHurt()) {
             if (frameCounter % 1 === 0)
                 this.playAnimation(this.IMAGES_HURT);
+            this.HURT_AUDIO.play();
         } else if (this.isSlapAttacking) {
             if (frameCounter % 1 === 0)
                 this.playAnimation(this.IMAGES_SLAP_ATTACK);
@@ -269,6 +271,9 @@ class Character extends MoveableObject {
     shootBubble() {
         super.shootBubble(this.world);
         this.lastKeyPress = new Date().getTime();
+        setTimeout(() => {
+            this.BUBBLE_SHOOT_AUDIO.play();
+        }, 750);
     }
 
     /**
