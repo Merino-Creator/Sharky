@@ -200,6 +200,7 @@ class World {
         this.level.toxic.forEach((toxic, index) => {
             if (this.character.isColliding(toxic)) {
                 this.toxicAmount++;
+                this.TOXIC_COLLECT_AUDIO.play();
                 this.level.toxic.splice(index, 1);
             }
         });
@@ -226,6 +227,10 @@ class World {
                     0.1 + Math.random() * 0.2
                 );
                 this.level.toxic.push(bottle);
+                this.TOXIC_BUBBLING_AUDIO.play();
+                setTimeout(() => {
+                    this.TOXIC_BUBBLING_AUDIO.pause();
+                }, 1000);
             }
         }, 3000);
         intervalIds.push(bottleSpawnId);
