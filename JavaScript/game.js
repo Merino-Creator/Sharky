@@ -12,7 +12,6 @@ let btnY;
 let gameOver = false;
 let gameWon = false;
 
-let STARTING_SCREEN_AUDIO = new Audio('assets/8.Audio/starting-screen.mp3');
 let INGAME_BGM_AUDIO = new Audio('assets/8.Audio/ingame-bgm.mp3');
 let GAME_WON_AUDIO = new Audio('assets/8.Audio/game-won.mp3');
 let GAME_OVER_AUDIO = new Audio('assets/8.Audio/game-over.mp3');
@@ -29,16 +28,15 @@ function init() {
  * Renders the start screen on the canvas including background, title and start button.
  */
 function showStartScreen() {
-    initStartScreenVars();
+    initStartScreen();
     loadStartScreenImages();
     registerStartScreenEvents();
-    STARTING_SCREEN_AUDIO.play();
 }
 
 /**
  * Initializes all variables needed for the start screen.
  */
-function initStartScreenVars() {
+function initStartScreen() {
     startCtx = canvas.getContext('2d');
     startBackground = new Image();
     startBtn = new Image();
