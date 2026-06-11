@@ -120,7 +120,6 @@ function startGame() {
         gameStarted = true;
         initLevel();
         world = new World(canvas);
-        STARTING_SCREEN_AUDIO.pause();
         INGAME_BGM_AUDIO.play();
     }
 }
