@@ -6,7 +6,7 @@
 
 ## 🎮 Über das Projekt
 
-**Sharky** ist ein in purem JavaScript entwickeltes 2D-Spiel, das vollständig im HTML5-`<canvas>` läuft. Der Spieler steuert einen Hai durch die Tiefen des Ozeans, weicht Hindernissen aus, jagt Beute und kämpft gegen Gegner – alles flüssig animiert und direkt im Browser spielbar.
+**Sharky** ist ein in purem JavaScript entwickeltes 2D-Spiel, das vollständig im HTML5-`<canvas>` läuft. Der Spieler steuert einen Hai durch die Tiefen des Ozeans, kämpft gegen Gegner und sammelt Münzen, sowie Giftflaschen ein, um seinen Angriff zu verstärken – alles flüssig animiert und direkt im Browser spielbar.
 
 Das Projekt entsteht ohne externe Game-Engines oder UI-Frameworks – alles wird von Grund auf selbst implementiert: Spielschleife, Kollisionserkennung, Animationssystem und mehr.
 
