@@ -208,6 +208,7 @@ class World {
         this.level.coins.forEach((coins, index) => {
             if (this.character.isColliding(coins)) {
                 this.coinAmount++;
+                this.COIN_COLLECT_AUDIO.play();
                 this.level.coins.splice(index, 1);
             }
         });
