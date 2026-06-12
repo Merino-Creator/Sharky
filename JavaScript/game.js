@@ -16,11 +16,15 @@ let INGAME_BGM_AUDIO = new Audio('assets/8.Audio/ingame-bgm.mp3');
 let GAME_WON_AUDIO = new Audio('assets/8.Audio/game-won.mp3');
 let GAME_OVER_AUDIO = new Audio('assets/8.Audio/game-over.mp3');
 
+let isMuted = localStorage.getItem('muted') === 'true';
+let allAudio = [];
+
 /**
  * Initializes the game by getting the canvas element and showing the start screen.
  */
 function init() {
     canvas = document.getElementById('canvas');
+    applyMuteState();
     showStartScreen();
 }
 
@@ -121,6 +125,7 @@ function startGame() {
         initLevel();
         world = new World(canvas);
         INGAME_BGM_AUDIO.play();
+        registerAudio(INGAME_BGM_AUDIO);
     }
 }
 
@@ -167,6 +172,7 @@ function looseGame() {
     gameOver = true;
     INGAME_BGM_AUDIO.pause();
     GAME_OVER_AUDIO.play();
+    registerAudio(GAME_OVER_AUDIO);
     showGameOverScreen();
 }
 
@@ -193,6 +199,7 @@ function winGame() {
     gameWon = true;
     showWinScreen();
     GAME_WON_AUDIO.play();
+    registerAudio(GAME_WON_AUDIO);
 }
 
 /**
@@ -208,4 +215,31 @@ function showWinScreen() {
     ctx.textAlign = 'center';
     ctx.fillText('YOU WIN!', canvas.width / 2, canvas.height / 2);
     ctx.restore();
+}
+
+/**
+ * Registers an audio object to be controlled by the mute function.
+ * @param {HTMLAudioElement} audio - The audio object to register.
+ */
+function registerAudio(audio) {
+    allAudio.push(audio);
+    audio.muted = isMuted;
+}
+
+/**
+ * Toggles the mute state for all registered audio objects.
+ */
+function toggleMute() {
+    isMuted = !isMuted;
+    localStorage.setItem('muted', isMuted);
+    allAudio.forEach(audio => audio.muted = isMuted);
+    document.getElementById('muteBtn').textContent = isMuted ? '🔇' : '🔊';
+}
+
+/**
+ * Applies the saved mute state to all registered audio objects.
+ */
+function applyMuteState() {
+    allAudio.forEach(audio => audio.muted = isMuted);
+    document.getElementById('muteBtn').textContent = isMuted ? '🔇' : '🔊';
 }

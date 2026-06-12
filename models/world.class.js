@@ -183,6 +183,7 @@ class World {
                     enemy.enemyHit(enemy.energy);
                     enemy.getSlapped();
                     this.SLAP_AUDIO.play();
+                    registerAudio(this.SLAP_AUDIO);
                     setTimeout(() => {
                         let index = this.level.enemies.indexOf(enemy);
                         if (index > -1) this.level.enemies.splice(index, 1);
@@ -201,6 +202,7 @@ class World {
             if (this.character.isColliding(toxic)) {
                 this.toxicAmount++;
                 this.TOXIC_COLLECT_AUDIO.play();
+                registerAudio(this.TOXIC_COLLECT_AUDIO);
                 this.level.toxic.splice(index, 1);
             }
         });
@@ -209,6 +211,7 @@ class World {
             if (this.character.isColliding(coins)) {
                 this.coinAmount++;
                 this.COIN_COLLECT_AUDIO.play();
+                registerAudio(this.COIN_COLLECT_AUDIO);
                 this.level.coins.splice(index, 1);
             }
         });
@@ -229,6 +232,7 @@ class World {
                 );
                 this.level.toxic.push(bottle);
                 this.TOXIC_BUBBLING_AUDIO.play();
+                registerAudio(this.TOXIC_BUBBLING_AUDIO);
                 setTimeout(() => {
                     this.TOXIC_BUBBLING_AUDIO.pause();
                 }, 1000);

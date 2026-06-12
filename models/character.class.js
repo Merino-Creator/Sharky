@@ -159,6 +159,7 @@ class Character extends MoveableObject {
             if (frameCounter % 1 === 0)
                 this.playAnimation(this.IMAGES_HURT);
             this.HURT_AUDIO.play();
+            registerAudio(this.HURT_AUDIO);
         } else if (this.isSlapAttacking) {
             if (frameCounter % 1 === 0)
                 this.playAnimation(this.IMAGES_SLAP_ATTACK);
@@ -273,6 +274,7 @@ class Character extends MoveableObject {
         this.lastKeyPress = new Date().getTime();
         setTimeout(() => {
             this.BUBBLE_SHOOT_AUDIO.play();
+            registerAudio(this.BUBBLE_SHOOT_AUDIO);
         }, 750);
     }
 

@@ -93,6 +93,7 @@ class Jellyfish extends MoveableObject {
                 if (!deadSoundPlaying) {
                     deadSoundPlaying = true;
                     this.JELLY_DEAD_AUDIO.play();
+                    registerAudio(this.JELLY_DEAD_AUDIO);
                     setTimeout(() => {
                         this.JELLY_DEAD_AUDIO.pause();
                         this.JELLY_DEAD_AUDIO.currentTime = 0;
@@ -105,6 +106,7 @@ class Jellyfish extends MoveableObject {
                 if (!agressiveSoundPlaying) {
                     agressiveSoundPlaying = true;
                     this.JELLY_AGRESSIVE_AUDIO.play();
+                    registerAudio(this.JELLY_AGRESSIVE_AUDIO);
                     setTimeout(() => {
                         this.JELLY_AGRESSIVE_AUDIO.pause();
                         this.JELLY_AGRESSIVE_AUDIO.currentTime = 0;
