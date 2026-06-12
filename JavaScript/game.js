@@ -19,6 +19,20 @@ let GAME_OVER_AUDIO = new Audio('assets/8.Audio/game-over.mp3');
 let isMuted = localStorage.getItem('muted') === 'true';
 let allAudio = [];
 
+let winBackground = new Image();
+let winRestartBtn = new Image();
+let winMenuBtn = new Image();
+let winRestartBtnX, winRestartBtnY, winMenuBtnX, winMenuBtnY;
+let winRestartBtnW = 200, winRestartBtnH = 80;
+let winMenuBtnW = 200, winMenuBtnH = 80;
+
+let gameOverBackground = new Image();
+let gameOverRestartBtn = new Image();
+let gameOverMenuBtn = new Image();
+let gameOverRestartBtnX, gameOverRestartBtnY, gameOverMenuBtnX, gameOverMenuBtnY;
+let gameOverRestartBtnW = 200, gameOverRestartBtnH = 80;
+let gameOverMenuBtnW = 200, gameOverMenuBtnH = 80;
+
 /**
  * Initializes the game by getting the canvas element and showing the start screen.
  */
@@ -26,6 +40,19 @@ function init() {
     canvas = document.getElementById('canvas');
     applyMuteState();
     showStartScreen();
+    initEndScreenImages();
+}
+
+/**
+ * Preloads all images used on the win and game over screens.
+ */
+function initEndScreenImages() {
+    winBackground.src = '/assets/6.Botones/Tittles/You win/Mesa de trabajo 1.png';
+    winRestartBtn.src = '/assets/6.Botones/Try again/Recurso 16.png';
+    winMenuBtn.src = '/assets/6.Botones/Try again/Recurso 16.png';
+    gameOverBackground.src = '/assets/6.Botones/Tittles/Game Over/Recurso 11.png';
+    gameOverRestartBtn.src = '/assets/6.Botones/Try again/Recurso 16.png';
+    gameOverMenuBtn.src = '/assets/6.Botones/Try again/Recurso 16.png';
 }
 
 /**
@@ -177,18 +204,43 @@ function looseGame() {
 }
 
 /**
- * Renders the game over screen on the canvas.
+ * Renders the game over screen with background image and restart/menu buttons.
  */
 function showGameOverScreen() {
     let ctx = canvas.getContext('2d');
-    ctx.save();
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.font = '60px Luckiest Guy';
-    ctx.fillStyle = 'white';
-    ctx.textAlign = 'center';
-    ctx.fillText('GAME OVER!', canvas.width / 2, canvas.height / 2);
-    ctx.restore();
+    ctx.drawImage(gameOverBackground, 0, 0, canvas.width, canvas.height);
+
+    gameOverRestartBtnX = canvas.width / 2 - gameOverRestartBtnW / 2;
+    gameOverRestartBtnY = canvas.height / 2;
+    gameOverMenuBtnX = canvas.width / 2 - gameOverMenuBtnW / 2;
+    gameOverMenuBtnY = canvas.height / 2 + 100;
+
+    ctx.drawImage(gameOverRestartBtn, gameOverRestartBtnX, gameOverRestartBtnY, gameOverRestartBtnW, gameOverRestartBtnH);
+    ctx.drawImage(gameOverMenuBtn, gameOverMenuBtnX, gameOverMenuBtnY, gameOverMenuBtnW, gameOverMenuBtnH);
+
+    canvas.addEventListener('click', onGameOverScreenClick);
+}
+
+/**
+ * Handles click events on the game over screen.
+ * @param {MouseEvent} event - The click event.
+ */
+function onGameOverScreenClick(event) {
+    let rect = canvas.getBoundingClientRect();
+    let clickX = event.clientX - rect.left;
+    let clickY = event.clientY - rect.top;
+
+    if (clickX >= gameOverRestartBtnX && clickX <= gameOverRestartBtnX + gameOverRestartBtnW &&
+        clickY >= gameOverRestartBtnY && clickY <= gameOverRestartBtnY + gameOverRestartBtnH) {
+        canvas.removeEventListener('click', onGameOverScreenClick);
+        restartGame();
+    }
+
+    if (clickX >= gameOverMenuBtnX && clickX <= gameOverMenuBtnX + gameOverMenuBtnW &&
+        clickY >= gameOverMenuBtnY && clickY <= gameOverMenuBtnY + gameOverMenuBtnH) {
+        canvas.removeEventListener('click', onGameOverScreenClick);
+        backToMenu();
+    }
 }
 
 /**
@@ -203,18 +255,76 @@ function winGame() {
 }
 
 /**
- * Renders the win screen on the canvas.
+ * Renders the win screen with background image and restart/menu buttons.
  */
 function showWinScreen() {
     let ctx = canvas.getContext('2d');
-    ctx.save();
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.font = '60px Luckiest Guy';
-    ctx.fillStyle = 'white';
-    ctx.textAlign = 'center';
-    ctx.fillText('YOU WIN!', canvas.width / 2, canvas.height / 2);
-    ctx.restore();
+    ctx.drawImage(winBackground, 0, 0, canvas.width, canvas.height);
+
+    winRestartBtnX = canvas.width / 2 - winRestartBtnW / 2;
+    winRestartBtnY = canvas.height / 2;
+    winMenuBtnX = canvas.width / 2 - winMenuBtnW / 2;
+    winMenuBtnY = canvas.height / 2 + 100;
+
+    ctx.drawImage(winRestartBtn, winRestartBtnX, winRestartBtnY, winRestartBtnW, winRestartBtnH);
+    ctx.drawImage(winMenuBtn, winMenuBtnX, winMenuBtnY, winMenuBtnW, winMenuBtnH);
+
+    canvas.addEventListener('click', onWinScreenClick);
+}
+
+/**
+ * Handles click events on the win screen.
+ * @param {MouseEvent} event - The click event.
+ */
+function onWinScreenClick(event) {
+    let rect = canvas.getBoundingClientRect();
+    let clickX = event.clientX - rect.left;
+    let clickY = event.clientY - rect.top;
+
+    if (clickX >= winRestartBtnX && clickX <= winRestartBtnX + winRestartBtnW &&
+        clickY >= winRestartBtnY && clickY <= winRestartBtnY + winRestartBtnH) {
+        canvas.removeEventListener('click', onWinScreenClick);
+        restartGame();
+    }
+
+    if (clickX >= winMenuBtnX && clickX <= winMenuBtnX + winMenuBtnW &&
+        clickY >= winMenuBtnY && clickY <= winMenuBtnY + winMenuBtnH) {
+        canvas.removeEventListener('click', onWinScreenClick);
+        backToMenu();
+    }
+}
+
+/**
+ * Restarts the game by resetting all states and reinitializing the world.
+ */
+function restartGame() {
+    gameStarted = false;
+    gameOver = false;
+    gameWon = false;
+    intervalIds = [];
+    allAudio = [];
+    INGAME_BGM_AUDIO.currentTime = 0;
+    GAME_OVER_AUDIO.currentTime = 0;
+    GAME_WON_AUDIO.currentTime = 0;
+    initLevel();
+    world = new World(canvas);
+    INGAME_BGM_AUDIO.play();
+    registerAudio(INGAME_BGM_AUDIO);
+}
+
+/**
+ * Returns to the start screen by resetting all game states.
+ */
+function backToMenu() {
+    gameStarted = false;
+    gameOver = false;
+    gameWon = false;
+    intervalIds = [];
+    allAudio = [];
+    INGAME_BGM_AUDIO.pause();
+    GAME_OVER_AUDIO.pause();
+    GAME_WON_AUDIO.pause();
+    showStartScreen();
 }
 
 /**
