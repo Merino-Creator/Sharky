@@ -43,9 +43,34 @@ canvas {
     width: 100%;
 }
 
+.dpad {
+    display: grid;
+    grid-template-columns: repeat(3, 30px);
+    grid-template-rows: repeat(3, 30px);
+    gap: 4px;
+}
+
+.dpad button {
+    width: 30px;
+    height: 30px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(255, 255, 255, 0.3);
+    font-size: 20px;
+}
+
 .panel {
     display: flex;
     gap: 24px;
+}
+
+.panel button {
+    width: 30px;
+    height: 30px;
+    border-radius: 12px;
+    border: none;
+    background: rgba(255, 255, 255, 0.3);
+    font-size: 20px;
 }
 
 h1 {

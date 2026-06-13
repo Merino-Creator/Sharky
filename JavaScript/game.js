@@ -184,6 +184,73 @@ window.addEventListener('keyup', (event) => {
     if (event.keyCode == 68) keyboard.D = false;
 });
 
+document.getElementById('btnUp').textContent = '▲';
+document.getElementById('btnDown').textContent = '▼';
+document.getElementById('btnLeft').textContent = '◀';
+document.getElementById('btnRight').textContent = '▶';
+document.getElementById('btnShoot').textContent = 'B';
+document.getElementById('btnSlap').textContent = 'S';
+
+document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.LEFT = true;
+});
+
+document.getElementById('btnLeft').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.LEFT = false;
+});
+
+document.getElementById('btnRight').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.RIGHT = true;
+});
+
+document.getElementById('btnRight').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.RIGHT = false;
+});
+
+document.getElementById('btnUp').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.UP = true;
+});
+
+document.getElementById('btnUp').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.UP = false;
+});
+
+document.getElementById('btnDown').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.DOWN = true;
+});
+
+document.getElementById('btnDown').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.DOWN = false;
+});
+
+document.getElementById('btnShoot').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.S = true;
+});
+
+document.getElementById('btnShoot').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.S = false;
+});
+
+document.getElementById('btnSlap').addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    keyboard.D = true;
+});
+
+document.getElementById('btnSlap').addEventListener('touchend', (e) => {
+    e.preventDefault();
+    keyboard.D = false;
+});
+
 /**
  * Stops the game by clearing all active intervals.
  */
