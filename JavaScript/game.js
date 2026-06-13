@@ -208,7 +208,16 @@ function looseGame() {
  */
 function showGameOverScreen() {
     let ctx = canvas.getContext('2d');
-    ctx.drawImage(gameOverBackground, 0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    let bgWidth = 400;
+    let bgHeight = 200;
+    let bgX = canvas.width / 2 - bgWidth / 2;
+    let bgY = 20;
+
+    ctx.drawImage(gameOverBackground, bgX, bgY, bgWidth, bgHeight);
 
     gameOverRestartBtnX = canvas.width / 2 - gameOverRestartBtnW / 2;
     gameOverRestartBtnY = canvas.height / 2;
@@ -262,9 +271,9 @@ function showWinScreen() {
     ctx.drawImage(winBackground, 0, 0, canvas.width, canvas.height);
 
     winRestartBtnX = canvas.width / 2 - winRestartBtnW / 2;
-    winRestartBtnY = canvas.height / 2;
+    winRestartBtnY = canvas.height / 4;
     winMenuBtnX = canvas.width / 2 - winMenuBtnW / 2;
-    winMenuBtnY = canvas.height / 2 + 100;
+    winMenuBtnY = canvas.height / 4 + 220;
 
     ctx.drawImage(winRestartBtn, winRestartBtnX, winRestartBtnY, winRestartBtnW, winRestartBtnH);
     ctx.drawImage(winMenuBtn, winMenuBtnX, winMenuBtnY, winMenuBtnW, winMenuBtnH);
