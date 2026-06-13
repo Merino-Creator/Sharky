@@ -22,6 +22,32 @@ canvas {
     max-width: 720px;
 }
 
+#canvas-container {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    display: inline-block;
+}
+
+#hud {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: none;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 24px 10px 24px;
+    max-width: 720px;
+    width: 100%;
+}
+
+.panel {
+    display: flex;
+    gap: 24px;
+}
+
 h1 {
     font-family: 'Luckiest_Guy';
     font-size: 48px;
@@ -43,9 +69,10 @@ h3 {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 20px;
     width: 100%;
     max-width: 720px;
+    box-sizing: border-box;
+    padding-top: 20px;
 }
 
 .arrows {
@@ -114,6 +141,23 @@ h3 {
     }
 }
 
+@media only screen and (max-height: 760px) {
+    h1 {
+        margin-bottom: 4px;
+        margin-top: 4px;
+    }
+}
+
+@media only screen and (max-height: 700px) {
+    h1 {
+        display: none;
+    }
+    
+    #controls {
+        display: none;
+    }
+}
+
 @media only screen and (max-height: 480px) {
     canvas {
         height: 100vh;
@@ -127,5 +171,9 @@ h3 {
 
     #controls {
         display: none;
+    }
+
+    #hud {
+        display: flex;
     }
 }

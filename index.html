@@ -15,9 +15,20 @@
 
     <h1>Sharky</h1>
 
-    <div style="position: relative; display: inline-block;">
+    <div id="canvas-container">
         <canvas id="canvas" width="720" height="480"></canvas>
         <button id="muteBtn" onclick="toggleMute()">🔊</button>
+
+        <div id="hud">
+            <div class="panel">
+                <button id="btnLeft"></button>
+                <button id="btnRight"></button>
+            </div>
+            <div class="panel">
+                <button id="btnShoot"></button>
+                <button id="btnSlap"></button>
+            </div>
+        </div>
     </div>
 
 
@@ -35,7 +46,6 @@
             <h3>Slap</h3>
         </div>
     </div>
-
 
 </body>
 
