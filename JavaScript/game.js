@@ -49,10 +49,10 @@ function init() {
 function initEndScreenImages() {
     winBackground.src = '/assets/6.Botones/Tittles/You win/Mesa de trabajo 1.png';
     winRestartBtn.src = '/assets/6.Botones/Try again/Recurso 16.png';
-    winMenuBtn.src = '/assets/6.Botones/Try again/Recurso 16.png';
+    winMenuBtn.src = '/assets/6.Botones/HOME_button.png';
     gameOverBackground.src = '/assets/6.Botones/Tittles/Game Over/Recurso 11.png';
     gameOverRestartBtn.src = '/assets/6.Botones/Try again/Recurso 16.png';
-    gameOverMenuBtn.src = '/assets/6.Botones/Try again/Recurso 16.png';
+    gameOverMenuBtn.src = '/assets/6.Botones/HOME_button.png';
 }
 
 /**
@@ -304,36 +304,40 @@ function onWinScreenClick(event) {
 }
 
 /**
- * Restarts the game by resetting all states and reinitializing the world.
+ * Resets all game states, audio and static arrays to their initial values.
  */
-function restartGame() {
+function resetGame() {
     gameStarted = false;
     gameOver = false;
     gameWon = false;
     intervalIds = [];
     allAudio = [];
-    INGAME_BGM_AUDIO.currentTime = 0;
-    GAME_OVER_AUDIO.currentTime = 0;
-    GAME_WON_AUDIO.currentTime = 0;
+
+    Puffer.usedPositions = [];
+    Jellyfish.usedPositions = [];
+    Coins.usedPositions = [];
+    PoisonBottle.usedPositions = [];
+
+    [INGAME_BGM_AUDIO, GAME_OVER_AUDIO, GAME_WON_AUDIO].forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0;
+    });
+
+    world = null;
+}
+
+function backToMenu() {
+    resetGame();
+    showStartScreen();
+}
+
+function restartGame() {
+    resetGame();
+    gameStarted = true;
     initLevel();
     world = new World(canvas);
     INGAME_BGM_AUDIO.play();
     registerAudio(INGAME_BGM_AUDIO);
-}
-
-/**
- * Returns to the start screen by resetting all game states.
- */
-function backToMenu() {
-    gameStarted = false;
-    gameOver = false;
-    gameWon = false;
-    intervalIds = [];
-    allAudio = [];
-    INGAME_BGM_AUDIO.pause();
-    GAME_OVER_AUDIO.pause();
-    GAME_WON_AUDIO.pause();
-    showStartScreen();
 }
 
 /**
