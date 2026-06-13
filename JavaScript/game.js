@@ -41,6 +41,7 @@ function init() {
     applyMuteState();
     showStartScreen();
     initEndScreenImages();
+    registerHudEvents();
 }
 
 /**
@@ -184,72 +185,75 @@ window.addEventListener('keyup', (event) => {
     if (event.keyCode == 68) keyboard.D = false;
 });
 
-document.getElementById('btnUp').textContent = '▲';
-document.getElementById('btnDown').textContent = '▼';
-document.getElementById('btnLeft').textContent = '◀';
-document.getElementById('btnRight').textContent = '▶';
-document.getElementById('btnShoot').textContent = 'B';
-document.getElementById('btnSlap').textContent = 'S';
-
 document.getElementById('btnLeft').addEventListener('touchstart', (e) => {
-    e.preventDefault();
+    if (e.cancelable) e.preventDefault();
     keyboard.LEFT = true;
-});
+}, { passive: false });
 
-document.getElementById('btnLeft').addEventListener('touchend', (e) => {
-    e.preventDefault();
-    keyboard.LEFT = false;
-});
+/**
+ * Registers all touch event listeners for the HUD buttons.
+ */
+function registerHudEvents() {
+    let buttons = [
+        { id: 'btnLeft', key: 'LEFT' },
+        { id: 'btnRight', key: 'RIGHT' },
+        { id: 'btnUp', key: 'UP' },
+        { id: 'btnDown', key: 'DOWN' },
+        { id: 'btnShoot', key: 'S' },
+        { id: 'btnSlap', key: 'D' }
+    ];
 
-document.getElementById('btnRight').addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    keyboard.RIGHT = true;
-});
+    buttons.forEach(({ id, key }) => {
+        document.getElementById(id).addEventListener('touchstart', (e) => {
+            if (e.cancelable) e.preventDefault();
+            keyboard[key] = true;
+        }, { passive: false });
 
-document.getElementById('btnRight').addEventListener('touchend', (e) => {
-    e.preventDefault();
-    keyboard.RIGHT = false;
-});
+        document.getElementById(id).addEventListener('touchend', (e) => {
+            if (e.cancelable) e.preventDefault();
+            keyboard[key] = false;
+        }, { passive: false });
+    });
 
-document.getElementById('btnUp').addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    keyboard.UP = true;
-});
+    document.getElementById('btnUp').textContent = '▲';
+    document.getElementById('btnDown').textContent = '▼';
+    document.getElementById('btnLeft').textContent = '◀';
+    document.getElementById('btnRight').textContent = '▶';
+    document.getElementById('btnShoot').textContent = 'B';
+    document.getElementById('btnSlap').textContent = 'S';
+}
 
-document.getElementById('btnUp').addEventListener('touchend', (e) => {
-    e.preventDefault();
-    keyboard.UP = false;
-});
 
-document.getElementById('btnDown').addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    keyboard.DOWN = true;
-});
+/**
+ * Registers all event listeners for the start screen.
+ */
+function registerStartScreenEvents() {
+    canvas.addEventListener('mousemove', onMouseMove);
+    canvas.addEventListener('click', onStartScreenClick);
+    canvas.addEventListener('touchend', onStartScreenTouch, { passive: false });
+}
 
-document.getElementById('btnDown').addEventListener('touchend', (e) => {
-    e.preventDefault();
-    keyboard.DOWN = false;
-});
+/**
+ * Handles touch events on the start screen.
+ * @param {TouchEvent} event - The touch event.
+ */
+function onStartScreenTouch(event) {
+    event.preventDefault();
+    let touch = event.changedTouches[0];
+    let rect = canvas.getBoundingClientRect();
+    let scaleX = canvas.width / rect.width;
+    let scaleY = canvas.height / rect.height;
+    let clickX = (touch.clientX - rect.left) * scaleX;
+    let clickY = (touch.clientY - rect.top) * scaleY;
 
-document.getElementById('btnShoot').addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    keyboard.S = true;
-});
-
-document.getElementById('btnShoot').addEventListener('touchend', (e) => {
-    e.preventDefault();
-    keyboard.S = false;
-});
-
-document.getElementById('btnSlap').addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    keyboard.D = true;
-});
-
-document.getElementById('btnSlap').addEventListener('touchend', (e) => {
-    e.preventDefault();
-    keyboard.D = false;
-});
+    if (clickX >= btnX && clickX <= btnX + btnWidth &&
+        clickY >= btnY && clickY <= btnY + btnHeight) {
+        canvas.removeEventListener('mousemove', onMouseMove);
+        canvas.removeEventListener('touchend', onStartScreenTouch);
+        canvas.style.cursor = 'default';
+        startGame();
+    }
+}
 
 /**
  * Stops the game by clearing all active intervals.
