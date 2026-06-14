@@ -232,6 +232,10 @@ function registerHudEvents() {
             if (e.cancelable) e.preventDefault();
             keyboard[key] = false;
         }, { passive: false });
+
+        document.getElementById(id).addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+        });
     });
 
     document.getElementById('btnUp').textContent = '▲';

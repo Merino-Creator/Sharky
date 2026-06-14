@@ -157,7 +157,7 @@ h3 {
     font-family: 'Luckiest_Guy';
 }
 
-@media only screen and (max-width: 720px)  and (orientation: portrait) {
+@media only screen and (max-width: 720px) and (orientation: portrait) {
     #rotate-overlay {
         display: flex;
     }
@@ -200,7 +200,7 @@ h3 {
     h1 {
         display: none;
     }
-    
+
     #controls {
         display: none;
     }
