@@ -16,7 +16,7 @@ class Character extends MoveableObject {
 
     HURT_AUDIO = new Audio('assets/8.Audio/character-hurt.mp3');
     BUBBLE_SHOOT_AUDIO = new Audio('assets/8.Audio/bubble-shoot.mp3');
-    SNORING_AUDIO = new Audio ('assets/8.Audio/snoring.mp3');
+    SNORING_AUDIO = new Audio('assets/8.Audio/snoring.mp3');
 
     offset = {
         top: 110,
@@ -153,30 +153,56 @@ class Character extends MoveableObject {
      * @param {number} frameCounter - The current animation frame counter.
      */
     animateCharacter(frameCounter) {
+        if (gamePaused) {
+            this.SNORING_AUDIO.pause();
+            this.snoringPlaying = false;
+            return;
+        }
+
         if (this.isDead()) {
             if (frameCounter % 2 === 0)
                 this.playAnimation(this.IMAGES_DEAD);
+
         } else if (this.isHurt()) {
             if (frameCounter % 1 === 0)
                 this.playAnimation(this.IMAGES_HURT);
-            this.HURT_AUDIO.play();
-            registerAudio(this.HURT_AUDIO);
+            if (!this.hurtSoundPlaying) {
+                this.hurtSoundPlaying = true;
+                this.HURT_AUDIO.play();
+                registerAudio(this.HURT_AUDIO);
+                setTimeout(() => this.hurtSoundPlaying = false, 1000);
+            }
+
         } else if (this.isSlapAttacking) {
             if (frameCounter % 1 === 0)
                 this.playAnimation(this.IMAGES_SLAP_ATTACK);
+
         } else if (this.isAttacking) {
             if (frameCounter % 1 === 0)
                 this.playAnimation(this.IMAGES_BUBBLE_ATTACK);
+
         } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
             if (frameCounter % 2 === 0)
                 this.playAnimation(this.IMAGES_SWIM);
+            this.SNORING_AUDIO.pause();
+            this.SNORING_AUDIO.currentTime = 0;
+            this.snoringPlaying = false;
+
         } else if (this.isLongIdle()) {
             if (frameCounter % 2 === 0)
                 this.playAnimation(this.IMAGES_LONG_IDLE);
+            if (!this.snoringPlaying) {
+                this.snoringPlaying = true;
                 this.SNORING_AUDIO.play();
+                registerAudio(this.SNORING_AUDIO);
+            }
+
         } else {
             if (frameCounter % 2 === 0)
                 this.playAnimation(this.IMAGES_IDLE);
+            this.SNORING_AUDIO.pause()
+            this.SNORING_AUDIO.currentTime = 0;
+            this.snoringPlaying = false;
         }
     }
 

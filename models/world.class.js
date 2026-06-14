@@ -49,6 +49,11 @@ class World {
      * Stops the loop and shows the appropriate end screen when the game is over.
      */
     draw() {
+        if (gamePaused) {
+            requestAnimationFrame(() => this.draw());
+            return;
+        }
+
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
@@ -88,26 +93,31 @@ class World {
      */
     checks() {
         let enemyCollisionId = setInterval(() => {
+            if (gamePaused) return;
             this.checkEnemyCollisions();
         }, 100);
         intervalIds.push(enemyCollisionId);
 
         let bubbleCollisionId = setInterval(() => {
+            if (gamePaused) return;
             this.checkBubbleCollisions();
         }, 120);
         intervalIds.push(bubbleCollisionId);
 
         let collectibleCollisionId = setInterval(() => {
+            if (gamePaused) return;
             this.checkCollectibles();
         }, 100);
         intervalIds.push(collectibleCollisionId);
 
         let slapCollisionId = setInterval(() => {
+            if (gamePaused) return;
             this.checkSlapCollisions();
         }, 100);
         intervalIds.push(slapCollisionId);
 
         let bottleMoveId = setInterval(() => {
+            if (gamePaused) return;
             this.level.toxic.forEach(bottle => bottle.updateBottle());
             this.level.toxic = this.level.toxic.filter(bottle => !bottle.isOutOfBounds());
         }, 1000 / 30);
@@ -224,6 +234,7 @@ class World {
      */
     spawnBottle() {
         let bottleSpawnId = setInterval(() => {
+            if (gamePaused) return;
             if (this.character.x <= 3000) {
                 let visibleX = -this.camera_x;
                 let bottle = new PoisonBottle(

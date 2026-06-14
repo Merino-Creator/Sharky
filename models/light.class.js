@@ -36,6 +36,7 @@ class Light extends MoveableObject {
      */
     moveLeft() {
         let lightId = setInterval(() => {
+            if (gamePaused) return;
             this.x -= this.speed;
         }, 1000 / 30);
         intervalIds.push(lightId);

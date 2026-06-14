@@ -11,6 +11,7 @@ let btnX;
 let btnY;
 let gameOver = false;
 let gameWon = false;
+let gamePaused = false;
 
 let INGAME_BGM_AUDIO = new Audio('assets/8.Audio/ingame-bgm.mp3');
 INGAME_BGM_AUDIO.loop = true;
@@ -97,7 +98,7 @@ function drawStartScreen(hover) {
     startCtx.font = '60px Luckiest Guy';
     startCtx.fillStyle = 'white';
     startCtx.textAlign = 'center';
-    startCtx.fillText('AND THE TOXIC WHALE', canvas.width / 2, canvas.height / 2 - 100);
+    startCtx.fillText('TOXIC WAVES', canvas.width / 2, canvas.height / 2 - 100);
     if (hover) {
         startCtx.drawImage(startBtn, btnX - 10, btnY - 5, btnWidth + 20, btnHeight + 10);
     } else {
@@ -511,4 +512,21 @@ function toggleMute() {
 function applyMuteState() {
     allAudio.forEach(audio => audio.muted = isMuted);
     document.getElementById('muteBtn').textContent = isMuted ? '🔇' : '🔊';
+}
+
+/**
+ * Toggles the info menu visibility and pauses/resumes the game.
+ */
+function toggleInfoMenu() {
+    let infoMenu = document.getElementById('infoMenu');
+    infoMenu.classList.toggle('visible');
+
+    if (gameStarted && !gameOver && !gameWon) {
+        gamePaused = !gamePaused;
+        if (gamePaused) {
+            INGAME_BGM_AUDIO.pause();
+        } else {
+            INGAME_BGM_AUDIO.play();
+        }
+    }
 }

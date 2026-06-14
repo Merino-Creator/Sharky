@@ -160,6 +160,7 @@ class MoveableObject extends DrawableObject {
         let movingUp = true;
 
         let upDownId = setInterval(() => {
+            if (gamePaused) return;
             if (movingUp) {
                 this.y -= this.speed;
                 if (this.y <= this.yMin) movingUp = false;

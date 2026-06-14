@@ -17,7 +17,14 @@
 
     <div id="canvas-container">
         <canvas id="canvas" width="720" height="480"></canvas>
-        <button id="muteBtn" onclick="toggleMute()">🔊</button>
+        <div id="canvasButtons">
+            <button id="muteBtn" onclick="toggleMute()">🔊</button>
+            <button id="infoBtn" onclick="toggleInfoMenu()">ℹ️</button>
+        </div>
+
+        <div id="infoMenu">
+            <a href="impressum.html" target="_blank">Impressum</a>
+        </div>
 
         <div id="hud">
             <div class="dpad">

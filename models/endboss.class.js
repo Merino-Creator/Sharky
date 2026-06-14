@@ -104,12 +104,14 @@ class Endboss extends MoveableObject {
         let deadFrame = 0;
 
         let bossAttackTriggerId = setInterval(() => {
+            if (gamePaused) return;
             if (this.firstContact && introFinished) {
                 isAttacking = true;
                 this.BOSS_ATTACK_AUDIO.play();
                 registerAudio(this.BOSS_ATTACK_AUDIO);
 
                 let attackId = setInterval(() => {
+                    if (gamePaused) return;
                     if (this.x > startX - 200) {
                         this.x -= 5;
                     } else {
@@ -122,6 +124,7 @@ class Endboss extends MoveableObject {
                     clearInterval(attackId);
 
                     let returnId = setInterval(() => {
+                        if (gamePaused) return;
                         if (this.x < startX) {
                             this.x += 5;
                         } else {
@@ -134,6 +137,7 @@ class Endboss extends MoveableObject {
         intervalIds.push(bossAttackTriggerId);
 
         let bossAnimateId = setInterval(() => {
+            if (gamePaused) return;
             frameCounter++;
 
             if (this.isDead()) {
@@ -148,20 +152,16 @@ class Endboss extends MoveableObject {
             } else if (this.bossIsHurt()) {
                 if (frameCounter % 1 === 0)
                     this.playAnimation(this.IMAGES_BOSS_HURT);
-
             } else if (!this.firstContact) {
                 if (frameCounter % 2 === 0)
                     this.playAnimation(this.IMAGES_BOSS_FLOAT);
-
             } else if (this.firstContact && this.currentImage < this.IMAGES_BOSS_INTRO.length) {
                 if (frameCounter % 2 === 0)
                     this.playAnimation(this.IMAGES_BOSS_INTRO);
-
             } else if (isAttacking) {
                 introFinished = true;
                 if (frameCounter % 2 === 0)
                     this.playAnimation(this.IMAGES_BOSS_ATTACK);
-
             } else {
                 introFinished = true;
                 if (frameCounter % 2 === 0)
@@ -171,6 +171,7 @@ class Endboss extends MoveableObject {
         intervalIds.push(bossAnimateId);
 
         let bossContactId = setInterval(() => {
+            if (gamePaused) return;
             if (world && world.character.x > 3050 && !this.firstContact) {
                 this.firstContact = true;
                 this.currentImage = 0;

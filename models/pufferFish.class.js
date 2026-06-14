@@ -104,6 +104,7 @@ class Puffer extends MoveableObject {
         intervalIds.push(pufferAnimateId);
 
         let pufferMoveLeftId = setInterval(() => {
+            if (gamePaused) return;
             this.moveLeft();
         }, 1000 / 30);
         intervalIds.push(pufferMoveLeftId);
