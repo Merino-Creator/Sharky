@@ -11,14 +11,14 @@ class PoisonBottle extends MoveableObject {
     acceleration = 0.1;
 
     IMAGES_POISON_BOTTLE = [
-        'assets/4. Marcadores/Posión/Animada/1.png',
-        'assets/4. Marcadores/Posión/Animada/2.png',
-        'assets/4. Marcadores/Posión/Animada/3.png',
-        'assets/4. Marcadores/Posión/Animada/4.png',
-        'assets/4. Marcadores/Posión/Animada/5.png',
-        'assets/4. Marcadores/Posión/Animada/6.png',
-        'assets/4. Marcadores/Posión/Animada/7.png',
-        'assets/4. Marcadores/Posión/Animada/8.png'
+        '/assets/4. Marcadores/Posión/Animada/1.png',
+        '/assets/4. Marcadores/Posión/Animada/2.png',
+        '/assets/4. Marcadores/Posión/Animada/3.png',
+        '/assets/4. Marcadores/Posión/Animada/4.png',
+        '/assets/4. Marcadores/Posión/Animada/5.png',
+        '/assets/4. Marcadores/Posión/Animada/6.png',
+        '/assets/4. Marcadores/Posión/Animada/7.png',
+        '/assets/4. Marcadores/Posión/Animada/8.png'
     ];
 
     /**
@@ -27,7 +27,7 @@ class PoisonBottle extends MoveableObject {
      * @param {number} acceleration - The fall acceleration of the bottle.
      */
     constructor(x, acceleration) {
-        super().loadImage('assets/4. Marcadores/Posión/Animada/1.png');
+        super().loadImage('/assets/4. Marcadores/Posión/Animada/1.png');
         this.loadImages(this.IMAGES_POISON_BOTTLE);
         this.x = x;
         this.acceleration = acceleration;

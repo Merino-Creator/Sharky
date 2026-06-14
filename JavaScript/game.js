@@ -13,10 +13,10 @@ let gameOver = false;
 let gameWon = false;
 let gamePaused = false;
 
-let INGAME_BGM_AUDIO = new Audio('assets/8.Audio/ingame-bgm.mp3');
+let INGAME_BGM_AUDIO = new Audio('/assets/8.Audio/ingame-bgm.mp3');
 INGAME_BGM_AUDIO.loop = true;
-let GAME_WON_AUDIO = new Audio('assets/8.Audio/game-won.mp3');
-let GAME_OVER_AUDIO = new Audio('assets/8.Audio/game-over.mp3');
+let GAME_WON_AUDIO = new Audio('/assets/8.Audio/game-won.mp3');
+let GAME_OVER_AUDIO = new Audio('/assets/8.Audio/game-over.mp3');
 
 let isMuted = localStorage.getItem('muted') === 'true';
 let allAudio = [];

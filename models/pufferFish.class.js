@@ -10,11 +10,11 @@ class Puffer extends MoveableObject {
     damage = 10;
 
     IMAGES_PUFFER_SWIM = [
-        'assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png',
-        'assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png',
-        'assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim3.png',
-        'assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim4.png',
-        'assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim5.png'
+        '/assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png',
+        '/assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png',
+        '/assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim3.png',
+        '/assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim4.png',
+        '/assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim5.png'
     ];
 
     IMAGES_PUFFER_TRANSITION = [

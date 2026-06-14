@@ -13,6 +13,6 @@ class Health extends Statusbar {
      * Creates a new Health instance and loads the health icon image.
      */
     constructor() {
-        super().loadImage('assets/4. Marcadores/green/100_  copia 3.png');
+        super().loadImage('/assets/4. Marcadores/green/100_  copia 3.png');
     }
 }
