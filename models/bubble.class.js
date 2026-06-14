@@ -16,7 +16,7 @@ class Bubble extends MoveableObject {
      * @param {number} y - The starting y position of the bubble.
      */
     constructor(x, y) {
-        super().loadImage('/assets/1.Sharkie/4.Attack/Bubble trap/Bubble.png');
+        super().loadImage('./assets/1.Sharkie/4.Attack/Bubble trap/Bubble.png');
         this.x = x;
         this.y = y;
         this.throw();

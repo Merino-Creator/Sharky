@@ -13,6 +13,6 @@ class Toxic extends Statusbar {
      * Creates a new Toxic instance and loads the toxic icon image.
      */
     constructor() {
-        super().loadImage('/assets/4. Marcadores/green/100_ copia 5.png');
+        super().loadImage('./assets/4. Marcadores/green/100_ copia 5.png');
     }
 }

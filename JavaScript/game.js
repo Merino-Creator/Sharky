@@ -13,10 +13,10 @@ let gameOver = false;
 let gameWon = false;
 let gamePaused = false;
 
-let INGAME_BGM_AUDIO = new Audio('/assets/8.Audio/ingame-bgm.mp3');
+let INGAME_BGM_AUDIO = new Audio('./assets/8.Audio/ingame-bgm.mp3');
 INGAME_BGM_AUDIO.loop = true;
-let GAME_WON_AUDIO = new Audio('/assets/8.Audio/game-won.mp3');
-let GAME_OVER_AUDIO = new Audio('/assets/8.Audio/game-over.mp3');
+let GAME_WON_AUDIO = new Audio('./assets/8.Audio/game-won.mp3');
+let GAME_OVER_AUDIO = new Audio('./assets/8.Audio/game-over.mp3');
 
 let isMuted = localStorage.getItem('muted') === 'true';
 let allAudio = [];
@@ -50,12 +50,12 @@ function init() {
  * Preloads all images used on the win and game over screens.
  */
 function initEndScreenImages() {
-    winBackground.src = '/assets/6.Botones/Tittles/You win/Mesa de trabajo 1.png';
-    winRestartBtn.src = '/assets/6.Botones/Try again/Recurso 16.png';
-    winMenuBtn.src = '/assets/6.Botones/HOME_button.png';
-    gameOverBackground.src = '/assets/6.Botones/Tittles/Game Over/Recurso 11.png';
-    gameOverRestartBtn.src = '/assets/6.Botones/Try again/Recurso 16.png';
-    gameOverMenuBtn.src = '/assets/6.Botones/HOME_button.png';
+    winBackground.src = './assets/6.Botones/Tittles/You win/Mesa de trabajo 1.png';
+    winRestartBtn.src = './assets/6.Botones/Try again/Recurso 16.png';
+    winMenuBtn.src = './assets/6.Botones/HOME_button.png';
+    gameOverBackground.src = './assets/6.Botones/Tittles/Game Over/Recurso 11.png';
+    gameOverRestartBtn.src = './assets/6.Botones/Try again/Recurso 16.png';
+    gameOverMenuBtn.src = './assets/6.Botones/HOME_button.png';
 }
 
 /**
@@ -74,8 +74,8 @@ function initStartScreen() {
     startCtx = canvas.getContext('2d');
     startBackground = new Image();
     startBtn = new Image();
-    startBackground.src = '/assets/3. Background/Dark/2.png';
-    startBtn.src = '/assets/6.Botones/Start/1.png';
+    startBackground.src = './assets/3. Background/Dark/2.png';
+    startBtn.src = './assets/6.Botones/Start/1.png';
     btnX = canvas.width / 2 - btnWidth / 2;
     btnY = canvas.height / 2;
 }

@@ -13,6 +13,6 @@ class CoinAmount extends Statusbar {
      * Creates a new CoinAmount instance and loads the coin icon image.
      */
     constructor() {
-        super().loadImage('/assets/4. Marcadores/green/100_ copia 6.png');
+        super().loadImage('./assets/4. Marcadores/green/100_ copia 6.png');
     }
 }

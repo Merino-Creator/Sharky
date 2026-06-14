@@ -10,38 +10,38 @@ class Puffer extends MoveableObject {
     damage = 10;
 
     IMAGES_PUFFER_SWIM = [
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png',
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png',
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim3.png',
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim4.png',
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim5.png'
+        './assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png',
+        './assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png',
+        './assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim3.png',
+        './assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim4.png',
+        './assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim5.png'
     ];
 
     IMAGES_PUFFER_TRANSITION = [
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition1.png',
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition2.png',
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition3.png',
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition4.png',
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition5.png'
+        './assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition1.png',
+        './assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition2.png',
+        './assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition3.png',
+        './assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition4.png',
+        './assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition5.png'
     ];
 
     IMAGES_PUFFER_ATTACK = [
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim1.png',
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim2.png',
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim3.png',
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim4.png',
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim5.png'
+        './assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim1.png',
+        './assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim2.png',
+        './assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim3.png',
+        './assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim4.png',
+        './assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim5.png'
     ];
 
     IMAGES_DEAD = [
-        '/assets/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 1 (can animate by going up).png'
+        './assets/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 1 (can animate by going up).png'
     ];
 
     /**
      * Creates a new Puffer instance with a random position and speed.
      */
     constructor() {
-        super().loadImage('assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
+        super().loadImage('./assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
         this.loadImages(this.IMAGES_PUFFER_SWIM);
         this.loadImages(this.IMAGES_PUFFER_TRANSITION);
         this.loadImages(this.IMAGES_PUFFER_ATTACK);

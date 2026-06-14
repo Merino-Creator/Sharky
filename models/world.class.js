@@ -16,10 +16,10 @@ class World {
     coins;
     lastBottleX = 0;
 
-    TOXIC_BUBBLING_AUDIO = new Audio('/assets/8.Audio/toxic-bubbling.mp3');
-    TOXIC_COLLECT_AUDIO = new Audio('/assets/8.Audio/toxic-collect.mp3');
-    COIN_COLLECT_AUDIO = new Audio('/assets/8.Audio/coin-sound.mp3');
-    SLAP_AUDIO = new Audio('/assets/8.Audio/slap.mp3');
+    TOXIC_BUBBLING_AUDIO = new Audio('./assets/8.Audio/toxic-bubbling.mp3');
+    TOXIC_COLLECT_AUDIO = new Audio('./assets/8.Audio/toxic-collect.mp3');
+    COIN_COLLECT_AUDIO = new Audio('./assets/8.Audio/coin-sound.mp3');
+    SLAP_AUDIO = new Audio('./assets/8.Audio/slap.mp3');
 
     /**
      * Creates a new World instance and initializes the game.
