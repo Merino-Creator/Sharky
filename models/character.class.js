@@ -16,6 +16,7 @@ class Character extends MoveableObject {
 
     HURT_AUDIO = new Audio('assets/8.Audio/character-hurt.mp3');
     BUBBLE_SHOOT_AUDIO = new Audio('assets/8.Audio/bubble-shoot.mp3');
+    SNORING_AUDIO = new Audio ('assets/8.Audio/snoring.mp3');
 
     offset = {
         top: 110,
@@ -172,6 +173,7 @@ class Character extends MoveableObject {
         } else if (this.isLongIdle()) {
             if (frameCounter % 2 === 0)
                 this.playAnimation(this.IMAGES_LONG_IDLE);
+                this.SNORING_AUDIO.play();
         } else {
             if (frameCounter % 2 === 0)
                 this.playAnimation(this.IMAGES_IDLE);
