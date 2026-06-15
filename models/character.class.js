@@ -57,19 +57,19 @@ class Character extends MoveableObject {
 
     IMAGES_LONG_IDLE = [
         './assets/1.Sharkie/2.Long_IDLE/i1.png',
-        './assets/1.Sharkie/2.Long_IDLE/i2.png',
-        './assets/1.Sharkie/2.Long_IDLE/i3.png',
-        './assets/1.Sharkie/2.Long_IDLE/i4.png',
-        './assets/1.Sharkie/2.Long_IDLE/i5.png',
-        './assets/1.Sharkie/2.Long_IDLE/i6.png',
-        './assets/1.Sharkie/2.Long_IDLE/i7.png',
-        './assets/1.Sharkie/2.Long_IDLE/i8.png',
-        './assets/1.Sharkie/2.Long_IDLE/i9.png',
-        './assets/1.Sharkie/2.Long_IDLE/i10.png',
-        './assets/1.Sharkie/2.Long_IDLE/i11.png',
-        './assets/1.Sharkie/2.Long_IDLE/i12.png',
-        './assets/1.Sharkie/2.Long_IDLE/i13.png',
-        './assets/1.Sharkie/2.Long_IDLE/i14.png'
+        './assets/1.Sharkie/2.Long_IDLE/I2.png',
+        './assets/1.Sharkie/2.Long_IDLE/I3.png',
+        './assets/1.Sharkie/2.Long_IDLE/I4.png',
+        './assets/1.Sharkie/2.Long_IDLE/I5.png',
+        './assets/1.Sharkie/2.Long_IDLE/I6.png',
+        './assets/1.Sharkie/2.Long_IDLE/I7.png',
+        './assets/1.Sharkie/2.Long_IDLE/I8.png',
+        './assets/1.Sharkie/2.Long_IDLE/I9.png',
+        './assets/1.Sharkie/2.Long_IDLE/I10.png',
+        './assets/1.Sharkie/2.Long_IDLE/I11.png',
+        './assets/1.Sharkie/2.Long_IDLE/I12.png',
+        './assets/1.Sharkie/2.Long_IDLE/I13.png',
+        './assets/1.Sharkie/2.Long_IDLE/I14.png'
     ];
 
     IMAGES_DEAD = [
