@@ -14,6 +14,6 @@ class ToxicBubble extends Bubble {
      */
     constructor(x, y) {
         super(x, y);
-        this.loadImage('/assets/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png');
+        this.loadImage('./assets/1.Sharkie/4.Attack/Bubble trap/Poisoned Bubble (for whale).png');
     }
 }

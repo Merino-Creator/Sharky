@@ -359,6 +359,7 @@ function onGameOverScreenClick(event) {
 function winGame() {
     stopGame();
     gameWon = true;
+    INGAME_BGM_AUDIO.pause();
     showWinScreen();
     GAME_WON_AUDIO.play();
     registerAudio(GAME_WON_AUDIO);

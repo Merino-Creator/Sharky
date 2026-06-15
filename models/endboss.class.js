@@ -14,6 +14,7 @@ class Endboss extends MoveableObject {
     damage = 50;
 
     BOSS_ATTACK_AUDIO = new Audio('./assets/8.Audio/boss-attack.mp3');
+    BOSS_DIES_AUDIO = new Audio('./assets/8.Audio/boss-dies.mp3');
 
     offset = {
         top: 130,
@@ -145,6 +146,15 @@ class Endboss extends MoveableObject {
                     if (deadFrame < this.IMAGES_BOSS_DEAD.length) {
                         this.img = this.ImageCache[this.IMAGES_BOSS_DEAD[deadFrame]];
                         deadFrame++;
+                        if (deadFrame === 1) {
+                            setTimeout(() => {
+                                this.BOSS_DIES_AUDIO.play();
+                                setTimeout(() => {
+                                    this.BOSS_DIES_AUDIO.pause();
+                                    this.BOSS_DIES_AUDIO.currentTime = 0;
+                                }, 1000);
+                            }, 100);
+                        }
                     } else {
                         this.img = this.ImageCache[this.IMAGES_BOSS_DEAD[this.IMAGES_BOSS_DEAD.length - 1]];
                     }
