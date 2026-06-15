@@ -6,14 +6,14 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url('/assets/7.Website_Background/Sharky-BGPN2.jpg');
+    background-image: url('./assets/7.Website_Background/Sharky-BGPN2.jpg');
     background-position: center;
     background-size: cover;
 }
 
 @font-face {
     font-family: 'Luckiest_Guy';
-    src: url('/assets/5.Font/LuckiestGuy-Regular.ttf');
+    src: url('./assets/5.Font/LuckiestGuy-Regular.ttf');
 }
 
 canvas {
