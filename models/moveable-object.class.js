@@ -75,8 +75,8 @@ class MoveableObject extends DrawableObject {
     }
 
     /**
-     * Reduces the character's energy by the given damage amount.
-     * Records the time of the hit to enable the hurt state.
+     * Reduces the character's energy by the given damage amount and records the hit time.
+     * Energy cannot drop below 0.
      * @param {number} damage - The amount of damage to apply.
      */
     characterHit(damage) {
@@ -88,7 +88,8 @@ class MoveableObject extends DrawableObject {
     }
 
     /**
-     * Reduces the enemy's energy by the given damage amount.
+     * Reduces the enemy's energy by the given damage amount and records the hit time.
+     * Energy cannot drop below 0.
      * @param {number} damage - The amount of damage to apply.
      */
     enemyHit(damage) {
@@ -110,6 +111,11 @@ class MoveableObject extends DrawableObject {
         return timepassed < 1;
     }
 
+    /**
+     * Checks if the Endboss is currently in a hurt state.
+     * The hurt state lasts for 0.3 seconds after being hit.
+     * @returns {boolean} True if the Endboss was hit less than 0.3 seconds ago.
+     */
     bossIsHurt() {
         let timepassed = new Date().getTime() - this.lastHit;
         timepassed = timepassed / 1000;
@@ -154,6 +160,7 @@ class MoveableObject extends DrawableObject {
 
     /**
      * Moves the object continuously up and down between yMin and yMax boundaries.
+     * Returns early when the game is paused.
      * Stores the interval ID for later cleanup.
      */
     moveUpDown() {
@@ -184,27 +191,36 @@ class MoveableObject extends DrawableObject {
             this.currentImage = 0;
 
             setTimeout(() => {
-                let bubble;
-                if (world.toxicAmount >= 4) {
-                    bubble = new ToxicBubble(
-                        this.x + this.offset.left + 140,
-                        this.y + this.offset.top + 25
-                    );
-                } else {
-                    bubble = new Bubble(
-                        this.x + this.offset.left + 140,
-                        this.y + this.offset.top + 25
-                    );
-                }
-                world.bubble.push(bubble);
-                this.isAttacking = false;
+                this.checkToxicAmount(world);
             }, 800);
         }
     }
 
     /**
+     * Creates a ToxicBubble if the toxic amount is 4 or more, otherwise creates a regular Bubble.
+     * Adds the bubble to the world and resets the attacking state.
+     * @param {World} world - The game world instance to add the bubble to.
+     */
+    checkToxicAmount(world) {
+        let bubble;
+        if (world.toxicAmount >= 4) {
+            bubble = new ToxicBubble(
+                this.x + this.offset.left + 140,
+                this.y + this.offset.top + 25
+            );
+        } else {
+            bubble = new Bubble(
+                this.x + this.offset.left + 140,
+                this.y + this.offset.top + 25
+            );
+        }
+        world.bubble.push(bubble);
+        this.isAttacking = false;
+    }
+
+    /**
      * Performs a slap attack if the character is not already attacking or hurt.
-     * Blocks further attacks until the animation completes after 800ms.
+     * Sets isSlapAttacking to true and resets both attack flags after 800ms.
      * @param {World} world - The game world instance.
      */
     slap(world) {
