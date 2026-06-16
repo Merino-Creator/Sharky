@@ -158,7 +158,15 @@ function onStartScreenTouch(event) {
     let scaleY = canvas.height / rect.height;
     let clickX = (touch.clientX - rect.left) * scaleX;
     let clickY = (touch.clientY - rect.top) * scaleY;
+    checkStartScreenTouch(clickX, clickY);
+}
 
+/**
+ * Checks if the touch position is within the start button bounds and starts the game.
+ * @param {number} clickX - The x position of the touch.
+ * @param {number} clickY - The y position of the touch.
+ */
+function checkStartScreenTouch(clickX, clickY) {
     if (clickX >= btnX && clickX <= btnX + btnWidth &&
         clickY >= btnY && clickY <= btnY + btnHeight) {
         canvas.removeEventListener('mousemove', onMouseMove);
@@ -211,40 +219,38 @@ window.addEventListener('keyup', (event) => {
 });
 
 /**
- * Registers all touch event listeners for the HUD buttons.
+ * Registers all touch event listeners and sets text content for the HUD buttons.
  */
 function registerHudEvents() {
     let buttons = [
-        { id: 'btnLeft', key: 'LEFT' },
-        { id: 'btnRight', key: 'RIGHT' },
-        { id: 'btnUp', key: 'UP' },
-        { id: 'btnDown', key: 'DOWN' },
-        { id: 'btnShoot', key: 'S' },
-        { id: 'btnSlap', key: 'D' }
+        { id: 'btnLeft', key: 'LEFT', text: '◀' },
+        { id: 'btnRight', key: 'RIGHT', text: '▶' },
+        { id: 'btnUp', key: 'UP', text: '▲' },
+        { id: 'btnDown', key: 'DOWN', text: '▼' },
+        { id: 'btnShoot', key: 'S', text: 'B' },
+        { id: 'btnSlap', key: 'D', text: 'S' }
     ];
+    registerTouch(buttons);
+}
 
-    buttons.forEach(({ id, key }) => {
-        document.getElementById(id).addEventListener('touchstart', (e) => {
+/**
+ * Registers touchstart, touchend and contextmenu event listeners for each HUD button.
+ * @param {Array} buttons - Array of button objects with id, key and text.
+ */
+function registerTouch(buttons) {
+    buttons.forEach(({ id, key, text }) => {
+        let btn = document.getElementById(id);
+        btn.textContent = text;
+        btn.addEventListener('touchstart', (e) => {
             if (e.cancelable) e.preventDefault();
             keyboard[key] = true;
         }, { passive: false });
-
-        document.getElementById(id).addEventListener('touchend', (e) => {
+        btn.addEventListener('touchend', (e) => {
             if (e.cancelable) e.preventDefault();
             keyboard[key] = false;
         }, { passive: false });
-
-        document.getElementById(id).addEventListener('contextmenu', (e) => {
-            e.preventDefault();
-        });
+        btn.addEventListener('contextmenu', (e) => e.preventDefault());
     });
-
-    document.getElementById('btnUp').textContent = '▲';
-    document.getElementById('btnDown').textContent = '▼';
-    document.getElementById('btnLeft').textContent = '◀';
-    document.getElementById('btnRight').textContent = '▶';
-    document.getElementById('btnShoot').textContent = 'B';
-    document.getElementById('btnSlap').textContent = 'S';
 }
 
 /**
@@ -267,7 +273,7 @@ function looseGame() {
 }
 
 /**
- * Draws the game over screen with optional hover effects on buttons.
+ * Draws the game over screen background and buttons with optional hover effects.
  * @param {boolean} hoverRestart - Whether the mouse is hovering over the restart button.
  * @param {boolean} hoverMenu - Whether the mouse is hovering over the menu button.
  */
@@ -275,19 +281,26 @@ function drawGameOverScreen(hoverRestart, hoverMenu) {
     let ctx = canvas.getContext('2d');
     ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
     let bgWidth = 400;
     let bgHeight = 200;
     let bgX = canvas.width / 2 - bgWidth / 2;
     let bgY = 20;
     ctx.drawImage(gameOverBackground, bgX, bgY, bgWidth, bgHeight);
+    gameOverButtonHover(ctx, hoverRestart, hoverMenu);
+}
 
+/**
+ * Draws the game over buttons with optional hover effects.
+ * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+ * @param {boolean} hoverRestart - Whether the mouse is hovering over the restart button.
+ * @param {boolean} hoverMenu - Whether the mouse is hovering over the menu button.
+ */
+function gameOverButtonHover(ctx, hoverRestart, hoverMenu) {
     if (hoverRestart) {
         ctx.drawImage(gameOverRestartBtn, gameOverRestartBtnX - 10, gameOverRestartBtnY - 5, gameOverRestartBtnW + 20, gameOverRestartBtnH + 10);
     } else {
         ctx.drawImage(gameOverRestartBtn, gameOverRestartBtnX, gameOverRestartBtnY, gameOverRestartBtnW, gameOverRestartBtnH);
     }
-
     if (hoverMenu) {
         ctx.drawImage(gameOverMenuBtn, gameOverMenuBtnX - 10, gameOverMenuBtnY - 5, gameOverMenuBtnW + 20, gameOverMenuBtnH + 10);
     } else {
@@ -296,16 +309,14 @@ function drawGameOverScreen(hoverRestart, hoverMenu) {
 }
 
 /**
- * Renders the game over screen with background image and restart/menu buttons.
+ * Renders the game over screen and registers click and mousemove event listeners.
  */
 function showGameOverScreen() {
     gameOverRestartBtnX = canvas.width / 2 - gameOverRestartBtnW / 2;
     gameOverRestartBtnY = canvas.height / 2;
     gameOverMenuBtnX = canvas.width / 2 - gameOverMenuBtnW / 2;
     gameOverMenuBtnY = canvas.height / 2 + 100;
-
     drawGameOverScreen(false, false);
-
     canvas.addEventListener('mousemove', onGameOverMouseMove);
     canvas.addEventListener('click', onGameOverScreenClick);
 }
@@ -318,13 +329,10 @@ function onGameOverMouseMove(event) {
     let rect = canvas.getBoundingClientRect();
     let mouseX = event.clientX - rect.left;
     let mouseY = event.clientY - rect.top;
-
     let hoverRestart = mouseX >= gameOverRestartBtnX && mouseX <= gameOverRestartBtnX + gameOverRestartBtnW &&
         mouseY >= gameOverRestartBtnY && mouseY <= gameOverRestartBtnY + gameOverRestartBtnH;
-
     let hoverMenu = mouseX >= gameOverMenuBtnX && mouseX <= gameOverMenuBtnX + gameOverMenuBtnW &&
         mouseY >= gameOverMenuBtnY && mouseY <= gameOverMenuBtnY + gameOverMenuBtnH;
-
     drawGameOverScreen(hoverRestart, hoverMenu);
     canvas.style.cursor = (hoverRestart || hoverMenu) ? 'pointer' : 'default';
 }
@@ -337,14 +345,21 @@ function onGameOverScreenClick(event) {
     let rect = canvas.getBoundingClientRect();
     let clickX = event.clientX - rect.left;
     let clickY = event.clientY - rect.top;
+    checkGameOverTouch(clickX, clickY);
+}
 
+/**
+ * Checks if the click position matches the restart or menu button on the game over screen.
+ * @param {number} clickX - The x position of the click.
+ * @param {number} clickY - The y position of the click.
+ */
+function checkGameOverTouch(clickX, clickY) {
     if (clickX >= gameOverRestartBtnX && clickX <= gameOverRestartBtnX + gameOverRestartBtnW &&
         clickY >= gameOverRestartBtnY && clickY <= gameOverRestartBtnY + gameOverRestartBtnH) {
         canvas.removeEventListener('click', onGameOverScreenClick);
         canvas.removeEventListener('mousemove', onGameOverMouseMove);
         restartGame();
     }
-
     if (clickX >= gameOverMenuBtnX && clickX <= gameOverMenuBtnX + gameOverMenuBtnW &&
         clickY >= gameOverMenuBtnY && clickY <= gameOverMenuBtnY + gameOverMenuBtnH) {
         canvas.removeEventListener('click', onGameOverScreenClick);
@@ -366,20 +381,18 @@ function winGame() {
 }
 
 /**
- * Draws the win screen with optional hover effects on buttons.
+ * Draws the win screen background and buttons with optional hover effects.
  * @param {boolean} hoverRestart - Whether the mouse is hovering over the restart button.
  * @param {boolean} hoverMenu - Whether the mouse is hovering over the menu button.
  */
 function drawWinScreen(hoverRestart, hoverMenu) {
     let ctx = canvas.getContext('2d');
     ctx.drawImage(winBackground, 0, 0, canvas.width, canvas.height);
-
     if (hoverRestart) {
         ctx.drawImage(winRestartBtn, winRestartBtnX - 10, winRestartBtnY - 5, winRestartBtnW + 20, winRestartBtnH + 10);
     } else {
         ctx.drawImage(winRestartBtn, winRestartBtnX, winRestartBtnY, winRestartBtnW, winRestartBtnH);
     }
-
     if (hoverMenu) {
         ctx.drawImage(winMenuBtn, winMenuBtnX - 10, winMenuBtnY - 5, winMenuBtnW + 20, winMenuBtnH + 10);
     } else {
@@ -388,16 +401,14 @@ function drawWinScreen(hoverRestart, hoverMenu) {
 }
 
 /**
- * Renders the win screen with background image and restart/menu buttons.
+ * Renders the win screen and registers click and mousemove event listeners.
  */
 function showWinScreen() {
     winRestartBtnX = canvas.width / 2 - winRestartBtnW / 2;
     winRestartBtnY = canvas.height / 4;
     winMenuBtnX = canvas.width / 2 - winMenuBtnW / 2;
     winMenuBtnY = canvas.height / 4 + 220;
-
     drawWinScreen(false, false);
-
     canvas.addEventListener('mousemove', onWinMouseMove);
     canvas.addEventListener('click', onWinScreenClick);
 }
@@ -410,13 +421,10 @@ function onWinMouseMove(event) {
     let rect = canvas.getBoundingClientRect();
     let mouseX = event.clientX - rect.left;
     let mouseY = event.clientY - rect.top;
-
     let hoverRestart = mouseX >= winRestartBtnX && mouseX <= winRestartBtnX + winRestartBtnW &&
         mouseY >= winRestartBtnY && mouseY <= winRestartBtnY + winRestartBtnH;
-
     let hoverMenu = mouseX >= winMenuBtnX && mouseX <= winMenuBtnX + winMenuBtnW &&
         mouseY >= winMenuBtnY && mouseY <= winMenuBtnY + winMenuBtnH;
-
     drawWinScreen(hoverRestart, hoverMenu);
     canvas.style.cursor = (hoverRestart || hoverMenu) ? 'pointer' : 'default';
 }
@@ -429,14 +437,21 @@ function onWinScreenClick(event) {
     let rect = canvas.getBoundingClientRect();
     let clickX = event.clientX - rect.left;
     let clickY = event.clientY - rect.top;
+    checkWinScreenClick(clickX, clickY);
+}
 
+/**
+ * Checks if the click position matches the restart or menu button on the win screen.
+ * @param {number} clickX - The x position of the click.
+ * @param {number} clickY - The y position of the click.
+ */
+function checkWinScreenClick(clickX, clickY) {
     if (clickX >= winRestartBtnX && clickX <= winRestartBtnX + winRestartBtnW &&
         clickY >= winRestartBtnY && clickY <= winRestartBtnY + winRestartBtnH) {
         canvas.removeEventListener('click', onWinScreenClick);
         canvas.removeEventListener('mousemove', onWinMouseMove);
         restartGame();
     }
-
     if (clickX >= winMenuBtnX && clickX <= winMenuBtnX + winMenuBtnW &&
         clickY >= winMenuBtnY && clickY <= winMenuBtnY + winMenuBtnH) {
         canvas.removeEventListener('click', onWinScreenClick);
@@ -454,18 +469,22 @@ function resetGame() {
     gameWon = false;
     intervalIds = [];
     allAudio = [];
-
     Puffer.usedPositions = [];
     Jellyfish.usedPositions = [];
     Coins.usedPositions = [];
     PoisonBottle.usedPositions = [];
+    resetAudio();
+    world = null;
+}
 
+/**
+ * Pauses and resets all main game audio objects.
+ */
+function resetAudio() {
     [INGAME_BGM_AUDIO, GAME_OVER_AUDIO, GAME_WON_AUDIO].forEach(audio => {
         audio.pause();
         audio.currentTime = 0;
     });
-
-    world = null;
 }
 
 /**

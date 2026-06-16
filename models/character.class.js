@@ -303,7 +303,7 @@ class Character extends MoveableObject {
         super.shootBubble(this.world);
         this.lastKeyPress = new Date().getTime();
         setTimeout(() => {
-            if (!this.otherDirection) {
+            if (!this.otherDirection && !this.isHurt) {
                 this.BUBBLE_SHOOT_AUDIO.play();
                 registerAudio(this.BUBBLE_SHOOT_AUDIO);
             }
