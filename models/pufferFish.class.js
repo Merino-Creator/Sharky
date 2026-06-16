@@ -9,47 +9,43 @@ class Puffer extends MoveableObject {
     energy = 50;
     damage = 10;
 
-    IMAGES_PUFFER_SWIM = [
-        './assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png',
-        './assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim2.png',
-        './assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim3.png',
-        './assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim4.png',
-        './assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim5.png'
-    ];
-
-    IMAGES_PUFFER_TRANSITION = [
-        './assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition1.png',
-        './assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition2.png',
-        './assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition3.png',
-        './assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition4.png',
-        './assets/2.Enemy/1.Puffer fish (3 color options)/2.transition/1.transition5.png'
-    ];
-
-    IMAGES_PUFFER_ATTACK = [
-        './assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim1.png',
-        './assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim2.png',
-        './assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim3.png',
-        './assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim4.png',
-        './assets/2.Enemy/1.Puffer fish (3 color options)/3.Bubbleeswim/1.bubbleswim5.png'
-    ];
-
-    IMAGES_DEAD = [
-        './assets/2.Enemy/1.Puffer fish (3 color options)/4.DIE/1.Dead 1 (can animate by going up).png'
-    ];
-
     /**
-     * Creates a new Puffer instance with a random position and speed.
+     * Creates a new Puffer instance with a random position, speed and default swim state.
      */
     constructor() {
         super().loadImage('./assets/2.Enemy/1.Puffer fish (3 color options)/1.Swim/1.swim1.png');
+        this.state = 'swim';
+        this.x = this.generateX();
+        this.y = 240;
+        this.speed = 1 + Math.random() * 0.25;
+        this.fetchPufferImages();
+    }
+
+    /**
+     * Fetches all puffer animation image paths from the JSON file,
+     * assigns them to the corresponding image arrays and starts the animation.
+     */
+    async fetchPufferImages() {
+        let response = await fetch('./jsons/puffer-images.json');
+        let images = await response.json();
+
+        this.IMAGES_PUFFER_SWIM = images.swim;
+        this.IMAGES_PUFFER_TRANSITION = images.transition;
+        this.IMAGES_PUFFER_ATTACK = images.attack;
+        this.IMAGES_DEAD = images.dead;
+
+        this.loadPufferImages();
+        this.animate();
+    }
+
+    /**
+     * Preloads all puffer animation images into the ImageCache.
+     */
+    loadPufferImages() {
         this.loadImages(this.IMAGES_PUFFER_SWIM);
         this.loadImages(this.IMAGES_PUFFER_TRANSITION);
         this.loadImages(this.IMAGES_PUFFER_ATTACK);
         this.loadImages(this.IMAGES_DEAD);
-        this.x = this.generateX();
-        this.y = 240;
-        this.speed = 1 + Math.random() * 0.25;
-        this.animate();
     }
 
     /**
@@ -71,35 +67,18 @@ class Puffer extends MoveableObject {
 
     /**
      * Starts all animation and movement intervals for the Puffer.
-     * Cycles through swim, transition and attack states every 6 seconds.
+     * Triggers state changes every 6 seconds and continuously checks
+     * the current animation and movement.
      * Stores all interval IDs for later cleanup.
      */
     animate() {
-        let state = 'swim';
-
         let pufferAttackTriggerId = setInterval(() => {
-            state = 'transition';
-            setTimeout(() => {
-                state = 'attack';
-                setTimeout(() => {
-                    state = 'swim';
-                }, 3000);
-            }, 2000);
+            this.checkPufferState();
         }, 6000);
         intervalIds.push(pufferAttackTriggerId);
 
         let pufferAnimateId = setInterval(() => {
-            if (this.isSlapped || this.isDead()) {
-                this.playAnimation(this.IMAGES_DEAD);
-            } else if (state === 'transition') {
-                this.playAnimation(this.IMAGES_PUFFER_TRANSITION);
-            } else if (state === 'attack') {
-                this.playAnimation(this.IMAGES_PUFFER_ATTACK);
-                this.attackMode();
-            } else {
-                this.playAnimation(this.IMAGES_PUFFER_SWIM);
-                this.damage = 10;
-            }
+            this.checkAnimation();
         }, 150);
         intervalIds.push(pufferAnimateId);
 
@@ -111,7 +90,41 @@ class Puffer extends MoveableObject {
     }
 
     /**
-     * Sets the Puffer to attack mode by increasing its damage value.
+     * Cycles the Puffer through transition and attack states before returning to swim.
+     * Transition lasts 2 seconds, attack lasts 3 seconds.
+     */
+    checkPufferState() {
+        this.state = 'transition';
+        setTimeout(() => {
+            this.state = 'attack';
+            setTimeout(() => {
+                this.state = 'swim';
+            }, 3000);
+        }, 2000);
+    }
+
+    /**
+     * Determines and plays the correct animation based on the current Puffer state.
+     * Priority order: dead/slapped > transition > attack > swim.
+     * Returns early when the game is paused.
+     */
+    checkAnimation() {
+        if (gamePaused) return;
+        if (this.isSlapped || this.isDead()) {
+            this.playAnimation(this.IMAGES_DEAD);
+        } else if (this.state === 'transition') {
+            this.playAnimation(this.IMAGES_PUFFER_TRANSITION);
+        } else if (this.state === 'attack') {
+            this.playAnimation(this.IMAGES_PUFFER_ATTACK);
+            this.attackMode();
+        } else {
+            this.playAnimation(this.IMAGES_PUFFER_SWIM);
+            this.damage = 10;
+        }
+    }
+
+    /**
+     * Sets the Puffer to attack mode by doubling its damage value.
      * @returns {number} The new damage value in attack mode.
      */
     attackMode() {
