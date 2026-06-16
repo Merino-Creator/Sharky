@@ -92,38 +92,53 @@ class World {
      * Stores all interval IDs for later cleanup.
      */
     checks() {
+        this.checkEnemyCollision();
+        this.checkBubbleCollision();
+        this.checkCollectibleCollision();
+        this.checkSlapCollision();
+        this.checkBottleMovement();
+        this.spawnBottle();
+    }
+
+    checkEnemyCollision() {
         let enemyCollisionId = setInterval(() => {
             if (gamePaused) return;
             this.checkEnemyCollisions();
         }, 100);
         intervalIds.push(enemyCollisionId);
+    }
 
+    checkBubbleCollision() {
         let bubbleCollisionId = setInterval(() => {
             if (gamePaused) return;
             this.checkBubbleCollisions();
         }, 120);
         intervalIds.push(bubbleCollisionId);
+    }
 
+    checkCollectibleCollision() {
         let collectibleCollisionId = setInterval(() => {
             if (gamePaused) return;
             this.checkCollectibles();
         }, 100);
         intervalIds.push(collectibleCollisionId);
+    }
 
+    checkSlapCollision() {
         let slapCollisionId = setInterval(() => {
             if (gamePaused) return;
             this.checkSlapCollisions();
         }, 100);
         intervalIds.push(slapCollisionId);
+    }
 
+    checkBottleMovement() {
         let bottleMoveId = setInterval(() => {
             if (gamePaused) return;
             this.level.toxic.forEach(bottle => bottle.updateBottle());
             this.level.toxic = this.level.toxic.filter(bottle => !bottle.isOutOfBounds());
         }, 1000 / 30);
         intervalIds.push(bottleMoveId);
-
-        this.spawnBottle();
     }
 
     /**
@@ -157,26 +172,34 @@ class World {
         this.level.enemies.forEach((enemy) => {
             this.bubble.forEach((bubble, bubbleIndex) => {
                 if (bubble.isColliding(enemy)) {
-                    if (enemy instanceof Jellyfish) {
-                        enemy.enemyHit(bubble.damage);
-                    } else if (enemy instanceof Endboss && bubble instanceof ToxicBubble) {
-                        enemy.enemyHit(bubble.damage);
-                    }
-                    this.bubble.splice(bubbleIndex, 1);
+                    this.checkEnemyType(enemy, bubble, bubbleIndex);
                 }
 
                 if (enemy.isDead()) {
-                    if (enemy instanceof Endboss) {
-                        setTimeout(() => winGame(), 1400);
-                    } else {
-                        setTimeout(() => {
-                            let index = this.level.enemies.indexOf(enemy);
-                            if (index > -1) this.level.enemies.splice(index, 1);
-                        }, 1000);
-                    }
+                    this.checkEnemyCondition(enemy);
                 }
             });
         });
+    }
+
+    checkEnemyType(enemy, bubble, bubbleIndex) {
+        if (enemy instanceof Jellyfish) {
+            enemy.enemyHit(bubble.damage);
+        } else if (enemy instanceof Endboss && bubble instanceof ToxicBubble) {
+            enemy.enemyHit(bubble.damage);
+        }
+        this.bubble.splice(bubbleIndex, 1);
+    }
+
+    checkEnemyCondition(enemy) {
+        if (enemy instanceof Endboss) {
+            setTimeout(() => winGame(), 1400);
+        } else {
+            setTimeout(() => {
+                let index = this.level.enemies.indexOf(enemy);
+                if (index > -1) this.level.enemies.splice(index, 1);
+            }, 1000);
+        }
     }
 
     /**
@@ -190,17 +213,21 @@ class World {
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && !enemy.isDead()) {
                 if (enemy instanceof Puffer) {
-                    enemy.enemyHit(enemy.energy);
-                    enemy.getSlapped();
-                    this.SLAP_AUDIO.play();
-                    registerAudio(this.SLAP_AUDIO);
-                    setTimeout(() => {
-                        let index = this.level.enemies.indexOf(enemy);
-                        if (index > -1) this.level.enemies.splice(index, 1);
-                    }, 1000);
+                    this.slapEnemy(enemy);
                 }
             }
         });
+    }
+
+    slapEnemy(enemy) {
+        enemy.enemyHit(enemy.energy);
+        enemy.getSlapped();
+        this.SLAP_AUDIO.play();
+        registerAudio(this.SLAP_AUDIO);
+        setTimeout(() => {
+            let index = this.level.enemies.indexOf(enemy);
+            if (index > -1) this.level.enemies.splice(index, 1);
+        }, 1000);
     }
 
     /**
@@ -209,22 +236,30 @@ class World {
      */
     checkCollectibles() {
         this.level.toxic.forEach((toxic, index) => {
-            if (this.character.isColliding(toxic)) {
-                this.toxicAmount++;
-                this.TOXIC_COLLECT_AUDIO.play();
-                registerAudio(this.TOXIC_COLLECT_AUDIO);
-                this.level.toxic.splice(index, 1);
-            }
+            this.checkToxicCollision(toxic, index);
         });
 
         this.level.coins.forEach((coins, index) => {
-            if (this.character.isColliding(coins)) {
-                this.coinAmount++;
-                this.COIN_COLLECT_AUDIO.play();
-                registerAudio(this.COIN_COLLECT_AUDIO);
-                this.level.coins.splice(index, 1);
-            }
+            this.checkCoinCollision(coins, index);
         });
+    }
+
+    checkToxicCollision(toxic, index) {
+        if (this.character.isColliding(toxic)) {
+            this.toxicAmount++;
+            this.TOXIC_COLLECT_AUDIO.play();
+            registerAudio(this.TOXIC_COLLECT_AUDIO);
+            this.level.toxic.splice(index, 1);
+        }
+    }
+
+    checkCoinCollision(coins, index) {
+        if (this.character.isColliding(coins)) {
+            this.coinAmount++;
+            this.COIN_COLLECT_AUDIO.play();
+            registerAudio(this.COIN_COLLECT_AUDIO);
+            this.level.coins.splice(index, 1);
+        }
     }
 
     /**
@@ -236,20 +271,24 @@ class World {
         let bottleSpawnId = setInterval(() => {
             if (gamePaused) return;
             if (this.character.x <= 3000) {
-                let visibleX = -this.camera_x;
-                let bottle = new PoisonBottle(
-                    visibleX + Math.random() * 720,
-                    0.1 + Math.random() * 0.2
-                );
-                this.level.toxic.push(bottle);
-                this.TOXIC_BUBBLING_AUDIO.play();
-                registerAudio(this.TOXIC_BUBBLING_AUDIO);
-                setTimeout(() => {
-                    this.TOXIC_BUBBLING_AUDIO.pause();
-                }, 1000);
+                this.bottleSpawnPosition();
             }
         }, 3000);
         intervalIds.push(bottleSpawnId);
+    }
+
+    bottleSpawnPosition() {
+        let visibleX = -this.camera_x;
+        let bottle = new PoisonBottle(
+            visibleX + Math.random() * 720,
+            0.1 + Math.random() * 0.2
+        );
+        this.level.toxic.push(bottle);
+        this.TOXIC_BUBBLING_AUDIO.play();
+        registerAudio(this.TOXIC_BUBBLING_AUDIO);
+        setTimeout(() => {
+            this.TOXIC_BUBBLING_AUDIO.pause();
+        }, 1000);
     }
 
     /**
