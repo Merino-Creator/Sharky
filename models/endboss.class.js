@@ -67,9 +67,9 @@ class Endboss extends MoveableObject {
     }
 
     /**
-     * Starts all animation and movement intervals for the Endboss.
-     * Stores all interval IDs for later cleanup.
-     */
+    * Starts all animation and movement intervals for the Endboss.
+    * Stores all interval IDs for later cleanup.
+    */
     animate() {
         let bossAttackTriggerId = setInterval(() => {
             this.triggerAttack();
@@ -77,28 +77,38 @@ class Endboss extends MoveableObject {
         intervalIds.push(bossAttackTriggerId);
 
         let bossAnimateId = setInterval(() => {
-            if (gamePaused) return;
-            this.frameCounter++;
             this.checkAnimation();
         }, 100);
         intervalIds.push(bossAnimateId);
 
         let bossContactId = setInterval(() => {
-            if (gamePaused) return;
-            if (world && world.character.x > 3050 && !this.firstContact) {
-                this.firstContact = true;
-                this.currentImage = 0;
-                this.startX = this.x;
-            }
+            this.checkFirstContact();
         }, 200);
         intervalIds.push(bossContactId);
     }
 
     /**
+     * Checks if the character has reached the boss trigger zone for the first time.
+     * Sets firstContact to true and stores the boss start position when triggered.
+     */
+    checkFirstContact() {
+        if (gamePaused) return;
+        if (world && world.character.x > 3050 && !this.firstContact) {
+            this.firstContact = true;
+            this.currentImage = 0;
+            this.startX = this.x;
+        }
+    }
+
+    /**
      * Determines and plays the correct animation based on the current Endboss state.
-     * Priority order: dead > hurt > float > intro > attacking > floating.
+     * Returns early when the game is paused.
+     * Priority order: dead > hurt > attacking > intro > float.
      */
     checkAnimation() {
+        if (gamePaused) return;
+        this.frameCounter++;
+
         if (this.isDead()) {
             this.playDeadAnimation();
         } else if (this.bossIsHurt()) {
