@@ -26,101 +26,38 @@ class Character extends MoveableObject {
         right: 40
     };
 
-    IMAGES_SWIM = [
-        './assets/1.Sharkie/3.Swim/1.png',
-        './assets/1.Sharkie/3.Swim/2.png',
-        './assets/1.Sharkie/3.Swim/3.png',
-        './assets/1.Sharkie/3.Swim/4.png',
-        './assets/1.Sharkie/3.Swim/5.png',
-        './assets/1.Sharkie/3.Swim/6.png'
-    ];
-
-    IMAGES_IDLE = [
-        './assets/1.Sharkie/1.IDLE/1.png',
-        './assets/1.Sharkie/1.IDLE/2.png',
-        './assets/1.Sharkie/1.IDLE/3.png',
-        './assets/1.Sharkie/1.IDLE/4.png',
-        './assets/1.Sharkie/1.IDLE/5.png',
-        './assets/1.Sharkie/1.IDLE/6.png',
-        './assets/1.Sharkie/1.IDLE/7.png',
-        './assets/1.Sharkie/1.IDLE/8.png',
-        './assets/1.Sharkie/1.IDLE/9.png',
-        './assets/1.Sharkie/1.IDLE/10.png',
-        './assets/1.Sharkie/1.IDLE/11.png',
-        './assets/1.Sharkie/1.IDLE/12.png',
-        './assets/1.Sharkie/1.IDLE/13.png',
-        './assets/1.Sharkie/1.IDLE/14.png',
-        './assets/1.Sharkie/1.IDLE/15.png',
-        './assets/1.Sharkie/1.IDLE/16.png',
-        './assets/1.Sharkie/1.IDLE/17.png',
-        './assets/1.Sharkie/1.IDLE/18.png'
-    ];
-
-    IMAGES_LONG_IDLE = [
-        './assets/1.Sharkie/2.Long_IDLE/i1.png',
-        './assets/1.Sharkie/2.Long_IDLE/I2.png',
-        './assets/1.Sharkie/2.Long_IDLE/I3.png',
-        './assets/1.Sharkie/2.Long_IDLE/I4.png',
-        './assets/1.Sharkie/2.Long_IDLE/I5.png',
-        './assets/1.Sharkie/2.Long_IDLE/I6.png',
-        './assets/1.Sharkie/2.Long_IDLE/I7.png',
-        './assets/1.Sharkie/2.Long_IDLE/I8.png',
-        './assets/1.Sharkie/2.Long_IDLE/I9.png',
-        './assets/1.Sharkie/2.Long_IDLE/I10.png',
-        './assets/1.Sharkie/2.Long_IDLE/I11.png',
-        './assets/1.Sharkie/2.Long_IDLE/I12.png',
-        './assets/1.Sharkie/2.Long_IDLE/I13.png',
-        './assets/1.Sharkie/2.Long_IDLE/I14.png'
-    ];
-
-    IMAGES_DEAD = [
-        './assets/1.Sharkie/6.dead/1.Poisoned/1.png',
-        './assets/1.Sharkie/6.dead/1.Poisoned/2.png',
-        './assets/1.Sharkie/6.dead/1.Poisoned/3.png',
-        './assets/1.Sharkie/6.dead/1.Poisoned/4.png',
-        './assets/1.Sharkie/6.dead/1.Poisoned/5.png',
-        './assets/1.Sharkie/6.dead/1.Poisoned/6.png',
-        './assets/1.Sharkie/6.dead/1.Poisoned/7.png',
-        './assets/1.Sharkie/6.dead/1.Poisoned/8.png',
-        './assets/1.Sharkie/6.dead/1.Poisoned/9.png',
-        './assets/1.Sharkie/6.dead/1.Poisoned/10.png',
-        './assets/1.Sharkie/6.dead/1.Poisoned/11.png',
-        './assets/1.Sharkie/6.dead/1.Poisoned/12.png'
-    ];
-
-    IMAGES_HURT = [
-        './assets/1.Sharkie/5.Hurt/2.Electric shock/1.png',
-        './assets/1.Sharkie/5.Hurt/2.Electric shock/2.png',
-        './assets/1.Sharkie/5.Hurt/2.Electric shock/3.png',
-    ];
-
-    IMAGES_BUBBLE_ATTACK = [
-        './assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/1.png',
-        './assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/2.png',
-        './assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/3.png',
-        './assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/4.png',
-        './assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/5.png',
-        './assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/6.png',
-        './assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/7.png',
-        './assets/1.Sharkie/4.Attack/Bubble trap/op1 (with bubble formation)/8.png'
-    ];
-
-    IMAGES_SLAP_ATTACK = [
-        './assets/1.Sharkie/4.Attack/Fin slap/1.png',
-        './assets/1.Sharkie/4.Attack/Fin slap/2.png',
-        './assets/1.Sharkie/4.Attack/Fin slap/3.png',
-        './assets/1.Sharkie/4.Attack/Fin slap/4.png',
-        './assets/1.Sharkie/4.Attack/Fin slap/5.png',
-        './assets/1.Sharkie/4.Attack/Fin slap/6.png',
-        './assets/1.Sharkie/4.Attack/Fin slap/7.png',
-        './assets/1.Sharkie/4.Attack/Fin slap/8.png'
-    ];
-
     /**
-     * Creates a new Character instance and preloads all animation images.
+     * Creates a new Character instance, loads the default image and fetches animation images.
      */
     constructor() {
         super().loadImage('./assets/1.Sharkie/3.Swim/1.png');
+        this.fetchCharacterImages();
+    }
+
+    /**
+     * Fetches all character animation image paths from the JSON file,
+     * assigns them to the corresponding image arrays and starts the animation.
+     */
+    async fetchCharacterImages() {
+        let response = await fetch('./jsons/character-images.json');
+        let images = await response.json();
+
+        this.IMAGES_SWIM = images.swim;
+        this.IMAGES_IDLE = images.idle;
+        this.IMAGES_LONG_IDLE = images.longIdle;
+        this.IMAGES_DEAD = images.dead;
+        this.IMAGES_HURT = images.hurt;
+        this.IMAGES_BUBBLE_ATTACK = images.bubbleAttack;
+        this.IMAGES_SLAP_ATTACK = images.slapAttack;
+
+        this.loadCharacterImages();
+        this.animate();
+    }
+
+    /**
+     * Preloads all character animation images into the ImageCache.
+     */
+    loadCharacterImages() {
         this.loadImages(this.IMAGES_SWIM);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
@@ -128,7 +65,6 @@ class Character extends MoveableObject {
         this.loadImages(this.IMAGES_HURT);
         this.loadImages(this.IMAGES_BUBBLE_ATTACK);
         this.loadImages(this.IMAGES_SLAP_ATTACK);
-        this.animate();
     }
 
     /**
@@ -151,6 +87,7 @@ class Character extends MoveableObject {
     /**
      * Determines and plays the correct animation based on the current character state.
      * Priority order: dead > hurt > slap attack > bubble attack > swimming > long idle > idle.
+     * Returns early when paused, stopping all movement sounds.
      * @param {number} frameCounter - The current animation frame counter.
      */
     animateCharacter(frameCounter) {
@@ -160,52 +97,94 @@ class Character extends MoveableObject {
             return;
         }
 
-        if (this.isDead()) {
-            if (frameCounter % 2 === 0)
-                this.playAnimation(this.IMAGES_DEAD);
-            this.DIES_AUDIO.play();
+        if (this.isDead()) return this.playDeadAnimation(frameCounter);
+        if (this.isHurt()) return this.playHurtAnimation(frameCounter);
+        if (this.isSlapAttacking) return this.playSlapAnimation(frameCounter);
+        if (this.isAttacking) return this.playBubbleAnimation(frameCounter);
+        if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) return this.playSwimAnimation(frameCounter);
+        if (this.isLongIdle()) return this.playLongIdleAnimation(frameCounter);
+        this.playIdleAnimation(frameCounter);
+    }
 
-        } else if (this.isHurt()) {
-            if (frameCounter % 1 === 0)
-                this.playAnimation(this.IMAGES_HURT);
-            if (!this.hurtSoundPlaying) {
-                this.hurtSoundPlaying = true;
-                this.HURT_AUDIO.play();
-                registerAudio(this.HURT_AUDIO);
-                setTimeout(() => this.hurtSoundPlaying = false, 1000);
-            }
+    /**
+     * Plays the death animation and the death sound.
+     * @param {number} frameCounter - The current animation frame counter.
+     */
+    playDeadAnimation(frameCounter) {
+        if (frameCounter % 2 === 0)
+            this.playAnimation(this.IMAGES_DEAD);
+        this.DIES_AUDIO.play();
+    }
 
-        } else if (this.isSlapAttacking) {
-            if (frameCounter % 1 === 0)
-                this.playAnimation(this.IMAGES_SLAP_ATTACK);
-
-        } else if (this.isAttacking) {
-            if (frameCounter % 1 === 0)
-                this.playAnimation(this.IMAGES_BUBBLE_ATTACK);
-
-        } else if (this.world.keyboard.RIGHT || this.world.keyboard.LEFT || this.world.keyboard.UP || this.world.keyboard.DOWN) {
-            if (frameCounter % 2 === 0)
-                this.playAnimation(this.IMAGES_SWIM);
-            this.SNORING_AUDIO.pause();
-            this.SNORING_AUDIO.currentTime = 0;
-            this.snoringPlaying = false;
-
-        } else if (this.isLongIdle()) {
-            if (frameCounter % 2 === 0)
-                this.playAnimation(this.IMAGES_LONG_IDLE);
-            if (!this.snoringPlaying) {
-                this.snoringPlaying = true;
-                this.SNORING_AUDIO.play();
-                registerAudio(this.SNORING_AUDIO);
-            }
-
-        } else {
-            if (frameCounter % 2 === 0)
-                this.playAnimation(this.IMAGES_IDLE);
-            this.SNORING_AUDIO.pause()
-            this.SNORING_AUDIO.currentTime = 0;
-            this.snoringPlaying = false;
+    /**
+     * Plays the hurt animation and the hurt sound once per hit.
+     * @param {number} frameCounter - The current animation frame counter.
+     */
+    playHurtAnimation(frameCounter) {
+        if (frameCounter % 1 === 0)
+            this.playAnimation(this.IMAGES_HURT);
+        if (!this.hurtSoundPlaying) {
+            this.hurtSoundPlaying = true;
+            this.HURT_AUDIO.play();
+            registerAudio(this.HURT_AUDIO);
+            setTimeout(() => this.hurtSoundPlaying = false, 1000);
         }
+    }
+
+    /**
+     * Plays the slap attack animation.
+     * @param {number} frameCounter - The current animation frame counter.
+     */
+    playSlapAnimation(frameCounter) {
+        if (frameCounter % 1 === 0)
+            this.playAnimation(this.IMAGES_SLAP_ATTACK);
+    }
+
+    /**
+     * Plays the bubble attack animation.
+     * @param {number} frameCounter - The current animation frame counter.
+     */
+    playBubbleAnimation(frameCounter) {
+        if (frameCounter % 1 === 0)
+            this.playAnimation(this.IMAGES_BUBBLE_ATTACK);
+    }
+
+    /**
+     * Plays the swim animation and stops the snoring sound.
+     * @param {number} frameCounter - The current animation frame counter.
+     */
+    playSwimAnimation(frameCounter) {
+        if (frameCounter % 2 === 0)
+            this.playAnimation(this.IMAGES_SWIM);
+        this.SNORING_AUDIO.pause();
+        this.SNORING_AUDIO.currentTime = 0;
+        this.snoringPlaying = false;
+    }
+
+    /**
+     * Plays the long idle animation and starts the snoring sound once.
+     * @param {number} frameCounter - The current animation frame counter.
+     */
+    playLongIdleAnimation(frameCounter) {
+        if (frameCounter % 2 === 0)
+            this.playAnimation(this.IMAGES_LONG_IDLE);
+        if (!this.snoringPlaying) {
+            this.snoringPlaying = true;
+            this.SNORING_AUDIO.play();
+            registerAudio(this.SNORING_AUDIO);
+        }
+    }
+
+    /**
+     * Plays the idle animation and stops the snoring sound.
+     * @param {number} frameCounter - The current animation frame counter.
+     */
+    playIdleAnimation(frameCounter) {
+        if (frameCounter % 2 === 0)
+            this.playAnimation(this.IMAGES_IDLE);
+        this.SNORING_AUDIO.pause();
+        this.SNORING_AUDIO.currentTime = 0;
+        this.snoringPlaying = false;
     }
 
     /**
@@ -297,7 +276,8 @@ class Character extends MoveableObject {
     }
 
     /**
-     * Triggers the bubble attack and updates the last key press time.
+     * Triggers the bubble attack, updates the last key press time
+     * and plays the shoot sound after the animation delay.
      */
     shootBubble() {
         super.shootBubble(this.world);
