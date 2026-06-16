@@ -23,77 +23,48 @@ class Endboss extends MoveableObject {
         right: 40
     };
 
-    IMAGES_BOSS_FLOAT = [
-        './assets/2.Enemy/3 Final Enemy/2.floating/1.png',
-        './assets/2.Enemy/3 Final Enemy/2.floating/2.png',
-        './assets/2.Enemy/3 Final Enemy/2.floating/3.png',
-        './assets/2.Enemy/3 Final Enemy/2.floating/4.png',
-        './assets/2.Enemy/3 Final Enemy/2.floating/5.png',
-        './assets/2.Enemy/3 Final Enemy/2.floating/6.png',
-        './assets/2.Enemy/3 Final Enemy/2.floating/7.png',
-        './assets/2.Enemy/3 Final Enemy/2.floating/8.png',
-        './assets/2.Enemy/3 Final Enemy/2.floating/9.png',
-        './assets/2.Enemy/3 Final Enemy/2.floating/10.png',
-        './assets/2.Enemy/3 Final Enemy/2.floating/11.png',
-        './assets/2.Enemy/3 Final Enemy/2.floating/12.png',
-        './assets/2.Enemy/3 Final Enemy/2.floating/13.png',
-    ];
-
-    IMAGES_BOSS_INTRO = [
-        './assets/2.Enemy/3 Final Enemy/1.Introduce/1.png',
-        './assets/2.Enemy/3 Final Enemy/1.Introduce/2.png',
-        './assets/2.Enemy/3 Final Enemy/1.Introduce/3.png',
-        './assets/2.Enemy/3 Final Enemy/1.Introduce/4.png',
-        './assets/2.Enemy/3 Final Enemy/1.Introduce/5.png',
-        './assets/2.Enemy/3 Final Enemy/1.Introduce/6.png',
-        './assets/2.Enemy/3 Final Enemy/1.Introduce/7.png',
-        './assets/2.Enemy/3 Final Enemy/1.Introduce/8.png',
-        './assets/2.Enemy/3 Final Enemy/1.Introduce/9.png',
-        './assets/2.Enemy/3 Final Enemy/1.Introduce/10.png'
-    ];
-
-    IMAGES_BOSS_ATTACK = [
-        './assets/2.Enemy/3 Final Enemy/Attack/1.png',
-        './assets/2.Enemy/3 Final Enemy/Attack/2.png',
-        './assets/2.Enemy/3 Final Enemy/Attack/3.png',
-        './assets/2.Enemy/3 Final Enemy/Attack/4.png',
-        './assets/2.Enemy/3 Final Enemy/Attack/5.png',
-        './assets/2.Enemy/3 Final Enemy/Attack/6.png'
-    ];
-
-    IMAGES_BOSS_HURT = [
-        './assets/2.Enemy/3 Final Enemy/Hurt/1.png',
-        './assets/2.Enemy/3 Final Enemy/Hurt/2.png',
-        './assets/2.Enemy/3 Final Enemy/Hurt/3.png',
-        './assets/2.Enemy/3 Final Enemy/Hurt/4.png'
-    ];
-
-    IMAGES_BOSS_DEAD = [
-        './assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 6.png',
-        './assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 7.png',
-        './assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 8.png',
-        './assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 9.png',
-        './assets/2.Enemy/3 Final Enemy/Dead/Mesa de trabajo 2 copia 10.png'
-    ]
-
     /**
-     * Creates a new Endboss instance and starts its animation.
+     * Creates a new Endboss instance, sets the starting position and fetches animation images.
      */
     constructor() {
-        super().loadImage(this.IMAGES_BOSS_FLOAT[0]);
+        super().loadImage('./assets/2.Enemy/3 Final Enemy/2.floating/1.png');
+        this.x = 3800;
+        this.fetchEndbossImages();
+    }
+
+    /**
+     * Fetches all endboss animation image paths from the JSON file,
+     * assigns them to the corresponding image arrays and starts the animation.
+     */
+    async fetchEndbossImages() {
+        let response = await fetch('./jsons/endboss-images.json');
+        let images = await response.json();
+
+        this.IMAGES_BOSS_FLOAT = images.float;
+        this.IMAGES_BOSS_INTRO = images.intro;
+        this.IMAGES_BOSS_ATTACK = images.attack;
+        this.IMAGES_BOSS_HURT = images.hurt;
+        this.IMAGES_BOSS_DEAD = images.dead;
+
+        this.loadEndbossImages();
+        this.animate();
+    }
+
+    /**
+     * Preloads all endboss animation images into the ImageCache.
+     */
+    loadEndbossImages() {
         this.loadImages(this.IMAGES_BOSS_FLOAT);
         this.loadImages(this.IMAGES_BOSS_INTRO);
         this.loadImages(this.IMAGES_BOSS_ATTACK);
         this.loadImages(this.IMAGES_BOSS_HURT);
         this.loadImages(this.IMAGES_BOSS_DEAD);
-        this.x = 3800;
-        this.animate();
     }
 
     /**
      * Starts all animation and movement intervals for the Endboss.
      * Plays the intro animation once on first contact, then alternates between
-     * floating and attacking every 2600ms. During an attack the boss moves
+     * floating and attacking every 1600ms. During an attack the boss moves
      * 200px toward the character and smoothly returns to its start position afterward.
      * Stores all interval IDs for later cleanup.
      */
