@@ -19,11 +19,6 @@
         <canvas id="canvas" width="720" height="480"></canvas>
         <div id="canvasButtons">
             <button id="muteBtn" onclick="toggleMute()">🔊</button>
-            <button id="infoBtn" onclick="toggleInfoMenu()">ℹ️</button>
-        </div>
-
-        <div id="infoMenu">
-            <a href="policy.html" target="_blank">Policy</a>
         </div>
 
         <div id="hud">
@@ -45,7 +40,6 @@
         </div>
     </div>
 
-
     <div id="controls">
         <div class="arrows">
             <img class="controls-image" src='./assets/6.Botones/Key/arrow keys.png'>
@@ -61,12 +55,17 @@
         </div>
     </div>
 
+    <div id="introOverlay">
+        <div id="introContent"></div>
+    </div>
+
     <div id="rotate-overlay">
         <h2>Please rotate your device to play!</h2>
     </div>
 
 </body>
 
+<script src="./templates/intro-overlay-template.js"></script>
 <script src="./models/drawable-object.class.js"></script>
 <script src="./models/moveable-object.class.js"></script>
 <script src="./models/statusbar.class.js"></script>

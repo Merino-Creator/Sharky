@@ -5,6 +5,8 @@ let gameStarted = false;
 let startCtx;
 let startBackground;
 let startBtn;
+let policyBtn;
+let introBtn;
 let btnWidth = 200;
 let btnHeight = 80;
 let btnX;
@@ -44,6 +46,7 @@ function init() {
     showStartScreen();
     initEndScreenImages();
     registerHudEvents();
+    introTemplate();
 }
 
 /**
@@ -74,8 +77,12 @@ function initStartScreen() {
     startCtx = canvas.getContext('2d');
     startBackground = new Image();
     startBtn = new Image();
+    policyBtn = new Image();
+    introBtn = new Image();
     startBackground.src = './assets/3. Background/Dark/2.png';
     startBtn.src = './assets/6.Botones/Start/1.png';
+    policyBtn.src = './assets/6.Botones/Impressum_button.png';
+    introBtn.src = './assets/6.Botones/Einleitung_button.png';
     btnX = canvas.width / 2 - btnWidth / 2;
     btnY = canvas.height / 2;
 }
@@ -99,11 +106,32 @@ function drawStartScreen(hover) {
     startCtx.fillStyle = 'white';
     startCtx.textAlign = 'center';
     startCtx.fillText('TOXIC WAVES', canvas.width / 2, canvas.height / 2 - 100);
-    if (hover) {
+
+    if (hover === 'start') {
         startCtx.drawImage(startBtn, btnX - 10, btnY - 5, btnWidth + 20, btnHeight + 10);
     } else {
         startCtx.drawImage(startBtn, btnX, btnY, btnWidth, btnHeight);
     }
+
+    let smallBtnW = 150;
+    let smallBtnH = 60;
+    let policyBtnX = canvas.width / 2 - smallBtnW - 10;
+    let policyBtnY = btnY + btnHeight + 20;
+    let introBtnX = canvas.width / 2 + 10;
+    let introBtnY = btnY + btnHeight + 20;
+
+    if (hover === 'policy') {
+        startCtx.drawImage(policyBtn, policyBtnX - 5, policyBtnY - 3, smallBtnW + 10, smallBtnH + 6);
+    } else {
+        startCtx.drawImage(policyBtn, policyBtnX, policyBtnY, smallBtnW, smallBtnH);
+    }
+
+    if (hover === 'intro') {
+        startCtx.drawImage(introBtn, introBtnX - 5, introBtnY - 3, smallBtnW + 10, smallBtnH + 6);
+    } else {
+        startCtx.drawImage(introBtn, introBtnX, introBtnY, smallBtnW, smallBtnH);
+    }
+
     startCtx.restore();
 }
 
@@ -115,10 +143,27 @@ function onMouseMove(event) {
     let rect = canvas.getBoundingClientRect();
     let mouseX = event.clientX - rect.left;
     let mouseY = event.clientY - rect.top;
-    let hover = mouseX >= btnX && mouseX <= btnX + btnWidth &&
-        mouseY >= btnY && mouseY <= btnY + btnHeight;
-    drawStartScreen(hover);
-    canvas.style.cursor = hover ? 'pointer' : 'default';
+
+    let smallBtnW = 150;
+    let smallBtnH = 60;
+    let policyBtnX = canvas.width / 2 - smallBtnW - 10;
+    let policyBtnY = btnY + btnHeight + 20;
+    let introBtnX = canvas.width / 2 + 10;
+    let introBtnY = btnY + btnHeight + 20;
+
+    if (mouseX >= btnX && mouseX <= btnX + btnWidth && mouseY >= btnY && mouseY <= btnY + btnHeight) {
+        drawStartScreen('start');
+        canvas.style.cursor = 'pointer';
+    } else if (mouseX >= policyBtnX && mouseX <= policyBtnX + smallBtnW && mouseY >= policyBtnY && mouseY <= policyBtnY + smallBtnH) {
+        drawStartScreen('policy');
+        canvas.style.cursor = 'pointer';
+    } else if (mouseX >= introBtnX && mouseX <= introBtnX + smallBtnW && mouseY >= introBtnY && mouseY <= introBtnY + smallBtnH) {
+        drawStartScreen('intro');
+        canvas.style.cursor = 'pointer';
+    } else {
+        drawStartScreen(false);
+        canvas.style.cursor = 'default';
+    }
 }
 
 /**
@@ -138,12 +183,37 @@ function onStartScreenClick(event) {
     let rect = canvas.getBoundingClientRect();
     let clickX = event.clientX - rect.left;
     let clickY = event.clientY - rect.top;
-    if (clickX >= btnX && clickX <= btnX + btnWidth &&
-        clickY >= btnY && clickY <= btnY + btnHeight) {
+
+    let smallBtnW = 150;
+    let smallBtnH = 60;
+    let policyBtnX = canvas.width / 2 - smallBtnW - 10;
+    let policyBtnY = btnY + btnHeight + 20;
+    let introBtnX = canvas.width / 2 + 10;
+    let introBtnY = btnY + btnHeight + 20;
+
+    if (clickX >= btnX && clickX <= btnX + btnWidth && clickY >= btnY && clickY <= btnY + btnHeight) {
         canvas.removeEventListener('mousemove', onMouseMove);
         canvas.style.cursor = 'default';
         startGame();
+    } else if (clickX >= policyBtnX && clickX <= policyBtnX + smallBtnW && clickY >= policyBtnY && clickY <= policyBtnY + smallBtnH) {
+        window.open('./policy.html', '_blank');
+    } else if (clickX >= introBtnX && clickX <= introBtnX + smallBtnW && clickY >= introBtnY && clickY <= introBtnY + smallBtnH) {
+        openIntroOverlay();
     }
+}
+
+/**
+ * Opens the intro overlay and pauses the start screen interaction.
+ */
+function openIntroOverlay() {
+    document.getElementById('introOverlay').classList.add('visible');
+}
+
+/**
+ * Closes the intro overlay.
+ */
+function closeIntroOverlay() {
+    document.getElementById('introOverlay').classList.remove('visible');
 }
 
 /**
@@ -549,4 +619,9 @@ function toggleInfoMenu() {
             INGAME_BGM_AUDIO.play();
         }
     }
+}
+
+function introTemplate() {
+    let introRef = document.getElementById('introContent');
+    introRef.innerHTML += introOverlayTemplate();
 }

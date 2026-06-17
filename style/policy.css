@@ -6,4 +6,6 @@ body {
     flex-direction: column;
     box-sizing: border-box;
     padding-left: 24px;
+    background-color: blue;
+    color: white;
 }
