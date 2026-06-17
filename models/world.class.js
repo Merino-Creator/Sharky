@@ -317,7 +317,7 @@ class World {
     checkToxicCollision(toxic, index) {
         if (this.character.isColliding(toxic)) {
             this.toxicAmount++;
-            this.level.UI[1].setPercentage(this.toxicAmount * 25);
+            this.level.UI[1].setPercentage(this.toxicAmount);
             this.TOXIC_COLLECT_AUDIO.play();
             registerAudio(this.TOXIC_COLLECT_AUDIO);
             this.level.toxic.splice(index, 1);
@@ -333,7 +333,7 @@ class World {
     checkCoinCollision(coins, index) {
         if (this.character.isColliding(coins)) {
             this.coinAmount++;
-            this.level.UI[2].setPercentage(this.coinAmount * 5);
+            this.level.UI[2].setPercentage(this.coinAmount);
             this.COIN_COLLECT_AUDIO.play();
             registerAudio(this.COIN_COLLECT_AUDIO);
             this.level.coins.splice(index, 1);

@@ -2,13 +2,15 @@ class Statusbar extends DrawableObject {
 
     width = 200;
     height = 60;
-    percentage = 100;
+    energyAmount = 100;
+    coinAmount = 0;
+    toxicAmount = 0;
     type;
 
     POSITIONS = {
         health: { x: 20, y: 0 },
-        toxic:  { x: 20, y: 50 },
-        coin:   { x: 20, y: 100 }
+        toxic: { x: 20, y: 50 },
+        coin: { x: 20, y: 100 }
     };
 
     /**
@@ -38,19 +40,21 @@ class Statusbar extends DrawableObject {
         this.loadImages(this.IMAGES_COIN);
         this.loadImages(this.IMAGES_TOXIC);
 
-        this.setPercentage(100);
+        if (this.type === 'health') {
+            this.setPercentage(100);
+        } else {
+            this.setPercentage(0);
+        }
     }
 
     /**
      * Sets the percentage and updates the displayed image accordingly.
      * @param {number} percentage - The percentage value between 0 and 100.
      */
-    setPercentage(percentage) {
-        this.percentage = percentage;
+    setPercentage(energyAmount) {
+        this.energyAmount = energyAmount;
         let images = this.getImages();
-        if (!images) return;
         let path = images[this.resolveImageIndex()];
-        if (!path) return;
         this.img = this.ImageCache[path];
     }
 
@@ -69,11 +73,51 @@ class Statusbar extends DrawableObject {
      * @returns {number} The index of the image to display.
      */
     resolveImageIndex() {
-        if (this.percentage == 100) return 5;
-        else if (this.percentage > 80) return 4;
-        else if (this.percentage > 60) return 3;
-        else if (this.percentage > 40) return 2;
-        else if (this.percentage > 20) return 1;
+        if (this.type === 'health') {
+            return this.resolveHealthIndex();
+        } else if (this.type === 'toxic') {
+            return this.resolveToxicIndex();
+        } else if (this.type === 'coin') {
+            return this.resolveCoinIndex();
+        }
+    }
+
+    /**
+     * Resolves the image index for the health bar based on energy (0-100).
+     * @returns {number} The index of the image to display.
+     */
+    resolveHealthIndex() {
+        if (this.energyAmount == 100) return 5;
+        else if (this.energyAmount > 80) return 4;
+        else if (this.energyAmount > 60) return 3;
+        else if (this.energyAmount > 40) return 2;
+        else if (this.energyAmount > 20) return 1;
+        else return 0;
+    }
+
+    /**
+     * Resolves the image index for the toxic bar based on bottle count (0-5).
+     * @returns {number} The index of the image to display.
+     */
+    resolveToxicIndex() {
+        if (this.energyAmount >= 5) return 5;
+        else if (this.energyAmount >= 4) return 4;
+        else if (this.energyAmount >= 3) return 3;
+        else if (this.energyAmount >= 2) return 2;
+        else if (this.energyAmount >= 1) return 1;
+        else return 0;
+    }
+
+    /**
+     * Resolves the image index for the coin bar based on coin count (0-20).
+     * @returns {number} The index of the image to display.
+     */
+    resolveCoinIndex() {
+        if (this.energyAmount >= 20) return 5;
+        else if (this.energyAmount >= 16) return 4;
+        else if (this.energyAmount >= 12) return 3;
+        else if (this.energyAmount >= 8) return 2;
+        else if (this.energyAmount >= 4) return 1;
         else return 0;
     }
 }

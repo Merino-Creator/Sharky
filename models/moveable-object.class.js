@@ -203,7 +203,7 @@ class MoveableObject extends DrawableObject {
      */
     checkToxicAmount(world) {
         let bubble;
-        if (world.toxicAmount >= 4) {
+        if (world.toxicAmount >= 5) {
             bubble = new ToxicBubble(
                 this.x + this.offset.left + 140,
                 this.y + this.offset.top + 25
