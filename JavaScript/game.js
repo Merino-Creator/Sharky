@@ -544,6 +544,7 @@ function resetGame() {
     Coins.usedPositions = [];
     PoisonBottle.usedPositions = [];
     resetAudio();
+    closeIntroOverlay();
     world = null;
 }
 

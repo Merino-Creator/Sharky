@@ -20,6 +20,7 @@ class World {
     TOXIC_COLLECT_AUDIO = new Audio('./assets/8.Audio/toxic-collect.mp3');
     COIN_COLLECT_AUDIO = new Audio('./assets/8.Audio/coin-sound.mp3');
     SLAP_AUDIO = new Audio('./assets/8.Audio/slap.mp3');
+    BUBBLE_POP_AUDIO = new Audio('./assets/8.Audio/bubble-pop.mp3');
 
     /**
      * Creates a new World instance and initializes the game.
@@ -237,6 +238,9 @@ class World {
      * @param {number} bubbleIndex - The index of the bubble in the bubble array.
      */
     checkEnemyType(enemy, bubble, bubbleIndex) {
+        if(enemy instanceof Puffer) {
+            this.BUBBLE_POP_AUDIO.play();
+        }
         if (enemy instanceof Jellyfish) {
             enemy.enemyHit(bubble.damage);
         } else if (enemy instanceof Endboss && bubble instanceof ToxicBubble) {
