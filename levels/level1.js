@@ -64,9 +64,9 @@ function initLevel() {
         ],
 
         [
-            new Toxic(),
-            new Health(),
-            new CoinAmount()
+            new Statusbar('health'),
+            new Statusbar('toxic'),
+            new Statusbar('coin')
         ],
 
         [],

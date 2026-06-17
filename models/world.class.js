@@ -75,9 +75,6 @@ class World {
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
         this.addObjectsToMap(this.level.UI);
-        this.level.UI[0].drawValue(this.ctx, this.toxicAmount, 70, 70);
-        this.level.UI[1].drawValue(this.ctx, this.character.energy, 160, 70);
-        this.level.UI[2].drawValue(this.ctx, this.coinAmount, 290, 72);
     }
 
     /**
@@ -202,6 +199,7 @@ class World {
             let isInvulnerable = enemy instanceof Puffer && this.character.isSlapAttacking;
             if (this.character.isColliding(enemy) && !enemy.isDead() && !isInvulnerable && !this.character.isHurt()) {
                 this.character.characterHit(enemy.damage);
+                this.level.UI[0].setPercentage(this.character.energy);
                 if (this.character.isDead()) {
                     this.character.timeDied = new Date().getTime();
                     setTimeout(() => looseGame(), 1400);
@@ -238,7 +236,7 @@ class World {
      * @param {number} bubbleIndex - The index of the bubble in the bubble array.
      */
     checkEnemyType(enemy, bubble, bubbleIndex) {
-        if(enemy instanceof Puffer) {
+        if (enemy instanceof Puffer) {
             this.BUBBLE_POP_AUDIO.play();
         }
         if (enemy instanceof Jellyfish) {
@@ -319,6 +317,7 @@ class World {
     checkToxicCollision(toxic, index) {
         if (this.character.isColliding(toxic)) {
             this.toxicAmount++;
+            this.level.UI[1].setPercentage(this.toxicAmount * 25);
             this.TOXIC_COLLECT_AUDIO.play();
             registerAudio(this.TOXIC_COLLECT_AUDIO);
             this.level.toxic.splice(index, 1);
@@ -334,6 +333,7 @@ class World {
     checkCoinCollision(coins, index) {
         if (this.character.isColliding(coins)) {
             this.coinAmount++;
+            this.level.UI[2].setPercentage(this.coinAmount * 5);
             this.COIN_COLLECT_AUDIO.play();
             registerAudio(this.COIN_COLLECT_AUDIO);
             this.level.coins.splice(index, 1);

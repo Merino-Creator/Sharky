@@ -36,7 +36,9 @@ class DrawableObject {
      * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
      */
     draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        if(this.img) {
+            ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+        }
     }
 
     /**
