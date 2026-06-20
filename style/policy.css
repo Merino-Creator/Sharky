@@ -11,6 +11,10 @@ body {
     font-size: 16px;
     line-height: 1.7;
     padding: 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
 }
 
 h1 {
@@ -62,16 +66,13 @@ a:hover {
 #impressum,
 #generator_results {
     max-width: 800px;
-    margin: 0 auto 40px auto;
+    width: 100%;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid #1e3a5f;
     border-radius: 12px;
     padding: 30px;
-}
-
-#rechtliches {
-    max-width: 800px;
-    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
 #generator_results_content h1 {
