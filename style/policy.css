@@ -1,11 +1,85 @@
-body {
+* {
     margin: 0;
-    height: 100vh;
-    scroll-behavior: smooth;
-    display: flex;
-    flex-direction: column;
+    padding: 0;
     box-sizing: border-box;
-    padding-left: 24px;
-    background-color: blue;
-    color: white;
+}
+
+body {
+    background-color: #0a1628;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 16px;
+    line-height: 1.7;
+    padding: 40px 20px;
+}
+
+h1 {
+    font-size: 32px;
+    color: #4fc3f7;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #1e3a5f;
+    text-align: center;
+}
+
+h2 {
+    font-size: 20px;
+    color: #81d4fa;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+h3 {
+    font-size: 17px;
+    color: #b0bec5;
+    margin-top: 20px;
+    margin-bottom: 8px;
+}
+
+p {
+    margin-bottom: 12px;
+    color: #cfd8dc;
+}
+
+ul {
+    margin: 10px 0 12px 24px;
+    color: #cfd8dc;
+}
+
+ul li {
+    margin-bottom: 6px;
+}
+
+a {
+    color: #4fc3f7;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#impressum,
+#generator_results {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid #1e3a5f;
+    border-radius: 12px;
+    padding: 30px;
+}
+
+#rechtliches {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#generator_results_content h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.generator_user_input {
+    font-weight: bold;
+    color: #e0e0e0;
 }
