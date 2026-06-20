@@ -252,6 +252,9 @@ function checkStartScreenTouch(clickX, clickY) {
  */
 function startGame() {
     if (!gameStarted) {
+        canvas.removeEventListener('click', onStartScreenClick);
+        canvas.removeEventListener('mousemove', onMouseMove);
+        canvas.removeEventListener('touchend', onStartScreenTouch);
         gameStarted = true;
         initLevel();
         world = new World(canvas);
