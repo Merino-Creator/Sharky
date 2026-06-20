@@ -7,7 +7,7 @@ class Jellyfish extends MoveableObject {
 
     static usedPositions = [];
     energy = 50;
-    damage = 25;
+    damage = 19;
 
     JELLY_AGRESSIVE_AUDIO = new Audio('./assets/8.Audio/jellyfish-agressive.mp3');
     JELLY_DEAD_AUDIO = new Audio('./assets/8.Audio/jellyfish-dead.mp3');
@@ -160,6 +160,6 @@ class Jellyfish extends MoveableObject {
      * @returns {number} The new damage value in aggressive mode.
      */
     agressiveMode() {
-        return this.damage = 50;
+        return this.damage = 38;
     }
 }
