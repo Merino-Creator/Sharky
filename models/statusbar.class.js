@@ -9,8 +9,8 @@ class Statusbar extends DrawableObject {
 
     POSITIONS = {
         health: { x: 20, y: 0 },
-        toxic: { x: 20, y: 50 },
-        coin: { x: 20, y: 100 }
+        toxic: { x: 220, y: 0 },
+        coin: { x: 420, y: 0 }
     };
 
     /**
