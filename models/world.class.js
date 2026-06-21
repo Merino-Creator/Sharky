@@ -201,8 +201,11 @@ class World {
                 this.character.characterHit(enemy.damage);
                 this.level.UI[0].setPercentage(this.character.energy);
                 if (this.character.isDead()) {
-                    this.character.timeDied = new Date().getTime();
-                    setTimeout(() => looseGame(), 1400);
+                    if (!this.looseGameTriggered) {
+                        this.looseGameTriggered = true;
+                        this.character.timeDied = new Date().getTime();
+                        setTimeout(() => looseGame(), 1400);
+                    }
                 }
             }
         });

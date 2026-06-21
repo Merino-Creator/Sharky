@@ -385,6 +385,8 @@ function gameOverButtonHover(ctx, hoverRestart, hoverMenu) {
  * Renders the game over screen and registers click and mousemove event listeners.
  */
 function showGameOverScreen() {
+    canvas.removeEventListener('click', onGameOverScreenClick);
+    canvas.removeEventListener('mousemove', onGameOverMouseMove);
     gameOverRestartBtnX = canvas.width / 2 - gameOverRestartBtnW / 2;
     gameOverRestartBtnY = canvas.height / 2;
     gameOverMenuBtnX = canvas.width / 2 - gameOverMenuBtnW / 2;
@@ -537,6 +539,7 @@ function checkWinScreenClick(clickX, clickY) {
  * Resets all game states, audio and static arrays to their initial values.
  */
 function resetGame() {
+    if (world) world.looseGameTriggered = false; 
     gameStarted = false;
     gameOver = false;
     gameWon = false;
