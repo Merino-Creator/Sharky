@@ -23,7 +23,7 @@ class Endboss extends MoveableObject {
     BOSS_DIES_AUDIO = new Audio('./assets/8.Audio/boss-dies.mp3');
 
     offset = {
-        top: 130,
+        top: 200,
         bottom: 60,
         left: 30,
         right: 40

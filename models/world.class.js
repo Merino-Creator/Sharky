@@ -352,10 +352,10 @@ class World {
     spawnBottle() {
         let bottleSpawnId = setInterval(() => {
             if (gamePaused) return;
-            if (this.character.x <= 3000) {
+            if (this.character.x > 3400) {
                 this.bottleSpawnPosition();
             }
-        }, 3000);
+        }, 2000);
         intervalIds.push(bottleSpawnId);
     }
 
