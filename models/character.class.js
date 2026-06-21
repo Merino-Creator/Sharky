@@ -31,6 +31,10 @@ class Character extends MoveableObject {
      */
     constructor() {
         super().loadImage('./assets/1.Sharkie/3.Swim/1.png');
+        registerAudio(this.HURT_AUDIO);
+        registerAudio(this.BUBBLE_SHOOT_AUDIO);
+        registerAudio(this.SNORING_AUDIO);
+        registerAudio(this.DIES_AUDIO);
         this.fetchCharacterImages();
     }
 
@@ -126,7 +130,6 @@ class Character extends MoveableObject {
         if (!this.hurtSoundPlaying) {
             this.hurtSoundPlaying = true;
             this.HURT_AUDIO.play();
-            registerAudio(this.HURT_AUDIO);
             setTimeout(() => this.hurtSoundPlaying = false, 1000);
         }
     }
@@ -171,7 +174,6 @@ class Character extends MoveableObject {
         if (!this.snoringPlaying) {
             this.snoringPlaying = true;
             this.SNORING_AUDIO.play();
-            registerAudio(this.SNORING_AUDIO);
         }
     }
 
@@ -285,7 +287,6 @@ class Character extends MoveableObject {
         setTimeout(() => {
             if (!this.otherDirection && !this.isHurt()) {
                 this.BUBBLE_SHOOT_AUDIO.play();
-                registerAudio(this.BUBBLE_SHOOT_AUDIO);
             }
         }, 750);
     }

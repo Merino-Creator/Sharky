@@ -17,6 +17,7 @@ class Endboss extends MoveableObject {
     startX = 3800;
     frameCounter = 0;
     deadFrame = 0;
+    attackType = null;
 
     BOSS_ATTACK_AUDIO = new Audio('./assets/8.Audio/boss-attack.mp3');
     BOSS_DIES_AUDIO = new Audio('./assets/8.Audio/boss-dies.mp3');
@@ -34,6 +35,8 @@ class Endboss extends MoveableObject {
     constructor() {
         super().loadImage('./assets/2.Enemy/3 Final Enemy/2.floating/1.png');
         this.x = 3800;
+        registerAudio(this.BOSS_ATTACK_AUDIO);
+        registerAudio(this.BOSS_DIES_AUDIO);
         this.fetchEndbossImages();
     }
 
@@ -71,6 +74,12 @@ class Endboss extends MoveableObject {
     * Stores all interval IDs for later cleanup.
     */
     animate() {
+        this.yStart = this.y;
+        this.yMin = this.y - 80;
+        this.yMax = this.y + 80;
+        this.speed = 2;
+        this.moveUpDown();
+
         let bossAttackTriggerId = setInterval(() => {
             this.triggerAttack();
         }, 1600);
@@ -114,7 +123,11 @@ class Endboss extends MoveableObject {
         } else if (this.bossIsHurt()) {
             this.playHurtAnimation();
         } else if (this.isAttacking) {
-            this.playAttackAnimation();
+            if (this.attackType === 1 && this.x >= this.startX - 10) {
+                this.playFloatAnimation();
+            } else {
+                this.playAttackAnimation();
+            }
         } else if (this.firstContact && this.currentImage < this.IMAGES_BOSS_INTRO.length) {
             this.playIntroAnimation();
         } else {
@@ -131,18 +144,77 @@ class Endboss extends MoveableObject {
         if (gamePaused) return;
         if (this.firstContact && this.introFinished) {
             this.isAttacking = true;
-            this.BOSS_ATTACK_AUDIO.play();
-            registerAudio(this.BOSS_ATTACK_AUDIO);
+            let attackType = Math.floor(Math.random() * 3);
 
+            if (attackType === 0) {
+                this.slowAdvance();
+            } else if (attackType === 1) {
+                this.dashAttack();
+            } else {
+                this.pendulumAttack();
+            }
+        }
+    }
+
+    /**
+     * Slow advance attack - moves 200px toward the character and returns.
+     */
+    slowAdvance() {
+        this.BOSS_ATTACK_AUDIO.play();
+        let attackId = setInterval(() => {
+            if (gamePaused) return;
+            this.x -= 3;
+        }, 1000 / 30);
+
+        setTimeout(() => {
+            this.attackAnimationXPosition(attackId);
+        }, 6 * 100);
+    }
+
+    /**
+     * Dash attack - short pause then fast sprint toward the character and back.
+     */
+    dashAttack() {
+        setTimeout(() => {
+            this.BOSS_ATTACK_AUDIO.play();
             let attackId = setInterval(() => {
                 if (gamePaused) return;
-                this.x -= 3;
+                this.x -= 12;
             }, 1000 / 30);
 
             setTimeout(() => {
                 this.attackAnimationXPosition(attackId);
-            }, 6 * 100);
-        }
+            }, 3 * 100);
+        }, 500);
+    }
+
+    /**
+     * Pendulum attack - moves back and forth multiple times rapidly.
+     */
+    pendulumAttack() {
+        this.BOSS_ATTACK_AUDIO.play();
+        let swings = 0;
+        let maxSwings = 3;
+        let goingLeft = true;
+
+        let pendulumId = setInterval(() => {
+            if (gamePaused) return;
+
+            if (goingLeft) {
+                this.x -= 8;
+                if (this.x <= this.startX - 150) goingLeft = false;
+            } else {
+                this.x += 8;
+                if (this.x >= this.startX) {
+                    goingLeft = true;
+                    swings++;
+                    if (swings >= maxSwings) {
+                        clearInterval(pendulumId);
+                        this.isAttacking = false;
+                    }
+                }
+            }
+        }, 1000 / 30);
     }
 
     /**

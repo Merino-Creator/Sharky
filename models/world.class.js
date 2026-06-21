@@ -241,6 +241,7 @@ class World {
     checkEnemyType(enemy, bubble, bubbleIndex) {
         if (enemy instanceof Puffer) {
             this.BUBBLE_POP_AUDIO.play();
+            registerAudio(this.BUBBLE_POP_AUDIO);
         }
         if (enemy instanceof Jellyfish) {
             enemy.enemyHit(bubble.damage);
