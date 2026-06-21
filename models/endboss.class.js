@@ -10,7 +10,7 @@ class Endboss extends MoveableObject {
     height = 450;
     width = 500;
     firstContact = false;
-    energy = 1000;
+    energy = 300;
     damage = 50;
     isAttacking = false;
     introFinished = false;
