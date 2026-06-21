@@ -11,6 +11,9 @@ let btnWidth = 200;
 let btnHeight = 80;
 let btnX;
 let btnY;
+let smallBtnW = 150;
+let smallBtnH = 60;
+let policyBtnX, policyBtnY, introBtnX, introBtnY;
 let gameOver = false;
 let gameWon = false;
 let gamePaused = false;
@@ -85,6 +88,10 @@ function initStartScreen() {
     introBtn.src = './assets/6.Botones/Einleitung_button.png';
     btnX = canvas.width / 2 - btnWidth / 2;
     btnY = canvas.height / 2;
+    policyBtnX = canvas.width / 2 - smallBtnW - 10;
+    policyBtnY = btnY + btnHeight + 20;
+    introBtnX = canvas.width / 2 + 10;
+    introBtnY = btnY + btnHeight + 20;
 }
 
 /**
@@ -96,8 +103,8 @@ function loadStartScreenImages() {
 }
 
 /**
- * Draws the start screen with optional hover effect on the start button.
- * @param {boolean} hover - Whether the mouse is hovering over the start button.
+ * Draws the start screen with optional hover effect on the buttons.
+ * @param {string|boolean} hover - The button currently hovered ('start', 'policy', 'intro' or false).
  */
 function drawStartScreen(hover) {
     startCtx.save();
@@ -106,50 +113,40 @@ function drawStartScreen(hover) {
     startCtx.fillStyle = 'white';
     startCtx.textAlign = 'center';
     startCtx.fillText('TOXIC WAVES', canvas.width / 2, canvas.height / 2 - 100);
+    hoverStartBtn(hover);
+    startCtx.restore();
+}
 
+/**
+ * Draws the start screen buttons with optional hover effects.
+ * @param {string|boolean} hover - The button currently hovered ('start', 'policy', 'intro' or false).
+ */
+function hoverStartBtn(hover) {
     if (hover === 'start') {
         startCtx.drawImage(startBtn, btnX - 10, btnY - 5, btnWidth + 20, btnHeight + 10);
     } else {
         startCtx.drawImage(startBtn, btnX, btnY, btnWidth, btnHeight);
     }
-
-    let smallBtnW = 150;
-    let smallBtnH = 60;
-    let policyBtnX = canvas.width / 2 - smallBtnW - 10;
-    let policyBtnY = btnY + btnHeight + 20;
-    let introBtnX = canvas.width / 2 + 10;
-    let introBtnY = btnY + btnHeight + 20;
-
     if (hover === 'policy') {
         startCtx.drawImage(policyBtn, policyBtnX - 5, policyBtnY - 3, smallBtnW + 10, smallBtnH + 6);
     } else {
         startCtx.drawImage(policyBtn, policyBtnX, policyBtnY, smallBtnW, smallBtnH);
     }
-
     if (hover === 'intro') {
         startCtx.drawImage(introBtn, introBtnX - 5, introBtnY - 3, smallBtnW + 10, smallBtnH + 6);
     } else {
         startCtx.drawImage(introBtn, introBtnX, introBtnY, smallBtnW, smallBtnH);
     }
-
-    startCtx.restore();
 }
 
 /**
- * Handles mouse movement to detect hover state over the start button.
+ * Handles mouse movement to detect hover state over the start screen buttons.
  * @param {MouseEvent} event - The mouse move event.
  */
 function onMouseMove(event) {
     let rect = canvas.getBoundingClientRect();
     let mouseX = event.clientX - rect.left;
     let mouseY = event.clientY - rect.top;
-
-    let smallBtnW = 150;
-    let smallBtnH = 60;
-    let policyBtnX = canvas.width / 2 - smallBtnW - 10;
-    let policyBtnY = btnY + btnHeight + 20;
-    let introBtnX = canvas.width / 2 + 10;
-    let introBtnY = btnY + btnHeight + 20;
 
     if (mouseX >= btnX && mouseX <= btnX + btnWidth && mouseY >= btnY && mouseY <= btnY + btnHeight) {
         drawStartScreen('start');
@@ -184,13 +181,6 @@ function onStartScreenClick(event) {
     let clickX = event.clientX - rect.left;
     let clickY = event.clientY - rect.top;
 
-    let smallBtnW = 150;
-    let smallBtnH = 60;
-    let policyBtnX = canvas.width / 2 - smallBtnW - 10;
-    let policyBtnY = btnY + btnHeight + 20;
-    let introBtnX = canvas.width / 2 + 10;
-    let introBtnY = btnY + btnHeight + 20;
-
     if (clickX >= btnX && clickX <= btnX + btnWidth && clickY >= btnY && clickY <= btnY + btnHeight) {
         canvas.removeEventListener('mousemove', onMouseMove);
         canvas.style.cursor = 'default';
@@ -203,7 +193,7 @@ function onStartScreenClick(event) {
 }
 
 /**
- * Opens the intro overlay and pauses the start screen interaction.
+ * Opens the intro overlay.
  */
 function openIntroOverlay() {
     document.getElementById('introOverlay').classList.add('visible');
@@ -631,6 +621,9 @@ function toggleInfoMenu() {
     }
 }
 
+/**
+ * Renders the intro overlay template into the intro content container.
+ */
 function introTemplate() {
     let introRef = document.getElementById('introContent');
     introRef.innerHTML += introOverlayTemplate();
