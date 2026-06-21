@@ -10,10 +10,10 @@ function introOverlayTemplate() {
         Nicht slappen – Stromschlag! Verwende stattdessen den Blasenangriff (SHOOT). Vorsicht: Nach dem ersten Treffer verdoppelt er seinen Schaden!<br>
         <br>
         <h3>Endboss</h3><br>
-        Weder der Slap noch normale Blasen richten Schaden an. Sammle mindestens 5 Giftflaschen, die von oben herab sinken, um deine Blase zur tödlichen Giftblase zu machen.<br>
+        Weder der Slap noch normale Blasen richten Schaden an. Während dem Bosskampf fallen regelmäßig Giftflaschen von oben herab – sammle 2 davon ein, um ihm mit einer Giftblase Schaden zuzufügen. Nach jedem Angriff musst du erneut 2 Flaschen einsammeln.<br>
         <br>
-        <h3>Tipp:</h3><br>
-        Eine Giftblase besiegt Jellyfische mit einem einzigen Treffer!
+        <h3>Coins</h3><br>
+        Für jede eingesammelte Münze erhöht sich die Geschwindigkeit des Charakters etwas. Dies dürfte sich im Bosskampf als nützlich herausstellen.<br>
         </p>
     `;
 }
