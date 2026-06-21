@@ -194,6 +194,7 @@ class Character extends MoveableObject {
      * Updates the camera position based on the character's x position.
      */
     moveCharacter() {
+        if (this.isDead()) return;
         if (this.canMoveRight()) this.moveRight();
         if (this.canMoveLeft()) this.moveLeft();
         if (this.canMoveUp()) this.moveUp();
