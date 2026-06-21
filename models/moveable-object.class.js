@@ -177,27 +177,44 @@ class MoveableObject extends DrawableObject {
     }
 
     /**
-     * Creates a ToxicBubble if the toxic amount is 4 or more, otherwise creates a regular Bubble.
-     * Adds the bubble to the world and resets the attacking state.
-     * @param {World} world - The game world instance to add the bubble to.
-     */
+    * Creates a ToxicBubble if the toxic amount is 2 or more, otherwise creates a regular Bubble.
+    * Adds the bubble to the world and resets the attacking state.
+    * @param {World} world - The game world instance to add the bubble to.
+    */
     checkToxicAmount(world) {
         let bubble;
         if (world.toxicAmount >= 2) {
-            bubble = new ToxicBubble(
-                this.x + this.offset.left + 140,
-                this.y + this.offset.top + 25
-            );
-            world.toxicAmount = 0;
-            world.level.UI[1].setPercentage(0);
+            bubble = this.toxicBubble(world);
         } else {
-            bubble = new Bubble(
-                this.x + this.offset.left + 140,
-                this.y + this.offset.top + 25
-            );
+            bubble = this.normalBubble();
         }
         world.bubble.push(bubble);
         this.isAttacking = false;
+    }
+
+    /**
+     * Creates a ToxicBubble and resets the toxic amount and statusbar.
+     * @param {World} world - The game world instance.
+     * @returns {ToxicBubble} The created toxic bubble.
+     */
+    toxicBubble(world) {
+        world.toxicAmount = 0;
+        world.level.UI[1].setPercentage(0);
+        return new ToxicBubble(
+            this.x + this.offset.left + 140,
+            this.y + this.offset.top + 25
+        );
+    }
+
+    /**
+     * Creates a normal Bubble.
+     * @returns {Bubble} The created bubble.
+     */
+    normalBubble() {
+        return new Bubble(
+            this.x + this.offset.left + 140,
+            this.y + this.offset.top + 25
+        );
     }
 
     /**

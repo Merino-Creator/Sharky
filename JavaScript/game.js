@@ -65,7 +65,7 @@ function initEndScreenImages() {
 }
 
 /**
- * Renders the start screen on the canvas including background, title and start button.
+ * Renders the start screen on the canvas including background, title and buttons.
  */
 function showStartScreen() {
     initStartScreen();
@@ -74,7 +74,7 @@ function showStartScreen() {
 }
 
 /**
- * Initializes all variables needed for the start screen.
+ * Initializes all image objects needed for the start screen.
  */
 function initStartScreen() {
     startCtx = canvas.getContext('2d');
@@ -82,6 +82,13 @@ function initStartScreen() {
     startBtn = new Image();
     policyBtn = new Image();
     introBtn = new Image();
+    initBtnContent();
+}
+
+/**
+ * Sets image sources and calculates button positions for the start screen.
+ */
+function initBtnContent() {
     startBackground.src = './assets/3. Background/Dark/2.png';
     startBtn.src = './assets/6.Botones/Start/1.png';
     policyBtn.src = './assets/6.Botones/Impressum_button.png';
@@ -95,7 +102,7 @@ function initStartScreen() {
 }
 
 /**
- * Loads start screen images and triggers initial draw.
+ * Loads start screen images and triggers initial draw once loaded.
  */
 function loadStartScreenImages() {
     startBackground.onload = () => drawStartScreen(false);
@@ -147,7 +154,16 @@ function onMouseMove(event) {
     let rect = canvas.getBoundingClientRect();
     let mouseX = event.clientX - rect.left;
     let mouseY = event.clientY - rect.top;
+    mousePosition(rect, mouseX, mouseY);
+}
 
+/**
+ * Determines which start screen button is hovered and updates the cursor and screen accordingly.
+ * @param {DOMRect} rect - The bounding rectangle of the canvas.
+ * @param {number} mouseX - The x position of the mouse relative to the canvas.
+ * @param {number} mouseY - The y position of the mouse relative to the canvas.
+ */
+function mousePosition(rect, mouseX, mouseY) {
     if (mouseX >= btnX && mouseX <= btnX + btnWidth && mouseY >= btnY && mouseY <= btnY + btnHeight) {
         drawStartScreen('start');
         canvas.style.cursor = 'pointer';
@@ -373,6 +389,7 @@ function gameOverButtonHover(ctx, hoverRestart, hoverMenu) {
 
 /**
  * Renders the game over screen and registers click and mousemove event listeners.
+ * Removes existing listeners first to prevent stacking.
  */
 function showGameOverScreen() {
     canvas.removeEventListener('click', onGameOverScreenClick);
@@ -527,6 +544,7 @@ function checkWinScreenClick(clickX, clickY) {
 
 /**
  * Resets all game states, audio and static arrays to their initial values.
+ * Also resets the looseGameTriggered and winGameTriggered flags on the world instance.
  */
 function resetGame() {
     if (world) {
@@ -536,15 +554,22 @@ function resetGame() {
     gameStarted = false;
     gameOver = false;
     gameWon = false;
+    resetArrays();
+    resetAudio();
+    closeIntroOverlay();
+    world = null;
+}
+
+/**
+ * Resets all interval, audio and static position arrays to their initial empty state.
+ */
+function resetArrays() {
     intervalIds = [];
     allAudio = [];
     Puffer.usedPositions = [];
     Jellyfish.usedPositions = [];
     Coins.usedPositions = [];
     PoisonBottle.usedPositions = [];
-    resetAudio();
-    closeIntroOverlay();
-    world = null;
 }
 
 /**

@@ -236,25 +236,33 @@ class Endboss extends MoveableObject {
     }
 
     /**
-     * Plays the dead animation and triggers the death sound once.
-     */
+    * Plays the dead animation frame by frame and freezes on the last frame when finished.
+    */
     playDeadAnimation() {
         if (this.frameCounter % 2 === 0) {
             if (this.deadFrame < this.IMAGES_BOSS_DEAD.length) {
                 this.img = this.ImageCache[this.IMAGES_BOSS_DEAD[this.deadFrame]];
                 this.deadFrame++;
-                if (this.deadFrame === 1) {
-                    setTimeout(() => {
-                        this.BOSS_DIES_AUDIO.play();
-                        setTimeout(() => {
-                            this.BOSS_DIES_AUDIO.pause();
-                            this.BOSS_DIES_AUDIO.currentTime = 0;
-                        }, 1000);
-                    }, 100);
-                }
+                this.bossIsDead();
             } else {
                 this.img = this.ImageCache[this.IMAGES_BOSS_DEAD[this.IMAGES_BOSS_DEAD.length - 1]];
             }
+        }
+    }
+
+    /**
+     * Plays the boss death sound once when the first dead frame is reached.
+     * Sound is stopped after 1 second.
+     */
+    bossIsDead() {
+        if (this.deadFrame === 1) {
+            setTimeout(() => {
+                this.BOSS_DIES_AUDIO.play();
+                setTimeout(() => {
+                    this.BOSS_DIES_AUDIO.pause();
+                    this.BOSS_DIES_AUDIO.currentTime = 0;
+                }, 1000);
+            }, 100);
         }
     }
 
