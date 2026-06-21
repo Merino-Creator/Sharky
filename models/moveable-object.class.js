@@ -42,26 +42,6 @@ class MoveableObject extends DrawableObject {
     }
 
     /**
-     * Draws the hitbox frame around the object for debugging purposes.
-     * Only renders for Character, Puffer, Jellyfish, PoisonBottle and Endboss instances.
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
-     */
-    drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Puffer || this instanceof Jellyfish || this instanceof PoisonBottle || this instanceof Endboss) {
-            ctx.beginPath();
-            ctx.lineWidth = '5';
-            ctx.strokeStyle = 'blue';
-            ctx.rect(
-                this.x + this.offset.left,
-                this.y + this.offset.top,
-                this.width - this.offset.left - this.offset.right,
-                this.height - this.offset.top - this.offset.bottom
-            );
-            ctx.stroke();
-        }
-    }
-
-    /**
      * Checks if this object is colliding with another object using AABB collision detection.
      * Takes into account the offset of both objects for accurate hitbox calculation.
      * @param {MoveableObject} mo - The object to check collision against.

@@ -40,11 +40,4 @@ class DrawableObject {
             ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
         }
     }
-
-    /**
-     * Draws the hitbox frame around the object for debugging purposes.
-     * Empty by default - overridden in MoveableObject for specific enemy types.
-     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
-     */
-    drawFrame(ctx) {}
 }
