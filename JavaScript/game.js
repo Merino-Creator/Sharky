@@ -539,7 +539,10 @@ function checkWinScreenClick(clickX, clickY) {
  * Resets all game states, audio and static arrays to their initial values.
  */
 function resetGame() {
-    if (world) world.looseGameTriggered = false; 
+    if (world) {
+        world.looseGameTriggered = false;
+        world.winGameTriggered = false;
+    }
     gameStarted = false;
     gameOver = false;
     gameWon = false;

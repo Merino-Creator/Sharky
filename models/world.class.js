@@ -258,7 +258,10 @@ class World {
      */
     checkEnemyCondition(enemy) {
         if (enemy instanceof Endboss) {
-            setTimeout(() => winGame(), 1400);
+            if (!this.winGameTriggered) {
+                this.winGameTriggered = true;
+                setTimeout(() => winGame(), 1400);
+            }
         } else {
             setTimeout(() => {
                 let index = this.level.enemies.indexOf(enemy);
@@ -337,6 +340,7 @@ class World {
     checkCoinCollision(coins, index) {
         if (this.character.isColliding(coins)) {
             this.coinAmount++;
+            this.character.speed += 0.2;
             this.level.UI[2].setPercentage(this.coinAmount);
             this.COIN_COLLECT_AUDIO.play();
             registerAudio(this.COIN_COLLECT_AUDIO);

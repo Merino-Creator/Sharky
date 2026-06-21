@@ -200,7 +200,7 @@ class Character extends MoveableObject {
         if (this.canMoveDown()) this.moveDown();
         if (this.canShootBubble()) this.shootBubble();
         if (this.canSlap()) this.slap();
-        this.world.camera_x = -this.x + 40;
+        this.world.camera_x = -Math.round(this.x) + 40;
     }
 
     /**
