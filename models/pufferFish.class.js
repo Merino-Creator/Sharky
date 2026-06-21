@@ -59,7 +59,7 @@ class Puffer extends MoveableObject {
 
         do {
             x = 400 + Math.random() * 3300;
-            tooClose = Puffer.usedPositions.some(pos => Math.abs(pos - x) < 400);
+            tooClose = Puffer.usedPositions.some(pos => Math.abs(pos - x) < 200);
         } while (tooClose);
         Puffer.usedPositions.push(x);
         return x;

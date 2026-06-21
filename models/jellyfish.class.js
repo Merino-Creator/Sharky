@@ -77,7 +77,7 @@ class Jellyfish extends MoveableObject {
 
         do {
             x = 400 + Math.random() * 3300;
-            tooClose = Jellyfish.usedPositions.some(pos => Math.abs(pos - x) < 400);
+            tooClose = Jellyfish.usedPositions.some(pos => Math.abs(pos - x) < 200);
         } while (tooClose);
 
         Jellyfish.usedPositions.push(x);
