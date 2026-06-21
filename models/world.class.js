@@ -238,9 +238,8 @@ class World {
      * @param {number} bubbleIndex - The index of the bubble in the bubble array.
      */
     checkEnemyType(enemy, bubble, bubbleIndex) {
-        if (enemy instanceof Puffer) {
+        if (enemy instanceof Puffer || (enemy instanceof Endboss && bubble instanceof Bubble && !(bubble instanceof ToxicBubble))) {
             this.BUBBLE_POP_AUDIO.play();
-            registerAudio(this.BUBBLE_POP_AUDIO);
         }
         if (enemy instanceof Jellyfish) {
             enemy.enemyHit(bubble.damage);
