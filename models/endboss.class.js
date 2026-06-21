@@ -23,8 +23,8 @@ class Endboss extends MoveableObject {
     BOSS_DIES_AUDIO = new Audio('./assets/8.Audio/boss-dies.mp3');
 
     offset = {
-        top: 200,
-        bottom: 60,
+        top: 220,
+        bottom: 80,
         left: 30,
         right: 40
     };
@@ -75,9 +75,9 @@ class Endboss extends MoveableObject {
     */
     animate() {
         this.yStart = this.y;
-        this.yMin = this.y - 80;
-        this.yMax = this.y + 80;
-        this.speed = 2;
+        this.yMin = this.y - 140;
+        this.yMax = this.y + 100;
+        this.speed = 3;
         this.moveUpDown();
 
         let bossAttackTriggerId = setInterval(() => {

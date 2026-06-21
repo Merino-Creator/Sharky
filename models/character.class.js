@@ -20,10 +20,10 @@ class Character extends MoveableObject {
     DIES_AUDIO = new Audio('./assets/8.Audio/character-dies.mp3');
 
     offset = {
-        top: 110,
+        top: 130,
         bottom: 60,
-        left: 40,
-        right: 40
+        left: 50,
+        right: 50
     };
 
     /**
