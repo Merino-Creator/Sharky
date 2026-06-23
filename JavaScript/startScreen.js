@@ -196,5 +196,11 @@ function checkStartScreenTouch(clickX, clickY) {
         canvas.removeEventListener('touchend', onStartScreenTouch);
         canvas.style.cursor = 'default';
         startGame();
+    } else if (clickX >= policyBtnX && clickX <= policyBtnX + smallBtnW &&
+        clickY >= policyBtnY && clickY <= policyBtnY + smallBtnH) {
+        window.open('./policy.html', '_blank');
+    } else if (clickX >= introBtnX && clickX <= introBtnX + smallBtnW &&
+        clickY >= introBtnY && clickY <= introBtnY + smallBtnH) {
+        openIntroOverlay();
     }
 }
