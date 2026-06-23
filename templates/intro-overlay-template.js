@@ -14,6 +14,7 @@ function introOverlayTemplate() {
         <br>
         <h3>Endboss</h3><br>
         Weder der Slap noch normale Blasen richten Schaden an. Während dem Bosskampf fallen regelmäßig Giftflaschen von oben herab – sammle 2 davon ein, um ihm mit einer Giftblase Schaden zuzufügen. Nach jedem Angriff musst du erneut 2 Flaschen einsammeln.<br>
+        Erwische ihn 3 mal bevor er dich erwischt!<br>
         <br>
         <h3>Coins</h3><br>
         Für jede eingesammelte Münze erhöht sich die Geschwindigkeit des Charakters etwas. Dies dürfte sich im Bosskampf als nützlich herausstellen.

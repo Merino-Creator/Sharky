@@ -204,3 +204,7 @@ function checkStartScreenTouch(clickX, clickY) {
         openIntroOverlay();
     }
 }
+
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeIntroOverlay();
+});
