@@ -18,7 +18,7 @@ class Bubble extends MoveableObject {
     constructor(x, y) {
         super().loadImage('./assets/1.Sharkie/4.Attack/Bubble trap/Bubble.png');
         this.x = x;
-        this.y = y;
+        this.y = y - 15;
         this.throw();
     }
 
