@@ -41,7 +41,7 @@ function initBtnContent() {
     policyBtn.src = './assets/6.Botones/Impressum_button.png';
     introBtn.src = './assets/6.Botones/Einleitung_button.png';
     btnX = canvas.width / 2 - btnWidth / 2;
-    btnY = canvas.height / 2;
+    btnY = canvas.height / 2 - 50;
     policyBtnX = canvas.width / 2 - smallBtnW - 10;
     policyBtnY = btnY + btnHeight + 20;
     introBtnX = canvas.width / 2 + 10;

@@ -34,7 +34,7 @@ function drawGameOverScreen(hoverRestart, hoverMenu) {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     let bgWidth = 400;
-    let bgHeight = 200;
+    let bgHeight = 100;
     let bgX = canvas.width / 2 - bgWidth / 2;
     let bgY = 20;
     ctx.drawImage(gameOverBackground, bgX, bgY, bgWidth, bgHeight);
@@ -68,9 +68,9 @@ function showGameOverScreen() {
     canvas.removeEventListener('click', onGameOverScreenClick);
     canvas.removeEventListener('mousemove', onGameOverMouseMove);
     gameOverRestartBtnX = canvas.width / 2 - gameOverRestartBtnW / 2;
-    gameOverRestartBtnY = canvas.height / 2;
+    gameOverRestartBtnY = canvas.height / 2 - 50;
     gameOverMenuBtnX = canvas.width / 2 - gameOverMenuBtnW / 2;
-    gameOverMenuBtnY = canvas.height / 2 + 100;
+    gameOverMenuBtnY = canvas.height / 2 + 50;
     drawGameOverScreen(false, false);
     canvas.addEventListener('mousemove', onGameOverMouseMove);
     canvas.addEventListener('click', onGameOverScreenClick);
@@ -98,8 +98,10 @@ function onGameOverMouseMove(event) {
  */
 function onGameOverScreenClick(event) {
     let rect = canvas.getBoundingClientRect();
-    let clickX = event.clientX - rect.left;
-    let clickY = event.clientY - rect.top;
+    let scaleX = canvas.width / rect.width;
+    let scaleY = canvas.height / rect.height;
+    let clickX = (event.clientX - rect.left) * scaleX;
+    let clickY = (event.clientY - rect.top) * scaleY;
     checkGameOverTouch(clickX, clickY);
 }
 
@@ -147,10 +149,10 @@ function drawWinScreen(hoverRestart, hoverMenu) {
  * Renders the win screen and registers click and mousemove event listeners.
  */
 function showWinScreen() {
-    winRestartBtnX = canvas.width / 2 - winRestartBtnW / 2;
+    winRestartBtnX = canvas.width / 2 - winRestartBtnW / 2 - 120;
     winRestartBtnY = canvas.height / 4;
-    winMenuBtnX = canvas.width / 2 - winMenuBtnW / 2;
-    winMenuBtnY = canvas.height / 4 + 220;
+    winMenuBtnX = canvas.width / 2 - winMenuBtnW / 2 + 120;
+    winMenuBtnY = canvas.height / 4;
     drawWinScreen(false, false);
     canvas.addEventListener('mousemove', onWinMouseMove);
     canvas.addEventListener('click', onWinScreenClick);
@@ -178,8 +180,10 @@ function onWinMouseMove(event) {
  */
 function onWinScreenClick(event) {
     let rect = canvas.getBoundingClientRect();
-    let clickX = event.clientX - rect.left;
-    let clickY = event.clientY - rect.top;
+    let scaleX = canvas.width / rect.width;
+    let scaleY = canvas.height / rect.height;
+    let clickX = (event.clientX - rect.left) * scaleX;
+    let clickY = (event.clientY - rect.top) * scaleY;
     checkWinScreenClick(clickX, clickY);
 }
 
