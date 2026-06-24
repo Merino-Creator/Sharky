@@ -228,6 +228,12 @@ h3 {
     cursor: pointer;
 }
 
+@media (max-width: 800px) {
+    #introContent {
+        max-width: 450px;
+    }
+}
+
 @media (max-width: 720px) and (orientation: portrait) {
     #rotate-overlay {
         display: flex;
@@ -248,6 +254,10 @@ h3 {
     .controls-image {
         height: 60px;
     }
+
+    #introContent {
+        max-width: 300px;
+    }
 }
 
 @media (max-width: 400px) {
@@ -257,6 +267,12 @@ h3 {
 
     h3 {
         font-size: 18px;
+    }
+}
+
+@media (max-height: 800px) {
+    #introContent {
+        max-height: 500px;
     }
 }
 
@@ -277,6 +293,12 @@ h3 {
     }
 }
 
+@media (max-height: 600px) {
+    #introContent {
+        max-height: 350px;
+    }
+}
+
 @media (max-height: 480px) {
     canvas {
         height: 100vh;
@@ -294,5 +316,9 @@ h3 {
 
     #hud {
         display: flex;
+    }
+
+    #introContent {
+        max-height: 250px;
     }
 }
