@@ -1,17 +1,17 @@
 function policyOverlayTemplate() {
     return `
         <button id="closeOverlayBtn" onclick="closeOverlay()">✕</button>
-        <h1>Rechtliches</h1>
+        <h2>Rechtliches</h2>
 
         <div id="impressum">
-            <h2>Impressum</h2>
+            <h3>Impressum</h3>
 
             <p>Daniel Stuermer<br>
                 Banzhaldenstrasse 89<br>
                 70469 Stuttgart
             </p>
 
-            <h2>Kontakt</h2>
+            <h3>Kontakt</h3>
             <p>stuermer.dan137@gmail.com</p>
 
             <p>Quelle:<a href="https://www.e-recht24.de"> e-recht24.de</a></p>
@@ -20,12 +20,12 @@ function policyOverlayTemplate() {
 
         <div id='generator_results'>
             <div id='generator_results_content'>
-                <h1>Datenschutzhinweise</h1>
-                <h2>Verantwortlicher</h2>
+                <h2>Datenschutzhinweise</h2>
+                <h3>Verantwortlicher</h3>
                 <p>Verantwortlicher im Sinne der Datenschutzgesetze, insbesondere der EU-Datenschutz-Grundverordnung
                     (DSGVO), ist:</p>
                 <p class='generator_user_input'>Daniel Stuermer</p>
-                <h2>Ihre Betroffenenrechte</h2>
+                <h3>Ihre Betroffenenrechte</h3>
                 <p>Unter den angegebenen Kontaktdaten können Sie gemäß EU-Datenschutz-Grundverordnung (DSGVO) jederzeit
                     folgende Rechte ausüben:</p>
                 <ul>
@@ -46,9 +46,9 @@ function policyOverlayTemplate() {
                 <p>Eine Liste der Aufsichtsbehörden (für den nichtöffentlichen Bereich) mit Anschrift finden Sie unter: <a
                         href="https://www.bfdi.bund.de/DE/Infothek/Anschriften_Links/anschriften_links-node.html">https://www.bfdi.bund.de/DE/Infothek/Anschriften_Links/anschriften_links-node.html</a>.
                 </p>
-                <h2>Verarbeitungstätigkeiten</h2>
-                <h2>Information über Ihr Widerspruchsrecht nach Art. 21 DSGVO</h2>
-                <h3>Einzelfallbezogenes Widerspruchsrecht</h3>
+                <h3>Verarbeitungstätigkeiten</h3>
+                <h3>Information über Ihr Widerspruchsrecht nach Art. 21 DSGVO</h3>
+                <h4>Einzelfallbezogenes Widerspruchsrecht</h4>
                 <p>Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die
                     Verarbeitung Sie betreffender personenbezogener Daten, die aufgrund Art. 6 Abs. 1 lit. f DSGVO
                     (Datenverarbeitung auf der Grundlage einer Interessenabwägung) erfolgt, Widerspruch einzulegen; dies
@@ -64,10 +64,10 @@ function policyOverlayTemplate() {
                     Anforderungen entspricht oder um Änderungen unserer Leistungen in der Datenschutzerklärung umzusetzen,
                     z.B. bei der Einführung neuer Services. Für Ihren erneuten Besuch gilt dann die neue
                     Datenschutzerklärung.</p>
-                <h2>Fragen zum Datenschutz</h2>
+                <h3>Fragen zum Datenschutz</h3>
                 <p>Wenn Sie Fragen zum Datenschutz haben, schreiben Sie uns bitte eine E-Mail an den oben genannten
                     Verantwortlichen.</p>
-                <h2>Urheberrechtliche Hinweise</h2>
+                <h3>Urheberrechtliche Hinweise</h3>
                 <p><em>Diese Datenschutzerklärung wurde mit Hilfe der activeMind AG erstellt – den Experten für <a
                             href="https://www.activemind.de/datenschutz/datenschutzbeauftragter/" target="_blank"
                             rel="noopener dofollow">externe Datenschutzbeauftragte</a> (Version #2024-10-25).</em></p>

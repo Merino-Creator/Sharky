@@ -226,23 +226,6 @@ function applyMuteState() {
 }
 
 /**
- * Toggles the info menu visibility and pauses/resumes the game.
- */
-function toggleInfoMenu() {
-    let infoMenu = document.getElementById('infoMenu');
-    infoMenu.classList.toggle('visible');
-
-    if (gameStarted && !gameOver && !gameWon) {
-        gamePaused = !gamePaused;
-        if (gamePaused) {
-            INGAME_BGM_AUDIO.pause();
-        } else {
-            INGAME_BGM_AUDIO.play();
-        }
-    }
-}
-
-/**
  * Renders the intro overlay template into the intro content container.
  */
 function introTemplate() {
