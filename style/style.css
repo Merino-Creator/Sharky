@@ -295,7 +295,7 @@ h3 {
     }
 }
 
-@media (max-width: 720px) and (orientation: portrait) {
+@media (orientation: portrait) and (hover: none) {
     #rotate-overlay {
         display: flex;
     }

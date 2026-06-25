@@ -233,6 +233,9 @@ function introTemplate() {
     introRef.innerHTML += introOverlayTemplate();
 }
 
+/**
+ * Renders the policy overlay template into the policy content container.
+ */
 function policyTemplate() {
     let policyRef = document.getElementById('policyContent');
     policyRef.innerHTML += policyOverlayTemplate();
