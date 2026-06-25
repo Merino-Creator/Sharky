@@ -1,6 +1,6 @@
 function introOverlayTemplate() {
     return `
-        <button id="closeIntroBtn" onclick="closeIntroOverlay()">✕</button>
+        <button id="closeOverlayBtn" onclick="closeOverlay()">✕</button>
         <h2>So wird gespielt!</h2>
         <h3>Steuerung</h3><br>
         Bewege Sharky mit den Pfeiltasten auf deiner Tastatur oder per Touch-Pad im Mobile-Modus.<br>

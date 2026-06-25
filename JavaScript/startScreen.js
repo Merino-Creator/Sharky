@@ -149,7 +149,7 @@ function onStartScreenClick(event) {
         canvas.style.cursor = 'default';
         startGame();
     } else if (clickX >= policyBtnX && clickX <= policyBtnX + smallBtnW && clickY >= policyBtnY && clickY <= policyBtnY + smallBtnH) {
-        window.open('./policy.html', '_blank');
+        openPolicyOverlay();
     } else if (clickX >= introBtnX && clickX <= introBtnX + smallBtnW && clickY >= introBtnY && clickY <= introBtnY + smallBtnH) {
         openIntroOverlay();
     }
@@ -165,8 +165,13 @@ function openIntroOverlay() {
 /**
  * Closes the intro overlay.
  */
-function closeIntroOverlay() {
+function closeOverlay() {
     document.getElementById('introOverlay').classList.remove('visible');
+    document.getElementById('policyOverlay').classList.remove('visible');
+}
+
+function openPolicyOverlay() {
+    document.getElementById('policyOverlay').classList.add('visible');
 }
 
 /**
@@ -198,7 +203,7 @@ function checkStartScreenTouch(clickX, clickY) {
         startGame();
     } else if (clickX >= policyBtnX && clickX <= policyBtnX + smallBtnW &&
         clickY >= policyBtnY && clickY <= policyBtnY + smallBtnH) {
-        window.open('./policy.html', '_blank');
+        openPolicyOverlay();
     } else if (clickX >= introBtnX && clickX <= introBtnX + smallBtnW &&
         clickY >= introBtnY && clickY <= introBtnY + smallBtnH) {
         openIntroOverlay();
@@ -206,5 +211,5 @@ function checkStartScreenTouch(clickX, clickY) {
 }
 
 document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') closeIntroOverlay();
+    if (event.key === 'Escape') closeOverlay();
 });

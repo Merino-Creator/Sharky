@@ -24,6 +24,7 @@ function init() {
     initEndScreenImages();
     registerHudEvents();
     introTemplate();
+    policyTemplate();
 }
 
 /**
@@ -151,7 +152,7 @@ function resetGame() {
     gameWon = false;
     resetArrays();
     resetAudio();
-    closeIntroOverlay();
+    closeOverlay();
     world = null;
 }
 
@@ -247,4 +248,9 @@ function toggleInfoMenu() {
 function introTemplate() {
     let introRef = document.getElementById('introContent');
     introRef.innerHTML += introOverlayTemplate();
+}
+
+function policyTemplate() {
+    let policyRef = document.getElementById('policyContent');
+    policyRef.innerHTML += policyOverlayTemplate();
 }

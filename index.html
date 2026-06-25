@@ -13,7 +13,7 @@
 
 <body onload="init()">
 
-    <h1>Sharky</h1>
+    <h1 id="pageTitle">Sharky</h1>
 
     <div id="canvas-container">
         <canvas id="canvas" width="720" height="480"></canvas>
@@ -55,7 +55,11 @@
         </div>
     </div>
 
-    <div id="introOverlay" onclick="closeIntroOverlay()">
+    <div id="policyOverlay" onclick="closeOverlay()">
+        <div id="policyContent" onclick="event.stopPropagation()"></div>
+    </div>
+
+    <div id="introOverlay" onclick="closeOverlay()">
         <div id="introContent" onclick="event.stopPropagation()"></div>
     </div>
 
@@ -66,6 +70,7 @@
 </body>
 
 <script src="./templates/intro-overlay-template.js"></script>
+<script src="./templates/policy-overlay-template.js"></script>
 <script src="./models/drawable-object.class.js"></script>
 <script src="./models/moveable-object.class.js"></script>
 <script src="./models/statusbar.class.js"></script>
