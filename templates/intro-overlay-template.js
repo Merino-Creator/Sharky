@@ -13,7 +13,9 @@ function introOverlayTemplate() {
         Nicht slappen – Stromschlag! Verwende stattdessen den Blasenangriff (SHOOT). Vorsicht: Nach dem ersten Treffer verdoppelt er seinen Schaden!<br>
         <br>
         <h3>Endboss</h3><br>
-        Weder der Slap noch normale Blasen richten Schaden an. Während dem Bosskampf fallen regelmäßig Giftflaschen von oben herab – sammle 2 davon ein, um ihm mit einer Giftblase Schaden zuzufügen. Nach jedem Angriff musst du erneut 2 Flaschen einsammeln.<br>
+        Weder der Slap noch normale Blasen richten Schaden an.<br> 
+        Während dem Bosskampf fallen regelmäßig Giftflaschen von oben herab – schwimme gekonnt ober und unterhalb an ihm vorbei und sammle 2 davon ein, um ihm mit einer Giftblase Schaden zuzufügen.<br>
+        Nach jedem Angriff musst du erneut 2 Flaschen einsammeln.<br>
         Erwische ihn 3 mal bevor er dich erwischt!<br>
         <br>
         <h3>Coins</h3><br>
