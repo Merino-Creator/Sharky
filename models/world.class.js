@@ -354,7 +354,7 @@ class World {
     spawnBottle() {
         let bottleSpawnId = setInterval(() => {
             if (gamePaused) return;
-            if (this.character.x > 3500) {
+            if (this.character.x > 3650) {
                 this.bottleSpawnPosition();
             }
         }, 2000);
@@ -366,9 +366,8 @@ class World {
      * with a randomized fall acceleration and plays the bubbling sound.
      */
     bottleSpawnPosition() {
-        let visibleX = -this.camera_x;
         let bottle = new PoisonBottle(
-            visibleX + Math.random() * 720,
+            3650 + Math.random() * 450,
             0.1 + Math.random() * 0.2
         );
         this.level.toxic.push(bottle);
