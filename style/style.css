@@ -396,8 +396,7 @@ h3 {
     }
 }
 
-@media (hover: none) and (orientation: landscape) and (max-width: 1020px),
-(hover: none) and (orientation: landscape) and (max-height: 825px) {
+@media (hover: none) and (orientation: landscape) and (max-height: 1025px) {
     #hud {
         display: flex;
     }
