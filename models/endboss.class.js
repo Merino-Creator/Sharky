@@ -71,6 +71,7 @@ class Endboss extends MoveableObject {
 
     /**
     * Starts all animation and movement intervals for the Endboss.
+    * Sets the vertical movement boundaries and starts the up/down movement.
     * Stores all interval IDs for later cleanup.
     */
     animate() {
@@ -79,17 +80,35 @@ class Endboss extends MoveableObject {
         this.yMax = this.y + 100;
         this.speed = 3;
         this.moveUpDown();
+        this.triggerBossAttack();
+        this.animateBoss();
+        this.contactBoss();
+    }
 
+    /**
+     * Starts the interval that triggers the boss attack pattern every 1600ms.
+     */
+    triggerBossAttack() {
         let bossAttackTriggerId = setInterval(() => {
             this.triggerAttack();
         }, 1600);
         intervalIds.push(bossAttackTriggerId);
+    }
 
+    /**
+     * Starts the interval that updates the boss animation every 100ms.
+     */
+    animateBoss() {
         let bossAnimateId = setInterval(() => {
             this.checkAnimation();
         }, 100);
         intervalIds.push(bossAnimateId);
+    }
 
+    /**
+     * Starts the interval that checks for first contact with the character every 200ms.
+     */
+    contactBoss() {
         let bossContactId = setInterval(() => {
             this.checkFirstContact();
         }, 200);
@@ -110,29 +129,43 @@ class Endboss extends MoveableObject {
     }
 
     /**
-     * Determines and plays the correct animation based on the current Endboss state.
-     * Returns early when the game is paused.
-     * Priority order: dead > hurt > attacking > intro > float.
-     */
+    * Determines and plays the correct animation based on the current Endboss state.
+    * Returns early when the game is paused.
+    * Priority order: dead > hurt > attacking > intro > float.
+    */
     checkAnimation() {
         if (gamePaused) return;
         this.frameCounter++;
+        this.chooseAnimation();
+    }
 
+    /**
+     * Selects the appropriate animation based on the current Endboss state.
+     */
+    chooseAnimation() {
         if (this.isDead()) {
             this.playDeadAnimation();
         } else if (this.bossIsHurt()) {
             this.playHurtAnimation();
         } else if (this.isAttacking) {
-            if (this.attackType === 1 && this.x >= this.startX - 10) {
-                this.playFloatAnimation();
-            } else {
-                this.playAttackAnimation();
-            }
+            this.attackOrFloat();
         } else if (this.firstContact && this.currentImage < this.IMAGES_BOSS_INTRO.length) {
             this.playIntroAnimation();
         } else {
             if (this.firstContact) this.introFinished = true;
             this.playFloatAnimation();
+        }
+    }
+
+    /**
+     * Plays the attack animation or float animation depending on the attack type and boss position.
+     * During a dash attack the boss floats while waiting before the sprint.
+     */
+    attackOrFloat() {
+        if (this.attackType === 1 && this.x >= this.startX - 10) {
+            this.playFloatAnimation();
+        } else {
+            this.playAttackAnimation();
         }
     }
 
@@ -189,32 +222,47 @@ class Endboss extends MoveableObject {
     }
 
     /**
-     * Pendulum attack - moves back and forth multiple times rapidly.
-     */
+    * Pendulum attack - moves back and forth multiple times rapidly.
+    */
     pendulumAttack() {
         this.BOSS_ATTACK_AUDIO.play();
-        let swings = 0;
-        let maxSwings = 3;
-        let goingLeft = true;
+        this.swings = 0;
+        this.maxSwings = 3;
+        this.goingLeft = true;
+        this.usePendulumAttack();
+    }
 
-        let pendulumId = setInterval(() => {
+    /**
+     * Starts the pendulum movement interval.
+     * Stores the interval ID for later cleanup.
+     */
+    usePendulumAttack() {
+        this.pendulumId = setInterval(() => {
             if (gamePaused) return;
+            this.bossDirection();
+        }, 1000 / 30);
+        intervalIds.push(this.pendulumId);
+    }
 
-            if (goingLeft) {
-                this.x -= 8;
-                if (this.x <= this.startX - 150) goingLeft = false;
-            } else {
-                this.x += 8;
-                if (this.x >= this.startX) {
-                    goingLeft = true;
-                    swings++;
-                    if (swings >= maxSwings) {
-                        clearInterval(pendulumId);
-                        this.isAttacking = false;
-                    }
+    /**
+     * Handles the directional movement logic for the pendulum attack.
+     * Alternates between moving left and right until max swings are reached.
+     */
+    bossDirection() {
+        if (this.goingLeft) {
+            this.x -= 8;
+            if (this.x <= this.startX - 150) this.goingLeft = false;
+        } else {
+            this.x += 8;
+            if (this.x >= this.startX) {
+                this.goingLeft = true;
+                this.swings++;
+                if (this.swings >= this.maxSwings) {
+                    clearInterval(this.pendulumId);
+                    this.isAttacking = false;
                 }
             }
-        }, 1000 / 30);
+        }
     }
 
     /**
