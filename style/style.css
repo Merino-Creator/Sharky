@@ -319,7 +319,7 @@ h3 {
     #introContent {
         max-width: 300px;
     }
-    
+
     #policyContent {
         max-width: 300px;
     }
@@ -339,7 +339,7 @@ h3 {
     #introContent {
         max-height: 500px;
     }
-    
+
     #policyContent {
         max-height: 500px;
     }
@@ -366,7 +366,7 @@ h3 {
     #introContent {
         max-height: 350px;
     }
-    
+
     #policyContent {
         max-height: 350px;
     }
@@ -387,15 +387,22 @@ h3 {
         display: none;
     }
 
+    #introContent {
+        max-height: 250px;
+    }
+
+    #policyContent {
+        max-height: 250px;
+    }
+}
+
+@media (hover: none) and (orientation: landscape) and (max-width: 1020px),
+(hover: none) and (orientation: landscape) and (max-height: 825px) {
     #hud {
         display: flex;
     }
 
-    #introContent {
-        max-height: 250px;
-    }
-    
-    #policyContent {
-        max-height: 250px;
+    #controls {
+        display: none;
     }
 }
