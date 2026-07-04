@@ -118,7 +118,6 @@ class World {
     addToMap(mo) {
         if (mo.otherDirection) this.flipImage(mo);
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
         if (mo.otherDirection) this.flipImageBack(mo);
     }
 
@@ -334,7 +333,7 @@ class World {
     checkCoinCollision(coins, index) {
         if (this.character.isColliding(coins)) {
             this.coinAmount++;
-            this.character.speed += 1;
+            this.character.speed += 0.4;
             this.COIN_COLLECT_AUDIO.play();
             this.level.coins.splice(index, 1);
         }

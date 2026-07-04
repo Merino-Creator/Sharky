@@ -54,6 +54,7 @@ class Statusbar extends DrawableObject {
     setPercentage(energyAmount) {
         this.energyAmount = energyAmount;
         let images = this.getImages();
+        if (!images) return;
         let path = images[this.resolveImageIndex()];
         this.img = this.ImageCache[path];
     }
@@ -110,11 +111,11 @@ class Statusbar extends DrawableObject {
      * @returns {number} The index of the image to display.
      */
     resolveCoinIndex() {
-        if (this.energyAmount >= 5) return 5;
-        else if (this.energyAmount >= 4) return 4;
-        else if (this.energyAmount >= 3) return 3;
-        else if (this.energyAmount >= 2) return 2;
-        else if (this.energyAmount >= 1) return 1;
+        if (this.energyAmount >= 10) return 5;
+        else if (this.energyAmount >= 8) return 4;
+        else if (this.energyAmount >= 6) return 3;
+        else if (this.energyAmount >= 4) return 2;
+        else if (this.energyAmount >= 2) return 1;
         else return 0;
     }
 }

@@ -16,10 +16,6 @@ function initLevel() {
             new Puffer(),
             new Puffer(),
             new Puffer(),
-            new Puffer(),
-            new Puffer(),
-            new Jellyfish(),
-            new Jellyfish(),
             new Jellyfish(),
             new Jellyfish(),
             new Jellyfish(),
@@ -80,8 +76,6 @@ function initLevel() {
         [],
 
         [
-            new Coins(), new Coins(), new Coins(), new Coins(), new Coins(),
-            new Coins(), new Coins(), new Coins(), new Coins(), new Coins(),
             new Coins(), new Coins(), new Coins(), new Coins(), new Coins(),
             new Coins(), new Coins(), new Coins(), new Coins(), new Coins()
         ]
