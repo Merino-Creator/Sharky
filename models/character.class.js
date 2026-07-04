@@ -169,8 +169,16 @@ class Character extends MoveableObject {
      * @param {number} frameCounter - The current animation frame counter.
      */
     playLongIdleAnimation(frameCounter) {
-        if (frameCounter % 2 === 0)
-            this.playAnimation(this.IMAGES_LONG_IDLE);
+        if (frameCounter % 2 === 0) {
+            if (this.currentImage < this.IMAGES_LONG_IDLE.length) {
+                this.img = this.ImageCache[this.IMAGES_LONG_IDLE[this.currentImage]];
+                this.currentImage++;
+            } else {
+                let loopIndex = this.IMAGES_LONG_IDLE.length - 2 + (this.currentImage % 2);
+                this.img = this.ImageCache[this.IMAGES_LONG_IDLE[loopIndex]];
+                this.currentImage++;
+            }
+        }
         if (!this.snoringPlaying) {
             this.snoringPlaying = true;
             this.SNORING_AUDIO.play();
