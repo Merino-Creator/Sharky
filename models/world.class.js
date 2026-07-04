@@ -11,10 +11,7 @@ class World {
     camera_x = 0;
     toxicAmount = 0;
     coinAmount = 0;
-    healthAmount = 0;
     bubble = [];
-    coins;
-    lastBottleX = 0;
 
     TOXIC_BUBBLING_AUDIO = new Audio('./assets/8.Audio/toxic-bubbling.mp3');
     TOXIC_COLLECT_AUDIO = new Audio('./assets/8.Audio/toxic-collect.mp3');
@@ -23,7 +20,7 @@ class World {
     BUBBLE_POP_AUDIO = new Audio('./assets/8.Audio/bubble-pop.mp3');
 
     /**
-     * Creates a new World instance and initializes the game.
+     * Creates a new World instance, registers all audio objects and initializes the game.
      * @param {HTMLCanvasElement} canvas - The canvas element to render the game on.
      */
     constructor(canvas) {
@@ -31,9 +28,21 @@ class World {
         this.ctx = canvas.getContext('2d');
         this.canvas = canvas;
         this.keyboard = keyboard;
+        this.registerWorldAudio();
         this.setWorld();
         this.draw();
         this.checks();
+    }
+
+    /**
+     * Registers all world audio objects with the global audio manager.
+     */
+    registerWorldAudio() {
+        registerAudio(this.TOXIC_BUBBLING_AUDIO);
+        registerAudio(this.TOXIC_COLLECT_AUDIO);
+        registerAudio(this.COIN_COLLECT_AUDIO);
+        registerAudio(this.SLAP_AUDIO);
+        registerAudio(this.BUBBLE_POP_AUDIO);
     }
 
     /**
@@ -75,6 +84,9 @@ class World {
         this.addToMap(this.character);
         this.ctx.translate(-this.camera_x, 0);
         this.addObjectsToMap(this.level.UI);
+        this.level.UI[0].setPercentage(this.character.energy);
+        this.level.UI[1].setPercentage(this.toxicAmount);
+        this.level.UI[2].setPercentage(this.coinAmount);
     }
 
     /**
@@ -95,9 +107,7 @@ class World {
      * @param {MoveableObject[]} objects - Array of objects to draw.
      */
     addObjectsToMap(objects) {
-        objects.forEach(o => {
-            this.addToMap(o);
-        });
+        objects.forEach(o => this.addToMap(o));
     }
 
     /**
@@ -106,13 +116,10 @@ class World {
      * @param {MoveableObject} mo - The object to draw.
      */
     addToMap(mo) {
-        if (mo.otherDirection) {
-            this.flipImage(mo);
-        }
+        if (mo.otherDirection) this.flipImage(mo);
         mo.draw(this.ctx);
-        if (mo.otherDirection) {
-            this.flipImageBack(mo);
-        }
+        mo.drawFrame(this.ctx);
+        if (mo.otherDirection) this.flipImageBack(mo);
     }
 
     /**
@@ -198,13 +205,10 @@ class World {
             let isInvulnerable = enemy instanceof Puffer && this.character.isSlapAttacking;
             if (this.character.isColliding(enemy) && !enemy.isDead() && !isInvulnerable && !this.character.isHurt()) {
                 this.character.characterHit(enemy.damage);
-                this.level.UI[0].setPercentage(this.character.energy);
-                if (this.character.isDead()) {
-                    if (!this.looseGameTriggered) {
-                        this.looseGameTriggered = true;
-                        this.character.timeDied = new Date().getTime();
-                        setTimeout(() => looseGame(), 1400);
-                    }
+                if (this.character.isDead() && !this.looseGameTriggered) {
+                    this.looseGameTriggered = true;
+                    this.character.timeDied = new Date().getTime();
+                    setTimeout(() => looseGame(), 1400);
                 }
             }
         });
@@ -218,7 +222,6 @@ class World {
      */
     checkBubbleCollisions() {
         if (this.bubble.length === 0) return;
-
         this.level.enemies.forEach((enemy) => {
             this.bubble.forEach((bubble, bubbleIndex) => {
                 if (bubble.isColliding(enemy)) {
@@ -233,6 +236,7 @@ class World {
 
     /**
      * Applies bubble damage to the correct enemy type and removes the bubble on impact.
+     * Plays the bubble pop sound when a normal bubble hits a Puffer or Endboss.
      * @param {MoveableObject} enemy - The enemy that was hit.
      * @param {Bubble|ToxicBubble} bubble - The bubble that collided with the enemy.
      * @param {number} bubbleIndex - The index of the bubble in the bubble array.
@@ -274,7 +278,6 @@ class World {
      */
     checkSlapCollisions() {
         if (!this.character.isSlapAttacking) return;
-
         this.level.enemies.forEach((enemy) => {
             if (this.character.isColliding(enemy) && !enemy.isDead()) {
                 if (enemy instanceof Puffer) {
@@ -293,7 +296,6 @@ class World {
         enemy.enemyHit(enemy.energy);
         enemy.getSlapped();
         this.SLAP_AUDIO.play();
-        registerAudio(this.SLAP_AUDIO);
         setTimeout(() => {
             let index = this.level.enemies.indexOf(enemy);
             if (index > -1) this.level.enemies.splice(index, 1);
@@ -305,12 +307,8 @@ class World {
      * Increments the toxic and coin counters and removes collected objects.
      */
     checkCollectibles() {
-        this.level.toxic.forEach((toxic, index) => {
-            this.checkToxicCollision(toxic, index);
-        });
-        this.level.coins.forEach((coins, index) => {
-            this.checkCoinCollision(coins, index);
-        });
+        this.level.toxic.forEach((toxic, index) => this.checkToxicCollision(toxic, index));
+        this.level.coins.forEach((coins, index) => this.checkCoinCollision(coins, index));
     }
 
     /**
@@ -322,39 +320,35 @@ class World {
     checkToxicCollision(toxic, index) {
         if (this.character.isColliding(toxic)) {
             this.toxicAmount++;
-            this.level.UI[1].setPercentage(this.toxicAmount);
             this.TOXIC_COLLECT_AUDIO.play();
-            registerAudio(this.TOXIC_COLLECT_AUDIO);
             this.level.toxic.splice(index, 1);
         }
     }
 
     /**
-     * Checks if the character collides with a coin, increments the coin counter
-     * and removes the coin from the level.
+     * Checks if the character collides with a coin, increments the coin counter,
+     * increases character speed and removes the coin from the level.
      * @param {Coins} coins - The coin to check.
      * @param {number} index - The index of the coin in the coins array.
      */
     checkCoinCollision(coins, index) {
         if (this.character.isColliding(coins)) {
             this.coinAmount++;
-            this.character.speed += 0.2;
-            this.level.UI[2].setPercentage(this.coinAmount);
+            this.character.speed += 1;
             this.COIN_COLLECT_AUDIO.play();
-            registerAudio(this.COIN_COLLECT_AUDIO);
             this.level.coins.splice(index, 1);
         }
     }
 
     /**
-     * Starts the interval for spawning poison bottles every 3 seconds.
-     * Only spawns while the character's x position is below 3000.
+     * Starts the interval for spawning poison bottles every 2 seconds.
+     * Only spawns when the character's x position is above 3600.
      * Stores the interval ID for later cleanup.
      */
     spawnBottle() {
         let bottleSpawnId = setInterval(() => {
             if (gamePaused) return;
-            if (this.character.x > 3650) {
+            if (this.character.x > 3600) {
                 this.bottleSpawnPosition();
             }
         }, 2000);
@@ -362,17 +356,16 @@ class World {
     }
 
     /**
-     * Spawns a new poison bottle at a random position within the visible screen area
+     * Spawns a new poison bottle at a random position between x 3600 and 4100
      * with a randomized fall acceleration and plays the bubbling sound.
      */
     bottleSpawnPosition() {
         let bottle = new PoisonBottle(
-            3650 + Math.random() * 450,
+            3600 + Math.random() * 500,
             0.1 + Math.random() * 0.2
         );
         this.level.toxic.push(bottle);
         this.TOXIC_BUBBLING_AUDIO.play();
-        registerAudio(this.TOXIC_BUBBLING_AUDIO);
         setTimeout(() => {
             this.TOXIC_BUBBLING_AUDIO.pause();
         }, 1000);
